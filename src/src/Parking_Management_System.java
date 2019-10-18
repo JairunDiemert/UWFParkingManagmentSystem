@@ -1,5 +1,6 @@
 package src;
 
+
 import models.User_Info;
 
 public class Parking_Management_System {
@@ -11,6 +12,8 @@ public class Parking_Management_System {
 
 		 newUser.setUserName("Hello World");
 		 System.out.println("The user name is " + newUser.getUserName());
+		 
+		 System.out.println("Testing");
 		 
 	}
 
