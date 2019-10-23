@@ -72,9 +72,9 @@ public class User_Controller {
 		//ADD link to database 
 	};
 	
-	String viewExistingUser(String userNameToSearch) {
-		//ADD link to database, may need a search function
-		String tempUserDataFromDataBase = "";
+	String viewExistingUserAndPermitInfo(String userNameToSearch) {
+		
+		String tempUserDataFromDataBase = getUserByUserName(userNameToSearch);
 		String delims = "[ ]+";
 		String[] tokens = tempUserDataFromDataBase.split(delims);
 		//parse variables from string retrieved from data base
@@ -97,13 +97,12 @@ public class User_Controller {
 		return formatedUserAndPermitInfo;
 	};
 	
-	void getUserByUserName() {
-		//not sure if needed yet
-	};
-	
-	void retreiveUserInfoFromDatabase() {
-		//not sure if needed yet
-	};
+	String getUserByUserName(String userNameToSearch) {
+
+		String userData = "";
+		//userData = ADD link to database to search and pass content.
+		return userData;
+	};	
 	
 	String formatUserInfo() {
 		User_Info existingUser = new User_Info();
@@ -127,26 +126,6 @@ public class User_Controller {
 				   " " + existingPermit.getEndDate() +
 				   " " + existingUser.getLicensePlate();	
 		return PermitInfo;
-	};
-	
-	void returnUserInfo() {
-		//not sure if needed yet
-	};
-	
-	void selectParkingPermitType() {
-		//not sure if needed yet
-	};
-	
-	void slelctParkingPermitPeriod() {
-		//not sure if needed yet
-	};
-	
-	void registerVehicleByTag() {
-		//not sure if needed yet
-	};
-	
-	void submitNewPermitInfo() {
-		//not sure if needed yet
 	};
 	
 }
