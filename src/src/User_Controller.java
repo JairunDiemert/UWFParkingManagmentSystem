@@ -1,32 +1,68 @@
 
 public class User_Controller {
 
-	void purchaseTicket() {};
+	void purchaseTicket() {
+		//not sure if needed yet
+	};
 	
-	void exitUserInterface() {};
+	void exitUserInterface() {
+		//not sure if needed yet
+	};
 	
-	void createNewUser() {};
+	User_Info createNewUser(String userName, String userEmail, String userPhoneNum, String userInfo) {
+
+		User_Info newUser = new User_Info();
+
+		newUser.setUserName(userName);
+		newUser.setUserEmail(userEmail);
+		newUser.setUserPhoneNum(userPhoneNum);
+		newUser.setUserInfo(userInfo);
+
+		return newUser;
+	};
 	
-	void inputNewUserInfo() {};
+	void inputNewUserInfo() {
+		//not sure if needed yet
+	};
 	
-	void pushNewUserInfoToDatabase() {};
+	void pushNewUserInfoToDatabase() {
+		//not sure if needed yet
+	};
 	
-	void viewExistingUser() {};
+	void viewExistingUser() {
+		//not sure if needed yet
+	};
 	
-	void getUserByUserName() {};
+	void getUserByUserName() {
+		//not sure if needed yet
+	};
 	
-	void retreiveUserInfoFromDatabase() {};
+	void retreiveUserInfoFromDatabase() {
+		//not sure if needed yet
+	};
 	
-	void formatUserInfo() {};
+	void formatUserInfo() {
+		//not sure if needed yet
+	};
 	
-	void returnUserInfo() {};
+	void returnUserInfo() {
+		//not sure if needed yet
+	};
 	
-	void selectParkingPermitType() {};
+	void selectParkingPermitType() {
+		//not sure if needed yet
+	};
 	
-	void slelctParkingPermitPeriod() {};
+	void slelctParkingPermitPeriod() {
+		//not sure if needed yet
+	};
 	
-	void registerVehicleByTag() {};
+	void registerVehicleByTag() {
+		//not sure if needed yet
+	};
 	
-	void submitNewPermitInfo() {};
+	void submitNewPermitInfo() {
+		//not sure if needed yet
+	};
 	
 }
