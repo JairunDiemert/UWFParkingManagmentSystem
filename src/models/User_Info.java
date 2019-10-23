@@ -10,6 +10,7 @@ public class User_Info {
 	private String licensePlate;		//license plate 
 	private String userPhoneNum; 		//user phone number
 	private String userInfo; 			//student, employee, guess
+	private String userLot; 			//user parking lot
 	/**
 	 * @return the userName
 	 */
@@ -135,6 +136,22 @@ public class User_Info {
 	 */
 	public void setUserInfo(String userInfo) {
 		this.userInfo = userInfo;
+	}
+
+
+	/**
+	 * @return the userLot
+	 */
+	public String getUserLot() {
+		return userLot;
+	}
+
+
+	/**
+	 * @param userLot the userLot to set
+	 */
+	public void setUserLot(String userLot) {
+		this.userLot = userLot;
 	}
 	
 

@@ -6,34 +6,138 @@ import models.User_Info;
 public class Permit_Cost_Calculation {
 
 	private static final double VETERAN_DISCOUNT = .30;
-	private static final double STUDENT_DISCOUNT = 1;
-	private static final double GUESS_DISCOUNT = 1;
+	//private static final double GUESS_DISCOUNT = 0;
 	private static final double EMPLOYEES_DISCOUNT = .30;
-	private static final double WAIVER = 0;
+	private static final double STUDENT_DISCOUNT = 1;
 	
-	public void cal() {
+	//prices for the permit rate
+	private static final double HOUR_RATE = 1.5;
+	private static final double DAY_RATE = 5;
+	private static final double WEEK_RATE = 15;
+	private static final double MONTH_RATE = 30;
+	private static final double SEMESTER_RATE = 55;			//Fall, Spring, Summer semester
+	private static final double YEAR_RATE = 100;			//3 semester in a year
+	
+	//parking factor
+	private static final double LOT_A = 1.5;
+	private static final double LOT_B = 1.1;
+	private static final double LOT_C = 0.9;
+	private static final double LOT_D = 1.3;
+	
+	//pass entire user for testing
+	public void cal(String s) {
 		
 		User_Info newUser = new User_Info();
+											
+		double cost = rateCal(s);
+			
+		cost *= discountCal(newUser.getUserInfo());
+			
+		cost *= lotCal(newUser.getUserLot());
+			
+		System.out.println("The cost is "+ cost);
 		
-			String info = newUser.getUserInfo();
-			double cost = 100;								//assuming the permit costed $100 now
+	}
+	
+	public double discountCal(String s){
+		
+		double discountFactor = 0.0;
+		
+		if(s.compareTo( "Employee" ) == 0) {
 			
-			if(info.compareTo( "Employee" ) == 0) {
-				
-				cost *= (1-EMPLOYEES_DISCOUNT);
-				
-			}
-			else if(info.compareTo( "Veteran" ) == 0) {
-				
-				cost *= (1-VETERAN_DISCOUNT);
-				
-			}
-			else {
-				
-				//not thing change
-			}
+			discountFactor = EMPLOYEES_DISCOUNT;
 			
-			//set price to the student info
+		}
+		else if(s.compareTo( "Veteran" ) == 0) {
+			
+			discountFactor = VETERAN_DISCOUNT;
+			
+			
+		}else if(s.compareTo( "Student" ) == 0) {
+			
+			discountFactor = STUDENT_DISCOUNT;
+			
+		}else {
+			
+			//guess and waiver discount 0.0
+		}
+		
+		return discountFactor;
+	}
+	
+	
+	public double lotCal(String s) {
+		
+		double lotCostFactor = 0.0;
+		
+		if((Character.compare(s.charAt(0), 'A')) == 0) {
+			
+			lotCostFactor = LOT_A;
+			
+		}
+		else if((Character.compare(s.charAt(0), 'B')) == 0) {
+			
+			lotCostFactor = LOT_B;
+			
+		}else if((Character.compare(s.charAt(0), 'C')) == 0) {
+			
+			lotCostFactor = LOT_C;
+			
+		}else if((Character.compare(s.charAt(0), 'D')) == 0) {
+			
+			lotCostFactor = LOT_D;
+			
+		}else  {
+			
+			//guess
+			lotCostFactor = 0.0;
+			
+		}
+	
+		return lotCostFactor;
+		
+		
+	}
+	
+	
+	public double rateCal(String s) {
+		
+		String[] splited = s.split("\\s+");
+		double rateCost = 0.0;
+		
+		if((splited[1].equalsIgnoreCase("Hour")) == true) {
+			
+			rateCost = Double.parseDouble(splited[0]) * HOUR_RATE;
+			
+		}
+		else if((splited[1].equalsIgnoreCase("Day")) == true) {
+			
+			rateCost = Double.parseDouble(splited[0]) * DAY_RATE;
+			
+		}else if((splited[1].equalsIgnoreCase("Week")) == true) {
+			
+			rateCost = Double.parseDouble(splited[0]) * WEEK_RATE;
+			
+		}else if((splited[1].equalsIgnoreCase("Month")) == true) {
+			
+			rateCost = Double.parseDouble(splited[0]) * MONTH_RATE;
+			
+		}else if((splited[1].equalsIgnoreCase("Semester")) == true) {
+			
+			rateCost = Double.parseDouble(splited[0]) * SEMESTER_RATE;
+			
+		}else if((splited[1].equalsIgnoreCase("Year")) == true) {
+			
+			rateCost = Double.parseDouble(splited[0]) * YEAR_RATE;
+			
+		}else{
+			
+			//guess rate will be 0
+			
+		}
+		
+		return rateCost;
+		
 		
 	}
 	
