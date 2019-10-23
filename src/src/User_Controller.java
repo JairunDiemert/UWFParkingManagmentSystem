@@ -23,6 +23,7 @@ public class User_Controller {
 	permit purchaseTicket() {
 		
 		permit newPermit = new permit();
+		setPermit(newPermit);
 		
 		return newPermit;
 	};
@@ -33,11 +34,17 @@ public class User_Controller {
 		return exitMessage;
 	};
 	
-	User_Info createNewUser(String userName, String userEmail, String userPhoneNum, String userInfo) {
+	User_Info createNewUser() {
 
+		User_Info newUser = new User_Info();
+		setUser(newUser);
+		
+		return newUser;
+	};
+	
+	User_Info inputNewUserInfo(String userName, String userEmail, String userPhoneNum, String userInfo) {
 		User_Info newUser = getUser();
 		
-
 		newUser.setUserName(userName);
 		newUser.setUserEmail(userEmail);
 		newUser.setUserPhoneNum(userPhoneNum);
@@ -46,12 +53,23 @@ public class User_Controller {
 		return newUser;
 	};
 	
-	void inputNewUserInfo() {
-		//not sure if needed yet
-	};
+	permit inputNewPermitInfo(char lotPermissions, String startDate, String endDate, String licensePlate) {
+		permit newPermit = getPermit();
+		User_Info newUser = getUser();
+		
+		newPermit.setLotPermissions(lotPermissions);
+		newPermit.setStartDate(startDate);
+		newPermit.setEndDate(endDate);
+		newUser.setLicensePlate(licensePlate);
+		
+		
+		return newPermit;
+	}
 	
 	void pushNewUserInfoToDatabase() {
-		//not sure if needed yet
+		User_Info newUser = getUser();
+		permit newPermit = getPermit();
+		//ADD link to database 
 	};
 	
 	void viewExistingUser() {
