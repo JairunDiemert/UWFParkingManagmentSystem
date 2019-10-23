@@ -1,12 +1,36 @@
 
 public class User_Controller {
+	
+	User_Info user;
+	permit permit;
 
-	void purchaseTicket() {
-		//not sure if needed yet
+	public User_Info getUser() {
+		return user;
+	}
+
+	public void setUser(User_Info user) {
+		this.user = user;
+	}
+
+	public permit getPermit() {
+		return permit;
+	}
+
+	public void setPermit(permit permit) {
+		this.permit = permit;
+	}
+
+	permit purchaseTicket() {
+		
+		permit newPermit = new permit();
+		
+		return newPermit;
 	};
 	
-	void exitUserInterface() {
-		//not sure if needed yet
+	String exitUserInterface(permit newPermit) {
+		String exitMessage;
+		exitMessage = "Good Bye";
+		return exitMessage;
 	};
 	
 	User_Info createNewUser(String userName, String userEmail, String userPhoneNum, String userInfo) {
