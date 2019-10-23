@@ -35,7 +35,8 @@ public class User_Controller {
 	
 	User_Info createNewUser(String userName, String userEmail, String userPhoneNum, String userInfo) {
 
-		User_Info newUser = new User_Info();
+		User_Info newUser = getUser();
+		
 
 		newUser.setUserName(userName);
 		newUser.setUserEmail(userEmail);
