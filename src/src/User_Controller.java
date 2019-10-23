@@ -72,8 +72,29 @@ public class User_Controller {
 		//ADD link to database 
 	};
 	
-	void viewExistingUser() {
-		//not sure if needed yet
+	String viewExistingUser(String userNameToSearch) {
+		//ADD link to database, may need a search function
+		String tempUserDataFromDataBase = "";
+		String delims = "[ ]+";
+		String[] tokens = tempUserDataFromDataBase.split(delims);
+		//parse variables from string retrieved from data base
+		String userName = tokens[0];		
+		String userEmail = tokens[1];
+		String userPhoneNum = tokens[2];
+		String userInfo = tokens[3];
+		
+		User_Info existingUser = inputNewUserInfo(userName, userEmail, userPhoneNum, userInfo);
+		
+		String tempLotPermissions = tokens[4];
+		char lotPermissions = tempLotPermissions.charAt(0);
+		String startDate = tokens[5]; 
+		String endDate = tokens[6];
+		String licensePlate = tokens[7];
+		
+		permit existingPermit = inputNewPermitInfo(lotPermissions, startDate, endDate, licensePlate);
+		
+		String formatedUserAndPermitInfo = "" + formatUserInfo() + formatPermitInfo();
+		return formatedUserAndPermitInfo;
 	};
 	
 	void getUserByUserName() {
@@ -84,8 +105,28 @@ public class User_Controller {
 		//not sure if needed yet
 	};
 	
-	void formatUserInfo() {
-		//not sure if needed yet
+	String formatUserInfo() {
+		User_Info existingUser = new User_Info();
+		existingUser = getUser();
+		String UserInfo = "";
+		UserInfo = "" + existingUser.getUserName() +
+				   " " + existingUser.getUserEmail() +
+				   " " + existingUser.getUserPhoneNum() +
+				   " " + existingUser.getUserInfo();	
+		return UserInfo;
+	};
+	
+	String formatPermitInfo() {
+		permit existingPermit = new permit();
+		existingPermit = getPermit();
+		User_Info existingUser = new User_Info();
+		existingUser = getUser();
+		String PermitInfo = "";
+		PermitInfo = " " + existingPermit.getLotPermissions() +
+				   " " + existingPermit.getStartDate() +
+				   " " + existingPermit.getEndDate() +
+				   " " + existingUser.getLicensePlate();	
+		return PermitInfo;
 	};
 	
 	void returnUserInfo() {
