@@ -3,7 +3,6 @@ package view;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import static javafx.application.Application.launch; 
 import javafx.geometry.Insets; 
 import javafx.geometry.Pos; 
 import javafx.scene.Scene; 
@@ -14,12 +13,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text; 
 import javafx.scene.control.TextField; 
 import javafx.stage.Stage;
+
 import models.User_Info; 
 
 public class User_View extends Application{
 	
-	Scene scene;
-	Stage userWindow;
+	TestController control = new TestController();
+	User_Info user;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -29,7 +29,6 @@ public class User_View extends Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-		this.userWindow = stage;
 		
 		Text titleText = new Text("Parking services");
 		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
@@ -37,10 +36,10 @@ public class User_View extends Application{
 		Button purchasePermitButton = new Button("Purchase Parking Permit");
 		Button exitButton = new Button("Exit");
 		
-		purchasePermitButton.setOnAction(e -> selectUserPane());
+		purchasePermitButton.setOnAction(e -> selectUserPane(stage));
+		exitButton.setOnAction(e-> stage.close());
 		
 		GridPane gridPane = new GridPane();
-		
 		gridPane.setVgap(20); 
 	    gridPane.setHgap(20);
 		
@@ -52,19 +51,18 @@ public class User_View extends Application{
 	    gridPane.add(purchasePermitButton, 0, 1);
 	    gridPane.add(exitButton, 0, 2);
 	    
-	    scene = new Scene(gridPane);
-	    userWindow.setScene(scene);
-	    userWindow.setTitle("User View Window");
-	    userWindow.show();
-		
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.setTitle("User View Window");
+	    stage.show();
 	}
 	
-	public void selectUserPane() {
+	public void selectUserPane(Stage stage) {
 		
 		Button newUserButton = new Button("New User");
 		Button existingUserButton = new Button("Existing User");
 		
-		newUserButton.setOnAction(e -> enterUserInfo());
+		newUserButton.setOnAction(e -> enterUserInfo(stage));
 		
 		GridPane gridPane = new GridPane();
 		
@@ -78,13 +76,13 @@ public class User_View extends Application{
 	    gridPane.add(newUserButton, 0, 1);
 	    gridPane.add(existingUserButton, 0, 2);
 	    
-	    scene = new Scene(gridPane);
-	    userWindow.setScene(scene);
-	    userWindow.show();	
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();	
 		
 	}
 	
-	public void enterUserInfo(){
+	public void enterUserInfo(Stage stage){
 		
 		
 		Text nameText = new Text("Name: ");;
@@ -100,11 +98,11 @@ public class User_View extends Application{
 		
 		ChoiceBox<String> statusChoice = new ChoiceBox<>();
 		
-		statusChoice.getItems().addAll("Student", "Faculty", "Guest");
+		statusChoice.getItems().addAll("Student", "Employee", "Veteran", "Guest");
 		statusChoice.setValue("Student");
 		
 		Button submitButton = new Button("Submit");
-		submitButton.setOnAction(e -> toUserController(nameField.getText(), emailField.getText(), 
+		submitButton.setOnAction(e -> toUserController(stage, nameField.getText(), emailField.getText(), 
 				phoneField.getText(), addressField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
 		
 		GridPane gridPane = new GridPane();
@@ -130,22 +128,24 @@ public class User_View extends Application{
 	    
 	    gridPane.add(submitButton, 1, 5);
 	    
-	    scene = new Scene(gridPane);
-	    userWindow.setScene(scene);
-	    userWindow.show();		
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();		
 		
 	}
 
 	
-	public void toUserController(String name, String email, String phoneNum, String address, String status) {
+	public void toUserController(Stage stage, String name, String email, String phoneNum, String address, String status) {
 		
-		//System.out.println(name + " " + email + " " + phoneNum + " " + address + " " + status);
+		user = control.CreateUser(name, email, phoneNum, address, status);
+		double cost = control.Calculation(user, "Hello", "A");
 		
-		addPermitPane(0);
+		addPermitPane(stage, cost, "Semester", "A");
 		
+			
 	}
 	
-	public void addPermitPane(double cost) {
+	public void addPermitPane(Stage stage, double cost, String period, String lot) {
 		
 		Text parkingLotText = new Text("Parking Lot: ");;
 		Text periodText = new Text("Period: ");
@@ -161,17 +161,29 @@ public class User_View extends Application{
 
 		
 		parkingLotChoice.getItems().addAll("A", "B", "C", "D");
-		parkingLotChoice.setValue("A");
+		parkingLotChoice.setValue(lot);
 		
 		periodChoice.getItems().addAll("Hour", "Day", "Week", "Month", "Semester", "Year");
-		periodChoice.setValue("Semester");
+		periodChoice.setValue(period);
 		
-		periodChoice.setOnAction(e-> toCostCal());
+		parkingLotChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
+				parkingLotChoice.getSelectionModel().getSelectedItem()));
+		periodChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
+				parkingLotChoice.getSelectionModel().getSelectedItem()));
 	
 		
 		Button submitButton = new Button("Submit");
-		submitButton.setOnAction(e -> toCreatePermit(parkingLotChoice.getSelectionModel().getSelectedItem(),
-				periodChoice.getSelectionModel().getSelectedItem(), licensePlateField.getText()));
+		//submitButton.setOnAction(e-> createPermitRequest(periodChoice.getSelectionModel().getSelectedItem(),
+			//	parkingLotChoice.getSelectionModel().getSelectedItem(), licensePlateField.getText()));
+		
+		submitButton.setOnAction(e->{
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		
 		GridPane gridPane = new GridPane();
 		
@@ -195,21 +207,25 @@ public class User_View extends Application{
 
 	    gridPane.add(submitButton, 1, 4);
 	    
-	    scene = new Scene(gridPane);
-	    userWindow.setScene(scene);
-	    userWindow.show();
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();
 		
 	}
 	
-	public void toCreatePermit(String parkingLot, String period, String licensePlate) {
-		
-		
-	}
-	
-	public void toCostCal() {
-		addPermitPane(70);
-		
-	}
+	  public void toCostCal(Stage stage, String period, String lot) {
+		  
+		  double cost = control.Calculation(user, period, lot);
+		  
+		  addPermitPane(stage, cost, period, lot);
+	  
+	  }
+	  
+	  public void createPermitRequest(String period, String lot, String plate){
+		  
+		  
+	  }
+	 
 	
 	
 }
