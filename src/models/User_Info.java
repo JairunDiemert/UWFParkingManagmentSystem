@@ -11,6 +11,33 @@ public class User_Info {
 	private String userPhoneNum; 		//user phone number
 	private String userInfo; 			//student, employee, guess
 	private String userLot; 			//user parking lot
+	
+	public User_Info() {
+		
+		userName = "NA";
+		userID = "NA";
+		userAddress = "NA"; 
+		userEmail = "NA";
+		userNumCar = 0;
+		licensePlate = "NA";
+		userPhoneNum = "NA";
+		userInfo = "NA";
+		userLot = "NA"; 
+	}
+	
+	public User_Info(String name, String id, String address, String email, int numOfCar, String license, String phoneNumber, String info, String lot) {
+		
+		this.userName = name;
+		this.userID = id;
+		this.userAddress = address; 
+		this.userEmail = email;
+		this.userNumCar = numOfCar;
+		this.licensePlate = license;
+		this.userPhoneNum = phoneNumber;
+		this.userInfo = info;
+		this.userLot = lot; 
+	}
+	
 	/**
 	 * @return the userName
 	 */

@@ -38,9 +38,15 @@ public class Permit_Cost_Calculation {
 	//pass entire user for testing
 	public double cal(User_Info user, permit p) {
 		
+		double cost = 0 ;
+		//same date
+		if( (p.getEndDate().equalsIgnoreCase(p.getStartDate())) == true) {
+			
+			String str = String.valueOf(p.getEndHour() - p.getStartHour()) + " Hour"; 
+			cost = rateCal(str);
+		}
+											
 		
-		//need to work on 									
-		double cost = rateCal("1 Hour");
 			
 		cost *= discountCal(user.getUserInfo());
 			
