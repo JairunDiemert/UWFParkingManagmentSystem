@@ -3,21 +3,30 @@ package models;
 public class permit {
 
 	private char lotPermissions;
-	private String startDate;
-	private String endDate;
+	private String startDate; // Day/Month/Year
+	private String endDate; // Day/Month/Year
+	private int startHour; //24 hour clock
+	private int endHour;   //24 hour clock
+	private String liscensePlate; 
 	private String UID; //unique ID reference to individual parking permit
 
 	public permit() {
 		lotPermissions = 'Z';
-		startDate = "NA";
-		endDate = "NA";
+		startDate = "0/JAN/00"; // Day/Month/Year
+		endDate = "0/JAN/00"; 
+		setStartHour(00);
+		setEndHour(00);
 		UID = "NA";
+		setLiscensePlate("NA");
 	}
 	
-	public permit(char lotPermissions, String startDate, String endDate, String UID) {
+	public permit(char lotPermissions, String startDate, String endDate, int startHour, int endHour, String liscensePlate, String UID) {
 		this.lotPermissions = lotPermissions;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.setStartHour(startHour);
+		this.setEndHour(endHour);
+		this.setLiscensePlate(liscensePlate);
 		this.UID = UID;
 	}
 	
@@ -75,5 +84,29 @@ public class permit {
 	 */
 	public void setUID(String UID) {
 		this.UID = UID;
+	}
+
+	public int getEndHour() {
+		return endHour;
+	}
+
+	public void setEndHour(int endHour) {
+		this.endHour = endHour;
+	}
+
+	public int getStartHour() {
+		return startHour;
+	}
+
+	public void setStartHour(int startHour) {
+		this.startHour = startHour;
+	}
+
+	public String getLiscensePlate() {
+		return liscensePlate;
+	}
+
+	public void setLiscensePlate(String liscensePlate) {
+		this.liscensePlate = liscensePlate;
 	}
 }
