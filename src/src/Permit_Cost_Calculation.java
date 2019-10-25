@@ -36,10 +36,25 @@ public class Permit_Cost_Calculation {
 	*/
 	
 	//pass entire user for testing
-	public double cal(User_Info user, String p) {
+	public double cal(User_Info user, permit p) {
 		
 		
 		//need to work on 									
+		double cost = rateCal("1 Hour");
+			
+		cost *= discountCal(user.getUserInfo());
+			
+		cost *= lotCal(user.getUserLot());
+			
+		return cost;
+		//System.out.println("The cost is "+ cost);
+		
+	}
+	
+	public double calByPeriod(User_Info user, String p) {
+		
+		
+										
 		double cost = rateCal(p);
 			
 		cost *= discountCal(user.getUserInfo());

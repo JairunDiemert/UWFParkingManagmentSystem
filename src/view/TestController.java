@@ -46,7 +46,7 @@ public class TestController {
   
 		  double cost;
 		  
-		  cost = cal.cal(user, period);
+		  cost = cal.calByPeriod(user, period);
 		
 		
 		return cost;

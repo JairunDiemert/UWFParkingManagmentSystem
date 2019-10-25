@@ -18,6 +18,7 @@ public class Permit_Cost_CalculationTest {
 		user.setUserLot("A");
 		userPermit.setStartHour(14);
 		userPermit.setEndHour(16);
+		
 		assertEquals("The cost is ", calculator.cal(user, userPermit));
 	}
 }
