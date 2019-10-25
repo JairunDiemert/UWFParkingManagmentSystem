@@ -46,7 +46,6 @@ public class Permit_Cost_Calculation {
 			cost = rateCal(str);
 		}
 											
-		
 			
 		cost *= discountCal(user.getUserInfo());
 			
@@ -61,7 +60,7 @@ public class Permit_Cost_Calculation {
 		
 		
 										
-		double cost = rateCal(p);
+		double cost = rateCal("1 "+ p);
 			
 		cost *= discountCal(user.getUserInfo());
 			
