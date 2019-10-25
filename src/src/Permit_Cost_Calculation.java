@@ -2,6 +2,7 @@
 package src;
 
 import models.User_Info;
+import models.permit;
 
 public class Permit_Cost_Calculation {
 
@@ -24,22 +25,32 @@ public class Permit_Cost_Calculation {
 	private static final double LOT_C = 0.9;
 	private static final double LOT_D = 1.3;
 	
+	
+	//time factor
+	/*
+	private static final double DAY = 1;
+	private static final double WEEK = 7;
+	private static final double MONTH = 30;
+	private static final double SEMESTER = 120;
+	private static final double YEAR = 360;
+	*/
+	
 	//pass entire user for testing
-	public void cal(String s) {
+	public void cal(User_Info user, permit userPermit) {
 		
-		User_Info newUser = new User_Info();
-											
-		double cost = rateCal(s);
+		
+		//need to work on 									
+		double cost = rateCal("Hour");
 			
-		cost *= discountCal(newUser.getUserInfo());
+		cost *= discountCal(user.getUserInfo());
 			
-		cost *= lotCal(newUser.getUserLot());
+		cost *= lotCal(user.getUserLot());
 			
 		System.out.println("The cost is "+ cost);
 		
 	}
 	
-	public double discountCal(String s){
+	private double discountCal(String s){
 		
 		double discountFactor = 0.0;
 		
@@ -66,7 +77,7 @@ public class Permit_Cost_Calculation {
 	}
 	
 	
-	public double lotCal(String s) {
+	private double lotCal(String s) {
 		
 		double lotCostFactor = 0.0;
 		
@@ -100,7 +111,7 @@ public class Permit_Cost_Calculation {
 	}
 	
 	
-	public double rateCal(String s) {
+	private double rateCal(String s) {
 		
 		String[] splited = s.split("\\s+");
 		double rateCost = 0.0;
