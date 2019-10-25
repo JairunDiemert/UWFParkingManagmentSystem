@@ -3,16 +3,16 @@ package models;
 public class permit {
 
 	private char lotPermissions;
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 	private String startDate;	//Day/Month/Year
 	private String endDate;
-=======
+=======*/
 	private String startDate; // Day/Month/Year
 	private String endDate; // Day/Month/Year
 	private int startHour; //24 hour clock
 	private int endHour;   //24 hour clock
 	private String liscensePlate; 
->>>>>>> aa7d423e649688564b397c5663cff09444500318
+//>>>>>>> aa7d423e649688564b397c5663cff09444500318
 	private String UID; //unique ID reference to individual parking permit
 
 	public permit() {
