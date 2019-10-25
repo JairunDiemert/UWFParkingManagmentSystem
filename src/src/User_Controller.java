@@ -1,3 +1,7 @@
+package src;
+
+import models.User_Info;
+import models.permit;
 
 public class User_Controller {
 	
@@ -28,7 +32,7 @@ public class User_Controller {
 		return newPermit;
 	};
 	
-	String exitUserInterface(permit newPermit) {
+	public String exitUserInterface(permit newPermit) {
 		String exitMessage;
 		exitMessage = "Good Bye";
 		return exitMessage;

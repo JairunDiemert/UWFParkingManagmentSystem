@@ -5,8 +5,22 @@ public class permit {
 	private char lotPermissions;
 	private String startDate;
 	private String endDate;
-	private String UID; //unique ID refernece to individual parking permit
+	private String UID; //unique ID reference to individual parking permit
 
+	public permit() {
+		lotPermissions = 'Z';
+		startDate = "NA";
+		endDate = "NA";
+		UID = "NA";
+	}
+	
+	public permit(char lotPermissions, String startDate, String endDate, String UID) {
+		this.lotPermissions = lotPermissions;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.UID = UID;
+	}
+	
 	/**
 	 * @return the lotPermissions
 	 */
