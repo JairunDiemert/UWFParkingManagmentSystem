@@ -3,7 +3,7 @@ package models;
 public class permit {
 
 	private char lotPermissions;
-	private String startDate;
+	private String startDate;	//Day/Month/Year
 	private String endDate;
 	private String UID; //unique ID reference to individual parking permit
 

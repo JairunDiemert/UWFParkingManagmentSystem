@@ -40,7 +40,7 @@ public class Permit_Cost_Calculation {
 		
 		
 		//need to work on 									
-		double cost = rateCal("Hour");
+		double cost = rateCal("1 Hour");
 			
 		cost *= discountCal(user.getUserInfo());
 			
