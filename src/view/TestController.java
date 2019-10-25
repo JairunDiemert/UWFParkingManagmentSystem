@@ -1,6 +1,7 @@
 package view;
 
 import models.User_Info;
+import models.permit;
 import src.Permit_Cost_Calculation;
 
 
@@ -45,17 +46,14 @@ public class TestController {
   
 		  double cost;
 		  
-		  cost = rate(period);
-		  
-		  cost *= cal.discountCal(user.getUserInfo());
-		  
-		  cost *= cal.lotCal(lot);
+		  cost = cal.cal(user, period);
 		
 		
 		return cost;
 		
 		
 	}
+	/*
 	public double rate(String s) {
 		
 		
@@ -98,7 +96,7 @@ public class TestController {
 		
 	}
 		
-		
+		*/
 	
 
 	
