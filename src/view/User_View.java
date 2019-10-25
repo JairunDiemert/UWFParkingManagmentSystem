@@ -1,5 +1,7 @@
 package view;
 
+import java.text.DecimalFormat;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,7 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField; 
-import javafx.scene.layout.GridPane; 
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text; 
 import javafx.scene.control.TextField; 
 import javafx.stage.Stage;
@@ -30,7 +33,7 @@ public class User_View extends Application{
 	public void start(Stage stage) throws Exception {
 		
 		
-		Text titleText = new Text("Parking services");
+		Text titleText = new Text("Welcome to Campus Parking Services");
 		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
 		
 		Button purchasePermitButton = new Button("Purchase Parking Permit");
@@ -39,19 +42,18 @@ public class User_View extends Application{
 		purchasePermitButton.setOnAction(e -> selectUserPane(stage));
 		exitButton.setOnAction(e-> stage.close());
 		
-		GridPane gridPane = new GridPane();
-		gridPane.setVgap(20); 
-	    gridPane.setHgap(20);
+		VBox vbox = new VBox();
 		
-		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setMinSize(400, 400);
-	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+		vbox.setSpacing(20);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
 	    
-	    gridPane.add(titleText, 0, 0);
-	    gridPane.add(purchasePermitButton, 0, 1);
-	    gridPane.add(exitButton, 0, 2);
+	    vbox.getChildren().add(titleText);
+	    vbox.getChildren().add(purchasePermitButton);
+	    vbox.getChildren().add(exitButton);
 	    
-	    Scene scene = new Scene(gridPane);
+	    Scene scene = new Scene(vbox);
 	    stage.setScene(scene);
 	    stage.setTitle("User View Window");
 	    stage.show();
@@ -63,29 +65,53 @@ public class User_View extends Application{
 		Button existingUserButton = new Button("Existing User");
 		
 		newUserButton.setOnAction(e -> enterUserInfo(stage));
+		existingUserButton.setOnAction(e-> enterExistingUser(stage));
 		
-		GridPane gridPane = new GridPane();
+		VBox vbox = new VBox();
 		
-		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setMinSize(400, 400);
-	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+	    vbox.setSpacing(20);
 	    
-	    gridPane.setVgap(20); 
-	    gridPane.setHgap(20);
+	    vbox.getChildren().add(existingUserButton);
+	    vbox.getChildren().add(newUserButton);
+	   
 	    
-	    gridPane.add(newUserButton, 0, 1);
-	    gridPane.add(existingUserButton, 0, 2);
-	    
-	    Scene scene = new Scene(gridPane);
+	    Scene scene = new Scene(vbox);
 	    stage.setScene(scene);
 	    stage.show();	
 		
 	}
+	public void enterExistingUser(Stage stage) {
+		
+		Text enterUserName = new Text("Enter Your User Id");
+		TextField nameField = new TextField();
+		
+		Button submitButton = new Button("Submit");
+		submitButton.setOnAction(e-> existingUserRequest(stage, nameField.getText()));
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	    
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(5);
+	    
+	    gridPane.add(enterUserName, 0, 0);
+	    gridPane.add(nameField, 1, 0);
+	    gridPane.add(submitButton, 0, 1);
+	    
+	    
+	    Scene scene  = new Scene(gridPane);
+		stage.setScene(scene);
+	}
 	
 	public void enterUserInfo(Stage stage){
-		
-		
-		Text nameText = new Text("Name: ");;
+			
+		Text nameText = new Text("Name: ");
 		Text emailText = new Text("Email: ");
 		Text phoneText = new Text("Phone Number: ");
 		Text addressText = new Text("Adddress: ");
@@ -102,13 +128,13 @@ public class User_View extends Application{
 		statusChoice.setValue("Student");
 		
 		Button submitButton = new Button("Submit");
-		submitButton.setOnAction(e -> toUserController(stage, nameField.getText(), emailField.getText(), 
+		submitButton.setOnAction(e -> newUserRequest(stage, nameField.getText(), emailField.getText(), 
 				phoneField.getText(), addressField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
 		
 		GridPane gridPane = new GridPane();
 		
 		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setMinSize(400, 400);
+		gridPane.setMinSize(500, 500);
 	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
 	    
 	    gridPane.setVgap(5); 
@@ -133,25 +159,16 @@ public class User_View extends Application{
 	    stage.show();		
 		
 	}
-
-	
-	public void toUserController(Stage stage, String name, String email, String phoneNum, String address, String status) {
-		
-		user = control.CreateUser(name, email, phoneNum, address, status);
-		double cost = control.Calculation(user, "Hello", "A");
-		
-		addPermitPane(stage, cost, "Semester", "A");
-		
-			
-	}
 	
 	public void addPermitPane(Stage stage, double cost, String period, String lot) {
+		
+		DecimalFormat df = new DecimalFormat("#.00");
 		
 		Text parkingLotText = new Text("Parking Lot: ");;
 		Text periodText = new Text("Period: ");
 		Text licensePlateText = new Text("License Plate: ");
 		
-		Text costText = new Text(Double.toString(cost));
+		Text costText = new Text("$ " + df.format(cost));
 		Text amountText = new Text("Amount: ");
 		
 		TextField licensePlateField = new TextField();
@@ -170,8 +187,7 @@ public class User_View extends Application{
 				parkingLotChoice.getSelectionModel().getSelectedItem()));
 		periodChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
 				parkingLotChoice.getSelectionModel().getSelectedItem()));
-	
-		
+			
 		Button submitButton = new Button("Submit");
 		//submitButton.setOnAction(e-> createPermitRequest(periodChoice.getSelectionModel().getSelectedItem(),
 			//	parkingLotChoice.getSelectionModel().getSelectedItem(), licensePlateField.getText()));
@@ -188,9 +204,8 @@ public class User_View extends Application{
 		GridPane gridPane = new GridPane();
 		
 		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setMinSize(400, 400);
+		gridPane.setMinSize(500, 500);
 	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
-	    
 	    gridPane.setVgap(5); 
 	    gridPane.setHgap(5);
 	    
@@ -199,32 +214,46 @@ public class User_View extends Application{
 	    gridPane.add(licensePlateText, 0, 2);
 	    gridPane.add(amountText, 0, 3);
 
-
 	    gridPane.add(parkingLotChoice, 1, 0);
 	    gridPane.add(periodChoice, 1, 1);
 	    gridPane.add(licensePlateField, 1, 2);
 	    gridPane.add(costText, 1, 3);
-
 	    gridPane.add(submitButton, 1, 4);
 	    
 	    Scene scene = new Scene(gridPane);
 	    stage.setScene(scene);
-	    stage.show();
-		
+	    stage.show();	
 	}
 	
-	  public void toCostCal(Stage stage, String period, String lot) {
+		public void toCostCal(Stage stage, String period, String lot) {
+			  
+			double cost = control.Calculation(user, period, lot);
+			  
+			addPermitPane(stage, cost, period, lot);
 		  
-		  double cost = control.Calculation(user, period, lot);
-		  
-		  addPermitPane(stage, cost, period, lot);
+		}
 	  
-	  }
+		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String status) {
+			
+			user = control.CreateUser(name, email, phoneNum, address, status);
+			double cost = control.Calculation(user, "Semester", "A");
+			
+			addPermitPane(stage, cost, "Semester", "A");			
+		}
+		
+		public void existingUserRequest(Stage stage, String id) {
+			// temp until database
+			user = control.getUserByID();
+			double cost = control.Calculation(user, "Semester", "A");
+			
+			addPermitPane(stage, cost, "Semester", "A");
+			
+		}
 	  
-	  public void createPermitRequest(String period, String lot, String plate){
-		  
-		  
-	  }
+//	  public void createPermitRequest(String period, String lot, String plate){
+//		  
+//		  
+//	  }
 	 
 	
 	
