@@ -1,4 +1,4 @@
-package testing;
+package src;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -19,6 +19,6 @@ public class Permit_Cost_CalculationTest {
 		userPermit.setStartHour(14);
 		userPermit.setEndHour(16);
 		
-		assertEquals("The cost is ", calculator.cal(user, userPermit));
+		assertEquals(4.5, calculator.cal(user, userPermit), 0);
 	}
 }

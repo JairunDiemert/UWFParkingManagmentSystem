@@ -1,11 +1,10 @@
-package testing;
-
-import static org.junit.Assert.*;
+package src;
+import static org.junit.Assert.assertEquals;
 import org.junit.*;
 
 import models.User_Info;
 import models.permit;
-import src.User_Controller;
+
 
 public class User_ControllerTest {
 
@@ -40,7 +39,4 @@ public class User_ControllerTest {
 		User_Controller controller = new User_Controller();
 		assertEquals("Good Bye", controller.exitUserInterface(newPermit));
 	}
-
-
-
 }
