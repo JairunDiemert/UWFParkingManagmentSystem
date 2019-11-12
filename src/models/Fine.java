@@ -18,7 +18,7 @@ public Fine() {
 	Date date = new Date();
 }
 
-public permit(double fineAmount, String violationType, String reasonForFine, String location, Date date) {
+public Fine(double fineAmount, String violationType, String reasonForFine, String location, Date date) {
 	this.fineAmount = fineAmount;
 	this.violationType = violationType;
 	this.reasonForFine = reasonForFine;
@@ -46,7 +46,7 @@ public String getReasonForFine() {
 	return reasonForFine;
 }
 
-public void setReasonForFine() {
+public void setReasonForFine(String reasonForFine) {
 	this.reasonForFine = reasonForFine;
 }
 

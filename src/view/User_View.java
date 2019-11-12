@@ -164,7 +164,7 @@ public class User_View extends Application{
 		
 		DecimalFormat df = new DecimalFormat("#.00");
 		
-		Text parkingLotText = new Text("Parking Lot: ");;
+		Text parkingLotText = new Text("Parking Lot: ");
 		Text periodText = new Text("Period: ");
 		Text licensePlateText = new Text("License Plate: ");
 		
@@ -175,13 +175,16 @@ public class User_View extends Application{
 		
 		ChoiceBox<String> parkingLotChoice = new ChoiceBox<>();
 		ChoiceBox<String> periodChoice = new ChoiceBox<>();
-
+		ChoiceBox<String> durationChoice = new ChoiceBox<>();
 		
 		parkingLotChoice.getItems().addAll("A", "B", "C", "D");
 		parkingLotChoice.setValue(lot);
 		
 		periodChoice.getItems().addAll("Hour", "Day", "Week", "Month", "Semester", "Year");
 		periodChoice.setValue(period);
+		
+		durationChoice.getItems().addAll("1", "2", "3", "4", "5", "6", "7");
+		durationChoice.setValue("1");
 		
 		parkingLotChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
 				parkingLotChoice.getSelectionModel().getSelectedItem()));
@@ -207,7 +210,7 @@ public class User_View extends Application{
 		gridPane.setMinSize(500, 500);
 	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
 	    gridPane.setVgap(5); 
-	    gridPane.setHgap(5);
+	    gridPane.setHgap(1);
 	    
 	    gridPane.add(parkingLotText, 0, 0);
 	    gridPane.add(periodText, 0, 1);
@@ -215,7 +218,8 @@ public class User_View extends Application{
 	    gridPane.add(amountText, 0, 3);
 
 	    gridPane.add(parkingLotChoice, 1, 0);
-	    gridPane.add(periodChoice, 1, 1);
+	    gridPane.add(periodChoice, 2, 1);
+	    gridPane.add(durationChoice, 1, 1);
 	    gridPane.add(licensePlateField, 1, 2);
 	    gridPane.add(costText, 1, 3);
 	    gridPane.add(submitButton, 1, 4);
