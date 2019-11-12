@@ -36,6 +36,7 @@ public class Permit_Cost_Calculation {
 	*/
 	
 	//pass entire user for testing
+	/*
 	public double cal(User_Info user, permit p) {
 		
 		double cost = 0 ;
@@ -43,7 +44,7 @@ public class Permit_Cost_Calculation {
 		if( (p.getEndDate().equalsIgnoreCase(p.getStartDate())) == true) {
 			
 			String str = String.valueOf(p.getEndHour() - p.getStartHour()) + " Hour"; 
-			cost = rateCal(str);
+			cost = rateCal();
 		}
 											
 			
@@ -54,17 +55,17 @@ public class Permit_Cost_Calculation {
 		return cost;
 		//System.out.println("The cost is "+ cost);
 		
-	}
+	}*/
 	
-	public double calByPeriod(User_Info user, String p) {
+	public double totalCal(User_Info user, String p, String l, String d) {
 		
 		
 										
-		double cost = rateCal("1 "+ p);
+		double cost = rateCal(p,d);
 			
 		cost *= discountCal(user.getUserInfo());
 			
-		cost *= lotCal(user.getUserLot());
+		cost *= lotCal(l);
 			
 		return cost;
 		//System.out.println("The cost is "+ cost);
@@ -132,35 +133,35 @@ public class Permit_Cost_Calculation {
 	}
 	
 	
-	private double rateCal(String s) {
+	private double rateCal(String p, String d) {
 		
-		String[] splited = s.split("\\s+");
+		
 		double rateCost = 0.0;
 		
-		if((splited[1].equalsIgnoreCase("Hour")) == true) {
+		if((p.equalsIgnoreCase("Hour")) == true) {
 			
-			rateCost = Double.parseDouble(splited[0]) * HOUR_RATE;
+			rateCost = Double.parseDouble(d) * HOUR_RATE;
 			
 		}
-		else if((splited[1].equalsIgnoreCase("Day")) == true) {
+		else if((p.equalsIgnoreCase("Day")) == true) {
 			
-			rateCost = Double.parseDouble(splited[0]) * DAY_RATE;
+			rateCost = Double.parseDouble(d) * DAY_RATE;
 			
-		}else if((splited[1].equalsIgnoreCase("Week")) == true) {
+		}else if((p.equalsIgnoreCase("Week")) == true) {
 			
-			rateCost = Double.parseDouble(splited[0]) * WEEK_RATE;
+			rateCost = Double.parseDouble(d) * WEEK_RATE;
 			
-		}else if((splited[1].equalsIgnoreCase("Month")) == true) {
+		}else if((p.equalsIgnoreCase("Month")) == true) {
 			
-			rateCost = Double.parseDouble(splited[0]) * MONTH_RATE;
+			rateCost = Double.parseDouble(d) * MONTH_RATE;
 			
-		}else if((splited[1].equalsIgnoreCase("Semester")) == true) {
+		}else if((p.equalsIgnoreCase("Semester")) == true) {
 			
-			rateCost = Double.parseDouble(splited[0]) * SEMESTER_RATE;
+			rateCost = Double.parseDouble(d) * SEMESTER_RATE;
 			
-		}else if((splited[1].equalsIgnoreCase("Year")) == true) {
+		}else if((p.equalsIgnoreCase("Year")) == true) {
 			
-			rateCost = Double.parseDouble(splited[0]) * YEAR_RATE;
+			rateCost = Double.parseDouble(d) * YEAR_RATE;
 			
 		}else{
 			

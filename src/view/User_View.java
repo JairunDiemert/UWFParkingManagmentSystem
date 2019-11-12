@@ -187,9 +187,9 @@ public class User_View extends Application{
 		durationChoice.setValue("1");
 		
 		parkingLotChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
-				parkingLotChoice.getSelectionModel().getSelectedItem()));
+				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
 		periodChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
-				parkingLotChoice.getSelectionModel().getSelectedItem()));
+				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
 			
 		Button submitButton = new Button("Submit");
 		//submitButton.setOnAction(e-> createPermitRequest(periodChoice.getSelectionModel().getSelectedItem(),
@@ -229,9 +229,9 @@ public class User_View extends Application{
 	    stage.show();	
 	}
 	
-		public void toCostCal(Stage stage, String period, String lot) {
+		public void toCostCal(Stage stage, String period, String lot, String duration) {
 			  
-			double cost = control.Calculation(user, period, lot);
+			double cost = control.Calculation(user, period, lot, duration);
 			  
 			addPermitPane(stage, cost, period, lot);
 		  
@@ -240,7 +240,7 @@ public class User_View extends Application{
 		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String status) {
 			
 			user = control.CreateUser(name, email, phoneNum, address, status);
-			double cost = control.Calculation(user, "Semester", "A");
+			double cost = control.Calculation(user, "Semester", "A","1");
 			
 			addPermitPane(stage, cost, "Semester", "A");			
 		}
@@ -248,7 +248,7 @@ public class User_View extends Application{
 		public void existingUserRequest(Stage stage, String id) {
 			// temp until database
 			user = control.getUserByID();
-			double cost = control.Calculation(user, "Semester", "A");
+			double cost = control.Calculation(user, "Semester", "A","1");
 			
 			addPermitPane(stage, cost, "Semester", "A");
 			

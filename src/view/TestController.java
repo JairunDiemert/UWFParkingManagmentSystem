@@ -41,12 +41,12 @@ public class TestController {
 	}
 	
 		
-	public double Calculation(User_Info user, String period, String lot) {
+	public double Calculation(User_Info user, String period, String lot, String duration) {
 		
   
 		  double cost;
 		  
-		  cost = cal.calByPeriod(user, period);
+		  cost = cal.totalCal(user, period, lot, duration);
 		
 		
 		return cost;
