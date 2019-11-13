@@ -7,9 +7,10 @@ import controller.Permit_Cost_Calculation;
 import models.User_Info;
 import models.permit;
 
+@SuppressWarnings("unused")
 public class Permit_Cost_CalculationTest {
 
-	@Test
+	/*@Test
 	public void testCal() {
 		User_Info user = new User_Info();
 		permit userPermit = new permit();
@@ -20,5 +21,5 @@ public class Permit_Cost_CalculationTest {
 		userPermit.setEndHour(16);
 		
 		assertEquals(4.5, calculator.rateCal(user, userPermit), 0);
-	}
+	}*/
 }

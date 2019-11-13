@@ -70,24 +70,37 @@ public class User_Controller {
 
 		return newUser;
 	};
-	
-	public permit inputNewPermitInfo(char lotPermissions, String endDate, String licensePlate) {
+	// two diff formats
+	public permit inputNewPermitInfo(char lotPermissions, int multiplier, String choice, String licensePlate) {
 		permit newPermit = getPermit();
 		User_Info newUser = getUser();
+		Duration_Calculation endDate = new Duration_Calculation();
 		
 		newPermit.setLotPermissions(lotPermissions);
 		setDate();
 		newPermit.setStartDate(getDateString());
-		newPermit.setEndDate(endDate);
+		newPermit.setEndDate(endDate.getEndDate(getDate(), multiplier, choice));
 		newUser.setLicensePlate(licensePlate);
 		
 		
 		return newPermit;
 	}
-	
+	// two diff formats
+	public permit inputNewPermitInfo(char lotPermissions, String startDate, String endDate, String licensePlate) {		
+		permit newPermit = getPermit();			
+		User_Info newUser = getUser();			
+
+
+		newPermit.setLotPermissions(lotPermissions);			
+		newPermit.setStartDate(startDate);			
+		newPermit.setEndDate(endDate);			
+		newUser.setLicensePlate(licensePlate);
+		
+		
+		return newPermit;
+	}
 	@SuppressWarnings("unused")
 	public void pushNewUserInfoToDatabase() {
-		@SuppressWarnings("unused")
 		User_Info newUser = getUser();
 		permit newPermit = getPermit();
 		//ADD link to database 
@@ -103,16 +116,16 @@ public class User_Controller {
 		String userName = tokens[0];		
 		String userEmail = tokens[1];
 		String userPhoneNum = tokens[2];
-		String userInfo = tokens[3];
+		String userAddress = tokens[3];
+		String userInfo = tokens[4];
 		
-		@SuppressWarnings("unused")
-		User_Info existingUser = inputNewUserInfo(userName, userEmail, userPhoneNum, userInfo);
+		User_Info existingUser = inputNewUserInfo(userName, userEmail, userPhoneNum, userAddress, userInfo);
 		
-		String tempLotPermissions = tokens[4];
+		String tempLotPermissions = tokens[5];
 		char lotPermissions = tempLotPermissions.charAt(0);
-		String startDate = tokens[5]; 
-		String endDate = tokens[6];
-		String licensePlate = tokens[7];
+		String startDate = tokens[6]; 
+		String endDate = tokens[7];
+		String licensePlate = tokens[8];
 		
 		permit existingPermit = inputNewPermitInfo(lotPermissions, startDate, endDate, licensePlate);
 		
