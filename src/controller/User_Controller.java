@@ -2,11 +2,13 @@ package controller;
 
 import models.User_Info;
 import models.permit;
+import java.util.*;
 
 public class User_Controller {
 	
-	User_Info user;
-	permit permit;
+	private User_Info user;
+	private permit permit;
+	private Date date;
 
 	public User_Info getUser() {
 		return user;
@@ -24,6 +26,17 @@ public class User_Controller {
 		this.permit = permit;
 	}
 
+	public void setDate() {
+		this.date = new Date();
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
+	public String getDateString() {
+		return this.date.toString();
+	}
 	public permit purchaseTicket() {
 		
 		permit newPermit = new permit();
@@ -46,23 +59,25 @@ public class User_Controller {
 		return newUser;
 	};
 	
-	public User_Info inputNewUserInfo(String userName, String userEmail, String userPhoneNum, String userInfo) {
+	public User_Info inputNewUserInfo(String userName, String userEmail, String userPhoneNum, String userAddress, String userInfo) {
 		User_Info newUser = getUser();
 		
 		newUser.setUserName(userName);
 		newUser.setUserEmail(userEmail);
 		newUser.setUserPhoneNum(userPhoneNum);
+		newUser.setUserAddress(userAddress);
 		newUser.setUserInfo(userInfo);
 
 		return newUser;
 	};
 	
-	public permit inputNewPermitInfo(char lotPermissions, String startDate, String endDate, String licensePlate) {
+	public permit inputNewPermitInfo(char lotPermissions, String endDate, String licensePlate) {
 		permit newPermit = getPermit();
 		User_Info newUser = getUser();
 		
 		newPermit.setLotPermissions(lotPermissions);
-		newPermit.setStartDate(startDate);
+		setDate();
+		newPermit.setStartDate(getDateString());
 		newPermit.setEndDate(endDate);
 		newUser.setLicensePlate(licensePlate);
 		
