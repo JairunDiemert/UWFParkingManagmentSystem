@@ -24,7 +24,7 @@ public class User_Controller {
 		this.permit = permit;
 	}
 
-	permit purchaseTicket() {
+	public permit purchaseTicket() {
 		
 		permit newPermit = new permit();
 		setPermit(newPermit);
@@ -38,7 +38,7 @@ public class User_Controller {
 		return exitMessage;
 	};
 	
-	User_Info createNewUser() {
+	public User_Info createNewUser() {
 
 		User_Info newUser = new User_Info();
 		setUser(newUser);
@@ -46,7 +46,7 @@ public class User_Controller {
 		return newUser;
 	};
 	
-	User_Info inputNewUserInfo(String userName, String userEmail, String userPhoneNum, String userInfo) {
+	public User_Info inputNewUserInfo(String userName, String userEmail, String userPhoneNum, String userInfo) {
 		User_Info newUser = getUser();
 		
 		newUser.setUserName(userName);
@@ -57,7 +57,7 @@ public class User_Controller {
 		return newUser;
 	};
 	
-	permit inputNewPermitInfo(char lotPermissions, String startDate, String endDate, String licensePlate) {
+	public permit inputNewPermitInfo(char lotPermissions, String startDate, String endDate, String licensePlate) {
 		permit newPermit = getPermit();
 		User_Info newUser = getUser();
 		
@@ -70,13 +70,13 @@ public class User_Controller {
 		return newPermit;
 	}
 	
-	void pushNewUserInfoToDatabase() {
+	public void pushNewUserInfoToDatabase() {
 		User_Info newUser = getUser();
 		permit newPermit = getPermit();
 		//ADD link to database 
 	};
 	
-	String viewExistingUserAndPermitInfo(String userNameToSearch) {
+	public String viewExistingUserAndPermitInfo(String userNameToSearch) {
 		
 		String tempUserDataFromDataBase = getUserByUserName(userNameToSearch);
 		String delims = "[ ]+";
@@ -101,14 +101,14 @@ public class User_Controller {
 		return formatedUserAndPermitInfo;
 	};
 	
-	String getUserByUserName(String userNameToSearch) {
+	public String getUserByUserName(String userNameToSearch) {
 
 		String userData = "";
 		//userData = ADD link to database to search and pass content.
 		return userData;
 	};	
 	
-	String formatUserInfo() {
+	public String formatUserInfo() {
 		User_Info existingUser = new User_Info();
 		existingUser = getUser();
 		String UserInfo = "";
@@ -119,7 +119,7 @@ public class User_Controller {
 		return UserInfo;
 	};
 	
-	String formatPermitInfo() {
+	public String formatPermitInfo() {
 		permit existingPermit = new permit();
 		existingPermit = getPermit();
 		User_Info existingUser = new User_Info();
