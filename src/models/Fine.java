@@ -10,6 +10,7 @@ private String reasonForFine; //comment field for ticket
 private String location;
 private Date date;
 
+@SuppressWarnings("unused")
 public Fine() {
 	fineAmount = -1;
 	violationType = "1A";

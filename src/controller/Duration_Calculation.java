@@ -1,4 +1,4 @@
-package src;
+package controller;
 
 public class Duration_Calculation {
 /*

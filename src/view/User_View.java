@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import models.User_Info; 
 
+@SuppressWarnings("unused")
 public class User_View extends Application{
 	
 	TestController control = new TestController();

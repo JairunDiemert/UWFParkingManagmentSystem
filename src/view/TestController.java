@@ -1,10 +1,11 @@
 package view;
 
+import controller.Permit_Cost_Calculation;
 import models.User_Info;
 import models.permit;
-import src.Permit_Cost_Calculation;
 
 
+@SuppressWarnings("unused")
 public class TestController {
 	
 	Permit_Cost_Calculation cal = new Permit_Cost_Calculation();

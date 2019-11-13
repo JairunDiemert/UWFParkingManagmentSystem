@@ -1,9 +1,10 @@
 /*need to get the "how long the user want the permit will be", which parking lots*/
-package src;
+package controller;
 
 import models.User_Info;
 import models.permit;
 
+@SuppressWarnings("unused")
 public class Permit_Cost_Calculation {
 
 	private static final double VETERAN_DISCOUNT = .30;

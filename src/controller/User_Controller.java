@@ -70,12 +70,15 @@ public class User_Controller {
 		return newPermit;
 	}
 	
+	@SuppressWarnings("unused")
 	public void pushNewUserInfoToDatabase() {
+		@SuppressWarnings("unused")
 		User_Info newUser = getUser();
 		permit newPermit = getPermit();
 		//ADD link to database 
 	};
 	
+	@SuppressWarnings("unused")
 	public String viewExistingUserAndPermitInfo(String userNameToSearch) {
 		
 		String tempUserDataFromDataBase = getUserByUserName(userNameToSearch);
@@ -87,6 +90,7 @@ public class User_Controller {
 		String userPhoneNum = tokens[2];
 		String userInfo = tokens[3];
 		
+		@SuppressWarnings("unused")
 		User_Info existingUser = inputNewUserInfo(userName, userEmail, userPhoneNum, userInfo);
 		
 		String tempLotPermissions = tokens[4];

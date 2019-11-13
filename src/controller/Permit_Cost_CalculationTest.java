@@ -1,11 +1,11 @@
-package src;
+package controller;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
+import controller.Permit_Cost_Calculation;
 import models.User_Info;
 import models.permit;
-import src.Permit_Cost_Calculation;
 
 public class Permit_Cost_CalculationTest {
 
@@ -19,6 +19,6 @@ public class Permit_Cost_CalculationTest {
 		userPermit.setStartHour(14);
 		userPermit.setEndHour(16);
 		
-		assertEquals(4.5, calculator.cal(user, userPermit), 0);
+		assertEquals(4.5, calculator.rateCal(user, userPermit), 0);
 	}
 }
