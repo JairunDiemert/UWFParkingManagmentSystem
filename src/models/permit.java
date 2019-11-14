@@ -9,6 +9,8 @@ public class permit {
 	private int endHour;   //24 hour clock
 	private String liscensePlate; 
 	private String UID; //unique ID reference to individual parking permit
+	private String duration;
+	private String period;
 
 	public permit() {
 		lotPermissions = 'Z';
@@ -108,5 +110,21 @@ public class permit {
 
 	public void setLiscensePlate(String liscensePlate) {
 		this.liscensePlate = liscensePlate;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
 	}
 }

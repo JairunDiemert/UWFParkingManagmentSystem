@@ -58,15 +58,15 @@ public class Permit_Cost_Calculation {
 		
 	}*/
 	
-	public double totalCal(User_Info user, String p, String l, String d) {
+	public double totalCal(User_Info user, String period, String lot, String duration) {
 		
 		
 										
-		double cost = rateCal(p,d);
+		double cost = rateCal(period,duration);
 			
 		cost *= discountCal(user.getUserInfo());
 			
-		cost *= lotCal(l);
+		cost *= lotCal(lot);
 			
 		return cost;
 		//System.out.println("The cost is "+ cost);
