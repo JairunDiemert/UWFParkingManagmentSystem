@@ -14,34 +14,50 @@ public class EndDate_Calculation {
 		startDate = new Date(year, month, date, hour, 0);
 	}
 	
-	private Date getEndDate(String period, String duration) {
+	private void setEndDate(String period, String duration, Date startDate) {
 		if((period.equalsIgnoreCase("Hour")) == true) {
+			addHours(startDate, Integer.parseInt(duration));
+		}
+		else if(period.equalsIgnoreCase("Day") == true) {
+			
+		}
+		else if(period.equalsIgnoreCase("Week") == true) {
+			
+		}
+		else if(period.equalsIgnoreCase("Month") == true) {
+			
+		}
+		else if(period.equalsIgnoreCase("Semester") == true) {
+			
+		}
+		else if(period.equalsIgnoreCase("Year") == true) {
+			
+		}
 		
-		}
-		else if(period == "Day") {
-			
-		}
-		else if(period == "Week") {
-			
-		}
-		else if(period == "Month") {
-			
-		}
-		else if(period == "Semester") {
-			
-		}
-		else if(period == "Year") {
-			
-		}
-		
-		return startDate;
+	}
+	
+	public Date getEndDate() {
+		return this.endDate;
+	}
+	
+	public Date startDate() {
+		return this.startDate;
+	}
+
+	private Date addHours(Date startDate, int hours) {
+	    calendar = Calendar.getInstance();
+	    calendar.setTime(startDate);
+	    calendar.add(Calendar.HOUR_OF_DAY, hours);
+	    return calendar.getTime();
+	}
+	
+	private Date addDays(Date startDate, int days) {
+	    calendar = Calendar.getInstance();
+	    calendar.setTime(startDate);
+	    //calendar.add(Calendar., days); //need to look up rest of method calls in API
+	    return calendar.getTime();
 	}
 	
 	
-	private Date getEndDate(Date startDate, String period, String duration) {
-		
-		
-		return endDate;
-	}
 	
 }
