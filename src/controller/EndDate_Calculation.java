@@ -11,27 +11,28 @@ public class EndDate_Calculation {
 	
 	@SuppressWarnings("deprecation")
 	public void setStartDate(int year, int month, int date, int hour) {
-		startDate = new Date(year, month, date, hour, 0);
+		this.startDate = new Date(year, month, date, hour, 0);
+		
 	}
 	
-	private void setEndDate(String period, String duration, Date startDate) {
+	public void setEndDate(String period, String duration, Date startDate) {
 		if((period.equalsIgnoreCase("Hour")) == true) {
-			addHours(startDate, Integer.parseInt(duration));
+			this.endDate = addHours(startDate, Integer.parseInt(duration));
 		}
 		else if(period.equalsIgnoreCase("Day") == true) {
-			
+			this.endDate = addDays(startDate, Integer.parseInt(duration));
 		}
 		else if(period.equalsIgnoreCase("Week") == true) {
-			
+			this.endDate =  addWeeks(startDate, Integer.parseInt(duration));
 		}
 		else if(period.equalsIgnoreCase("Month") == true) {
-			
+			this.endDate =  addMonths(startDate, Integer.parseInt(duration));
 		}
 		else if(period.equalsIgnoreCase("Semester") == true) {
-			
+			this.endDate =  addSemesters(startDate, Integer.parseInt(duration));
 		}
 		else if(period.equalsIgnoreCase("Year") == true) {
-			
+			this.endDate =  addYears(startDate, Integer.parseInt(duration));
 		}
 		
 	}
@@ -40,7 +41,7 @@ public class EndDate_Calculation {
 		return this.endDate;
 	}
 	
-	public Date startDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
@@ -54,10 +55,38 @@ public class EndDate_Calculation {
 	private Date addDays(Date startDate, int days) {
 	    calendar = Calendar.getInstance();
 	    calendar.setTime(startDate);
-	    //calendar.add(Calendar., days); //need to look up rest of method calls in API
+	    calendar.add(Calendar.DAY_OF_MONTH, days); 
 	    return calendar.getTime();
 	}
 	
+	private Date addWeeks(Date startDate, int weeks) {
+	    calendar = Calendar.getInstance();
+	    calendar.setTime(startDate);
+	    calendar.add(Calendar.WEEK_OF_MONTH, weeks); 
+	    return calendar.getTime();
+	}
+	
+	private Date addMonths(Date startDate, int months) {
+	    calendar = Calendar.getInstance();
+	    calendar.setTime(startDate);
+	    calendar.add(Calendar.MONTH, months); 
+	    return calendar.getTime();
+	}
+	
+	private Date addSemesters(Date startDate, int semesters) {
+		semesters *= 3; //approximating 3 months for a semester
+	    calendar = Calendar.getInstance();
+	    calendar.setTime(startDate);
+	    calendar.add(Calendar.MONTH, semesters); 
+	    return calendar.getTime();
+	}
+	
+	private Date addYears(Date startDate, int years) {
+	    calendar = Calendar.getInstance();
+	    calendar.setTime(startDate);
+	    calendar.add(Calendar.YEAR, years);
+	    return calendar.getTime();
+	}
 	
 	
 }
