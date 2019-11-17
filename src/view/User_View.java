@@ -2,6 +2,7 @@ package view;
 
 import java.text.DecimalFormat;
 
+import database.Read_DB;
 import database.Update_DB;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -104,8 +105,11 @@ public class User_View extends Application{
 		Button submitButton = new Button("Submit");
 		Button backButton = new Button("Back");
 		
+		
 		submitButton.setOnAction(e-> existingUserRequest(stage, nameField.getText()));
+		
 		backButton.setOnAction(e-> selectUserPane(stage));
+		
 		
 		GridPane gridPane = new GridPane();
 		
@@ -270,12 +274,31 @@ public class User_View extends Application{
 			addPermitPane(stage, cost, "Semester", "A", "1");			
 		}
 		
+		
+		/*resultSet[0] =  rs.getString("name");
+		resultSet[1] = rs.getString("address");
+		resultSet[2] = rs.getString("email");
+		
+		resultSet[3] = rs.getString("phone_number");
+		resultSet[4] = rs.getString("status");
+		resultSet[5] = rs.getString("license_plate");
+		
+		resultSet[6] = rs.getString("parking_lot");
+		resultSet[7] = rs.getString("period");
+		resultSet[8] = rs.getString("duration");
+		
+		resultSet[9] = String.valueOf(rs.getDouble("cost"));
+		resultSet[10] = String.valueOf(rs.getInt("USER_ID"));*/
+		
 		public void existingUserRequest(Stage stage, String id) {
 			// temp until database
 			user = control.getUserByID();
-			double cost = control.Calculation(user, "Semester", "A", "1");
 			
-			addPermitPane(stage, cost, "Semester", "A", "1");
+			Read_DB readDB = new Read_DB();
+			
+			@SuppressWarnings("static-access")
+			String arr[] = readDB.findUser(Integer.parseInt(id)); 			
+			addPermitPane(stage, Double.valueOf(arr[9]), arr[8], arr[6], arr[7]);
 			
 		}
 		
