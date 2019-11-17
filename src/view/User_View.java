@@ -38,7 +38,6 @@ public class User_View extends Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-		
 		Text titleText = new Text("Welcome to Campus Parking Services");
 		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
 		
@@ -76,6 +75,7 @@ public class User_View extends Application{
 		Button submitButton = new Button("Submit");
 		Button backButton = new Button("Back");
 		
+		submitButton.setOnAction(e-> mainUserPane(stage, loginField.getText()) );
 		backButton.setOnAction(e-> {
 			try {
 				start(stage);
@@ -105,6 +105,44 @@ public class User_View extends Application{
 		
 	}
 	
+	public void mainUserPane(Stage stage, String id) {
+		
+		Read_DB readDB = new Read_DB();
+		
+		@SuppressWarnings("static-access")
+		String arr[] = readDB.findUser(Integer.parseInt(id));
+		
+		Button viewUserInfoButton = new Button("View User Info");
+		Button viewUserPermitButton = new Button("View Permit Info");
+		Button logoutButton = new Button("Log Out");
+		
+		viewUserInfoButton.setOnAction(e-> ViewUserInfoPain(stage, arr));
+		
+		logoutButton.setOnAction(e-> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		VBox vbox = new VBox();
+		
+		vbox.setSpacing(20);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+	    
+	    vbox.getChildren().add(viewUserInfoButton);
+	    vbox.getChildren().add(viewUserPermitButton);
+	    vbox.getChildren().add(logoutButton);
+	    
+	    Scene scene = new Scene(vbox);
+	    stage.setScene(scene);
+	    stage.show();	
+	    	
+	}
 	public void selectUserPane(Stage stage) {
 		
 		Button newUserButton = new Button("New User");
@@ -134,12 +172,57 @@ public class User_View extends Application{
 	    vbox.getChildren().add(newUserButton);
 	    vbox.getChildren().add(backButton);
 	   
-	    
 	    Scene scene = new Scene(vbox);
 	    stage.setScene(scene);
 	    stage.show();	
 		
 	}
+	public void ViewUserInfoPain(Stage stage, String arr[]) {
+		
+		Text nameText = new Text("Name: ");
+		Text emailText = new Text("Email: ");
+		Text IDText = new Text("ID:");
+		Text phoneText = new Text("Phone Number: ");
+		Text addressText = new Text("Adddress: ");
+		Text statusText = new Text("Status: ");
+		
+		Text userNameText = new Text(arr[0]);
+		Text userIDText = new Text(arr[10]);
+		Text userAddressText = new Text(arr[1]);
+		Text userEmailText = new Text(arr[2]);
+		Text userPhoneText = new Text(arr[3]);
+		Text userStatusText = new Text(arr[4]);
+		
+		Button backButton = new Button("Back");
+		backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
+		
+		GridPane gridPane = new GridPane();
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(5);
+	    
+	    gridPane.add(nameText, 0, 0);
+	    gridPane.add(IDText, 0, 1);
+	    gridPane.add(addressText, 0, 2);
+	    gridPane.add(emailText, 0, 3);
+	    gridPane.add(phoneText, 0, 4);
+	    gridPane.add(statusText, 0, 5);
+	    
+	    gridPane.add(userNameText, 1, 0);
+	    gridPane.add(userIDText, 1, 1);
+	    gridPane.add(userAddressText, 1, 2);
+	    gridPane.add(userEmailText, 1, 3);
+	    gridPane.add(userPhoneText, 1, 4);
+	    gridPane.add(userStatusText, 1, 5);
+	    
+	    gridPane.add(backButton, 0, 6);
+	    
+	    Scene scene  = new Scene(gridPane);
+		stage.setScene(scene);
+	}
+	
 	public void enterExistingUser(Stage stage) {
 		
 		Text enterUserName = new Text("Enter Your User Id");
@@ -148,18 +231,14 @@ public class User_View extends Application{
 		Button submitButton = new Button("Submit");
 		Button backButton = new Button("Back");
 		
-		
 		submitButton.setOnAction(e-> existingUserRequest(stage, nameField.getText()));
-		
 		backButton.setOnAction(e-> selectUserPane(stage));
-		
 		
 		GridPane gridPane = new GridPane();
 		
 		gridPane.setAlignment(Pos.CENTER);
 		gridPane.setMinSize(500, 500);
 	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
-	    
 	    gridPane.setVgap(5); 
 	    gridPane.setHgap(5);
 	    
@@ -226,7 +305,6 @@ public class User_View extends Application{
 	    Scene scene = new Scene(gridPane);
 	    stage.setScene(scene);
 	    stage.show();		
-		
 	}
 	
 	public void addPermitPane(Stage stage, double cost, String period, String lot, String duration) {
@@ -276,11 +354,7 @@ public class User_View extends Application{
 				durationChoice.getSelectionModel().getSelectedItem(), parkingLotChoice.getSelectionModel().getSelectedItem(), cost,
 				datePicker.getValue()));
 		
-		/*
-		 * submitButton.setOnAction(e->{ try { start(stage); } catch (Exception e1) { //
-		 * TODO Auto-generated catch block e1.printStackTrace(); } });
-		 */
-		
+
 		GridPane gridPane = new GridPane();
 		
 		gridPane.setAlignment(Pos.CENTER);
@@ -379,11 +453,7 @@ public class User_View extends Application{
 			
 			Button finishButton = new Button("Finish");
 			Button backButton = new Button("Back");
-			
 			backButton.setOnAction(e-> enterExistingUser(stage));
-			
-			
-			
 			
 			finishButton.setOnAction(e-> {
 				try {
@@ -433,10 +503,7 @@ public class User_View extends Application{
 			
 			
 		}
-		
-		
-		
-		
+
 		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost, LocalDate localDate) {
 			
 			java.util.Date date = java.sql.Date.valueOf(localDate);
@@ -476,9 +543,7 @@ public class User_View extends Application{
 			Button confirmButton = new Button("Confirm");
 			Button backButton = new Button("Back");
 			
-			
-			
-			
+
 			backButton.setOnAction(e-> addPermitPane(stage, cost, period, lot, duration));
 			confirmButton.setOnAction(e-> confirmPane( stage, user,plate, period,  duration,  lot,  cost)); 
 			
@@ -527,7 +592,6 @@ public class User_View extends Application{
 		}
 	  
 		public void confirmPane(Stage stage, User_Info user, String plate, String period, String duration, String lot, double cost) {
-			
 			
 			Update_DB insertUserToDB = new Update_DB();
 			int id = insertUserToDB.addNewUserInfo(user, plate, period,  duration,  lot,  cost );
