@@ -55,14 +55,14 @@ public class EndDate_Calculation {
 	private Date addDays(Date startDate, int days) {
 	    calendar = Calendar.getInstance();
 	    calendar.setTime(startDate);
-	    calendar.add(Calendar.DAY_OF_MONTH, days); 
+	    calendar.add(Calendar.DATE, days); 
 	    return calendar.getTime();
 	}
 	
 	private Date addWeeks(Date startDate, int weeks) {
 	    calendar = Calendar.getInstance();
 	    calendar.setTime(startDate);
-	    calendar.add(Calendar.WEEK_OF_MONTH, weeks); 
+	    calendar.add(Calendar.WEEK_OF_YEAR, weeks); 
 	    return calendar.getTime();
 	}
 	
