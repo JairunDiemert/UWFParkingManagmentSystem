@@ -6,12 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class EndDate_CalculationTest {
 
 	@BeforeAll
-	public static void init() {
+	public static void setup() {
 		EndDate_Calculation sut = new EndDate_Calculation();
 		sut.setStartDate(2019, 11, 1, 0);
 	}
@@ -19,6 +20,7 @@ class EndDate_CalculationTest {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testFiveHoursFromStartDate() {
+		
 		EndDate_Calculation sut = new EndDate_Calculation();
 		Date currentDate = new Date(2019, 11, 1, 1, 0);
 		sut.setStartDate(2019, 11, 1, 1);
@@ -29,29 +31,77 @@ class EndDate_CalculationTest {
 		assertEquals(cal.getTime(), sut.getEndDate());
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testOneDayFromStartDate() {
-		fail("Not yet implemented");
+		
+		EndDate_Calculation sut = new EndDate_Calculation();
+		Date currentDate = new Date(2019, 11, 1, 1, 0);
+		sut.setStartDate(2019, 11, 1, 1);
+		sut.setEndDate("Day", "1", currentDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.DATE, 1);
+		assertEquals(cal.getTime(), sut.getEndDate());
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testOneWeekFromStartDate() {
-		fail("Not yet implemented");
+		
+		EndDate_Calculation sut = new EndDate_Calculation();
+		Date currentDate = new Date(2019, 11, 1, 1, 0);
+		sut.setStartDate(2019, 11, 1, 1);
+		sut.setEndDate("Week", "1", currentDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.WEEK_OF_YEAR, 1);
+		assertEquals(cal.getTime(), sut.getEndDate());
+		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testOneMonthFromStartDate() {
-		fail("Not yet implemented");
+
+		EndDate_Calculation sut = new EndDate_Calculation();
+		Date currentDate = new Date(2019, 11, 1, 1, 0);
+		sut.setStartDate(2019, 11, 1, 1);
+		sut.setEndDate("Month", "1", currentDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.MONTH, 1);
+		assertEquals(cal.getTime(), sut.getEndDate());
+		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testOneSemesterFromStartDate() {
-		fail("Not yet implemented");
+
+		EndDate_Calculation sut = new EndDate_Calculation();
+		Date currentDate = new Date(2019, 11, 1, 1, 0);
+		sut.setStartDate(2019, 11, 1, 1);
+		sut.setEndDate("Semester", "1", currentDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.MONTH, 3);
+		assertEquals(cal.getTime(), sut.getEndDate());
+		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testOneYearFromStartDate() {
-		fail("Not yet implemented");
+
+		EndDate_Calculation sut = new EndDate_Calculation();
+		Date currentDate = new Date(2019, 11, 1, 1, 0);
+		sut.setStartDate(2019, 11, 1, 1);
+		sut.setEndDate("Year", "1", currentDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.YEAR, 1);
+		assertEquals(cal.getTime(), sut.getEndDate());
 	}
 
 }

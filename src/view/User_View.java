@@ -2,6 +2,7 @@ package view;
 
 import java.text.DecimalFormat;
 
+import database.Update_DB;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -307,7 +308,14 @@ public class User_View extends Application{
 			Button confirmButton = new Button("Confirm");
 			Button backButton = new Button("Back");
 			
+			
+			
+			
 			backButton.setOnAction(e-> addPermitPane(stage, cost, period, lot, duration));
+			
+			
+			//Update_DB insertUserToDB = new Update_DB();
+			//insertUserToDB.addNewUserInfo(user, plate, period,  duration,  lot,  cost );
 			
 			GridPane gridPane = new GridPane();
 			

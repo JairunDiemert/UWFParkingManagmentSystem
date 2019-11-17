@@ -48,7 +48,7 @@ public class Create_DB
 			s.execute("INSERT INTO ParkingManagement " +
 					"VALUES ('YL', 'fdsj St', 'yl@student.uwf.edu', '324-4324', 'Student', 'fjdisof', 'A', '1', 'Semester ', 50,1)");
 			s.execute("INSERT INTO ParkingManagement " +
-					"VALUES ('YL', 'fdsj St', 'yl@student.uwf.edu', '324-4324', 'Student', 'fjdisof', 'A', '1', 'Semester ', 50,2)");
+					"VALUES ('GM', 'fdfsfsft', 'gm@student.uwf.edu', '234-4324', 'Military', 'fdsff', 'B', '2', 'Semester ', 45, 2)");
 			System.out.println("Done' table.");
 			
 			conn.close();
