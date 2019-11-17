@@ -54,50 +54,6 @@ public class TestController {
 		
 		
 	}
-	/*
-	public double rate(String s) {
-		
-		
-		double rateCost = 0.0;
-		
-		if((s.equalsIgnoreCase("Hour")) == true) {
-			
-			rateCost = 1.5;
-			
-		}
-		else if((s.equalsIgnoreCase("Day")) == true) {
-			
-			rateCost = 5;
-			
-		}else if((s.equalsIgnoreCase("Week")) == true) {
-			
-			rateCost = 15;
-			
-		}else if((s.equalsIgnoreCase("Month")) == true) {
-			
-			rateCost = 30;
-			
-		}else if((s.equalsIgnoreCase("Semester")) == true) {
-			
-			rateCost = 55;
-			
-		}else if((s.equalsIgnoreCase("Year")) == true) {
-			
-			rateCost = 100;
-			
-		}else{
-			
-			//guess rate will be 0
-			
-		}
-		
-		
-		
-		return rateCost;
-		
-	}
-		
-		*/
 	
 
 	
