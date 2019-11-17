@@ -64,9 +64,19 @@ public class User_View extends Application{
 		
 		Button newUserButton = new Button("New User");
 		Button existingUserButton = new Button("Existing User");
+		Button backButton = new Button("Back");
 		
 		newUserButton.setOnAction(e -> enterUserInfo(stage));
 		existingUserButton.setOnAction(e-> enterExistingUser(stage));
+		
+		backButton.setOnAction(e -> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		
 		VBox vbox = new VBox();
 		
@@ -77,6 +87,7 @@ public class User_View extends Application{
 	    
 	    vbox.getChildren().add(existingUserButton);
 	    vbox.getChildren().add(newUserButton);
+	    vbox.getChildren().add(backButton);
 	   
 	    
 	    Scene scene = new Scene(vbox);
@@ -90,7 +101,10 @@ public class User_View extends Application{
 		TextField nameField = new TextField();
 		
 		Button submitButton = new Button("Submit");
+		Button backButton = new Button("Back");
+		
 		submitButton.setOnAction(e-> existingUserRequest(stage, nameField.getText()));
+		backButton.setOnAction(e-> selectUserPane(stage));
 		
 		GridPane gridPane = new GridPane();
 		
@@ -103,7 +117,8 @@ public class User_View extends Application{
 	    
 	    gridPane.add(enterUserName, 0, 0);
 	    gridPane.add(nameField, 1, 0);
-	    gridPane.add(submitButton, 0, 1);
+	    gridPane.add(submitButton, 1, 1);
+	    gridPane.add(backButton, 0, 1);
 	    
 	    
 	    Scene scene  = new Scene(gridPane);
@@ -129,6 +144,9 @@ public class User_View extends Application{
 		statusChoice.setValue("Student");
 		
 		Button submitButton = new Button("Submit");
+		Button backButton = new Button("Back");
+		
+		backButton.setOnAction(e-> selectUserPane(stage));
 		submitButton.setOnAction(e -> newUserRequest(stage, nameField.getText(), emailField.getText(), 
 				phoneField.getText(), addressField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
 		
@@ -146,6 +164,8 @@ public class User_View extends Application{
 	    gridPane.add(phoneText, 0, 2);
 	    gridPane.add(addressText, 0, 3);
 	    gridPane.add(statusText, 0, 4);
+	    
+	    gridPane.add(backButton, 0, 5);
 
 	    gridPane.add(nameField, 1, 0);
 	    gridPane.add(emailField, 1, 1);
@@ -161,7 +181,7 @@ public class User_View extends Application{
 		
 	}
 	
-	public void addPermitPane(Stage stage, double cost, String period, String lot) {
+	public void addPermitPane(Stage stage, double cost, String period, String lot, String duration) {
 		
 		DecimalFormat df = new DecimalFormat("#.00");
 		
@@ -185,25 +205,27 @@ public class User_View extends Application{
 		periodChoice.setValue(period);
 		
 		durationChoice.getItems().addAll("1", "2", "3", "4", "5", "6", "7");
-		durationChoice.setValue("1");
+		durationChoice.setValue(duration);
 		
 		parkingLotChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
 				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
 		periodChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
 				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
-			
-		Button submitButton = new Button("Submit");
-		//submitButton.setOnAction(e-> createPermitRequest(periodChoice.getSelectionModel().getSelectedItem(),
-			//	parkingLotChoice.getSelectionModel().getSelectedItem(), licensePlateField.getText()));
+		durationChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
+				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
 		
-		submitButton.setOnAction(e->{
-			try {
-				start(stage);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
+		Button submitButton = new Button("Submit");
+		Button backButton = new Button("Back");
+		
+		backButton.setOnAction(e-> selectUserPane(stage));
+		
+		submitButton.setOnAction(e-> userInfoPane(stage, licensePlateField.getText(), periodChoice.getSelectionModel().getSelectedItem(),
+				durationChoice.getSelectionModel().getSelectedItem(), parkingLotChoice.getSelectionModel().getSelectedItem(), cost));
+		
+		/*
+		 * submitButton.setOnAction(e->{ try { start(stage); } catch (Exception e1) { //
+		 * TODO Auto-generated catch block e1.printStackTrace(); } });
+		 */
 		
 		GridPane gridPane = new GridPane();
 		
@@ -217,6 +239,7 @@ public class User_View extends Application{
 	    gridPane.add(periodText, 0, 1);
 	    gridPane.add(licensePlateText, 0, 2);
 	    gridPane.add(amountText, 0, 3);
+	    gridPane.add(backButton, 0, 4);
 
 	    gridPane.add(parkingLotChoice, 1, 0);
 	    gridPane.add(periodChoice, 2, 1);
@@ -234,25 +257,95 @@ public class User_View extends Application{
 			  
 			double cost = control.Calculation(user, period, lot, duration);
 			  
-			addPermitPane(stage, cost, period, lot);
+			addPermitPane(stage, cost, period, lot, duration);
 		  
 		}
 	  
 		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String status) {
 			
 			user = control.CreateUser(name, email, phoneNum, address, status);
-			double cost = control.Calculation(user, "Semester", "A","1");
+			double cost = control.Calculation(user, "Semester", "A", "1");
 			
-			addPermitPane(stage, cost, "Semester", "A");			
+			addPermitPane(stage, cost, "Semester", "A", "1");			
 		}
 		
 		public void existingUserRequest(Stage stage, String id) {
 			// temp until database
 			user = control.getUserByID();
-			double cost = control.Calculation(user, "Semester", "A","1");
+			double cost = control.Calculation(user, "Semester", "A", "1");
 			
-			addPermitPane(stage, cost, "Semester", "A");
+			addPermitPane(stage, cost, "Semester", "A", "1");
 			
+		}
+		
+		
+		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost) {
+			DecimalFormat df = new DecimalFormat("#.00");
+			
+			Text nameText = new Text("Name: ");
+			//Text IDText = new Text("ID: ");
+			Text addressText = new Text("Address: ");
+			Text emailText = new Text("Email: ");
+			Text phoneText = new Text("Phone Number: ");
+			Text statusText = new Text("Status: ");
+			Text licenseText = new Text("license plate: ");
+			Text parkingLotText = new Text("Parking Lot: ");
+			Text lengthText = new Text("Duration: ");
+			Text costText = new Text("Total Cost: ");
+			
+			Text userNameText = new Text(user.getUserName());
+			//Text userIDText = new Text("N/A");
+			Text userAddressText = new Text(user.getUserAddress());
+			Text userEmailText = new Text(user.getUserEmail());
+			Text userPhoneText = new Text(user.getUserPhoneNum());
+			Text userStatusText = new Text(user.getUserInfo());
+			Text userLicenseText = new Text(plate);
+			Text userParkingLotText = new Text(lot);
+			Text userLengthText = new Text(duration + " " + period + "(s)");
+			Text userCostText = new Text("$ " + df.format(cost));
+			
+			Button confirmButton = new Button("Confirm");
+			Button backButton = new Button("Back");
+			
+			backButton.setOnAction(e-> addPermitPane(stage, cost, period, lot, duration));
+			
+			GridPane gridPane = new GridPane();
+			
+			gridPane.setAlignment(Pos.CENTER);
+			gridPane.setMinSize(500, 500);
+		    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+		    gridPane.setVgap(5); 
+		    gridPane.setHgap(1);
+		    
+		    gridPane.add(nameText, 0, 0);
+		    //gridPane.add(IDText, 0, 1);
+		    gridPane.add(addressText, 0, 2);
+		    gridPane.add(emailText, 0, 3);
+		    gridPane.add(phoneText, 0, 4);
+		    gridPane.add(statusText, 0, 5);
+		    gridPane.add(licenseText, 0, 6);
+		    gridPane.add(parkingLotText, 0, 7);
+		    gridPane.add(lengthText, 0, 8);
+		    gridPane.add(costText, 0, 9);
+		    gridPane.add(backButton, 0, 10);
+		    
+		    gridPane.add(userNameText, 1, 0);
+		    //gridPane.add(userIDText, 1, 1);
+		    gridPane.add(userAddressText, 1, 2);
+		    gridPane.add(userEmailText, 1, 3);
+		    gridPane.add(userPhoneText, 1, 4);
+		    gridPane.add(userStatusText, 1, 5);
+		    gridPane.add(userLicenseText, 1, 6);
+		    gridPane.add(userParkingLotText, 1, 7);
+		    gridPane.add(userLengthText, 1, 8);
+		    gridPane.add(userCostText, 1, 9);
+		    gridPane.add(confirmButton, 1, 10);
+
+			
+		    Scene scene = new Scene(gridPane);
+		    stage.setScene(scene);
+		    stage.show();
+						
 		}
 	  
 //	  public void createPermitRequest(String period, String lot, String plate){
