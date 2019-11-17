@@ -74,12 +74,12 @@ public class User_Controller {
 	public permit inputNewPermitInfo(char lotPermissions, int multiplier, String choice, String licensePlate) {
 		permit newPermit = getPermit();
 		User_Info newUser = getUser();
-		Duration_Calculation endDate = new Duration_Calculation();
+		//Duration_Calculation endDate = new Duration_Calculation();
 		
 		newPermit.setLotPermissions(lotPermissions);
 		setDate();
 		newPermit.setStartDate(getDateString());
-		newPermit.setEndDate(endDate.getEndDate(getDate(), multiplier, choice));
+		//newPermit.setEndDate(endDate.getEndDate(getDate(), multiplier, choice));
 		newUser.setLicensePlate(licensePlate);
 		
 		
