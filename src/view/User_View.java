@@ -1,7 +1,9 @@
 package view;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 
+import controller.EndDate_Calculation;
 import database.Read_DB;
 import database.Update_DB;
 import javafx.application.Application;
@@ -12,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene; 
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField; 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -40,9 +43,11 @@ public class User_View extends Application{
 		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
 		
 		Button purchasePermitButton = new Button("Purchase Parking Permit");
+		Button loginButton = new Button("Log In");
 		Button exitButton = new Button("Exit");
 		
 		purchasePermitButton.setOnAction(e -> selectUserPane(stage));
+		loginButton.setOnAction(e-> loginPane(stage));
 		exitButton.setOnAction(e-> stage.close());
 		
 		VBox vbox = new VBox();
@@ -54,12 +59,50 @@ public class User_View extends Application{
 	    
 	    vbox.getChildren().add(titleText);
 	    vbox.getChildren().add(purchasePermitButton);
+	    vbox.getChildren().add(loginButton);
 	    vbox.getChildren().add(exitButton);
 	    
 	    Scene scene = new Scene(vbox);
 	    stage.setScene(scene);
 	    stage.setTitle("User View Window");
 	    stage.show();
+	}
+	
+	public void loginPane(Stage stage) {
+		
+		Text loginText = new Text("Please enter your User ID: ");
+		TextField loginField = new TextField();
+		
+		Button submitButton = new Button("Submit");
+		Button backButton = new Button("Back");
+		
+		backButton.setOnAction(e-> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	    
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(5);
+	    
+	    gridPane.add(loginText, 0, 0);
+	    gridPane.add(loginField, 1, 0);
+	    gridPane.add(submitButton, 1, 1);
+	    gridPane.add(backButton, 0, 1);
+	    
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();
+		
 	}
 	
 	public void selectUserPane(Stage stage) {
@@ -193,6 +236,7 @@ public class User_View extends Application{
 		Text parkingLotText = new Text("Parking Lot: ");
 		Text periodText = new Text("Period: ");
 		Text licensePlateText = new Text("License Plate: ");
+		Text startDateText = new Text("Start Date");
 		
 		Text costText = new Text("$ " + df.format(cost));
 		Text amountText = new Text("Amount: ");
@@ -203,6 +247,10 @@ public class User_View extends Application{
 		ChoiceBox<String> periodChoice = new ChoiceBox<>();
 		ChoiceBox<String> durationChoice = new ChoiceBox<>();
 		
+		DatePicker datePicker = new DatePicker();
+        datePicker.setEditable(false);
+        datePicker.setValue(LocalDate.now());
+        
 		parkingLotChoice.getItems().addAll("A", "B", "C", "D");
 		parkingLotChoice.setValue(lot);
 		
@@ -225,7 +273,8 @@ public class User_View extends Application{
 		backButton.setOnAction(e-> selectUserPane(stage));
 		
 		submitButton.setOnAction(e-> userInfoPane(stage, licensePlateField.getText(), periodChoice.getSelectionModel().getSelectedItem(),
-				durationChoice.getSelectionModel().getSelectedItem(), parkingLotChoice.getSelectionModel().getSelectedItem(), cost));
+				durationChoice.getSelectionModel().getSelectedItem(), parkingLotChoice.getSelectionModel().getSelectedItem(), cost,
+				datePicker.getValue()));
 		
 		/*
 		 * submitButton.setOnAction(e->{ try { start(stage); } catch (Exception e1) { //
@@ -242,16 +291,18 @@ public class User_View extends Application{
 	    
 	    gridPane.add(parkingLotText, 0, 0);
 	    gridPane.add(periodText, 0, 1);
-	    gridPane.add(licensePlateText, 0, 2);
-	    gridPane.add(amountText, 0, 3);
-	    gridPane.add(backButton, 0, 4);
+	    gridPane.add(startDateText, 0, 2);
+	    gridPane.add(licensePlateText, 0, 3);
+	    gridPane.add(amountText, 0, 4);
+	    gridPane.add(backButton, 0, 5);
 
 	    gridPane.add(parkingLotChoice, 1, 0);
 	    gridPane.add(periodChoice, 2, 1);
 	    gridPane.add(durationChoice, 1, 1);
-	    gridPane.add(licensePlateField, 1, 2);
-	    gridPane.add(costText, 1, 3);
-	    gridPane.add(submitButton, 1, 4);
+	    gridPane.add(datePicker, 1, 2);
+	    gridPane.add(licensePlateField, 1, 3);
+	    gridPane.add(costText, 1, 4);
+	    gridPane.add(submitButton, 1, 5);
 	    
 	    Scene scene = new Scene(gridPane);
 	    stage.setScene(scene);
@@ -329,6 +380,8 @@ public class User_View extends Application{
 			Button finishButton = new Button("Finish");
 			Button backButton = new Button("Back");
 			
+			backButton.setOnAction(e-> enterExistingUser(stage));
+			
 			
 			
 			
@@ -384,9 +437,15 @@ public class User_View extends Application{
 		
 		
 		
-		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost) {
-			DecimalFormat df = new DecimalFormat("#.00");
+		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost, LocalDate localDate) {
 			
+			java.util.Date date = java.sql.Date.valueOf(localDate);
+			EndDate_Calculation dateCalc = new EndDate_Calculation();
+			dateCalc.setStartDate(date.getYear(), date.getMonth(), date.getDate(), 0);
+			dateCalc.setEndDate(period, duration, dateCalc.getStartDate());
+		
+			
+			DecimalFormat df = new DecimalFormat("#.00");
 			Text nameText = new Text("Name: ");
 			//Text IDText = new Text("ID: ");
 			Text addressText = new Text("Address: ");
@@ -396,6 +455,9 @@ public class User_View extends Application{
 			Text licenseText = new Text("license plate: ");
 			Text parkingLotText = new Text("Parking Lot: ");
 			Text lengthText = new Text("Duration: ");
+			Text startDateText = new Text("Start Date: ");
+			Text endDateText = new Text("End Date: ");
+			
 			Text costText = new Text("Total Cost: ");
 			
 			Text userNameText = new Text(user.getUserName());
@@ -407,6 +469,8 @@ public class User_View extends Application{
 			Text userLicenseText = new Text(plate);
 			Text userParkingLotText = new Text(lot);
 			Text userLengthText = new Text(duration + " " + period + "(s)");
+			Text userStartDateText = new Text(dateCalc.getStartDate().toString());
+			Text userEndDateText = new Text(dateCalc.getEndDate().toString());
 			Text userCostText = new Text("$ " + df.format(cost));
 			
 			Button confirmButton = new Button("Confirm");
@@ -436,8 +500,10 @@ public class User_View extends Application{
 		    gridPane.add(licenseText, 0, 6);
 		    gridPane.add(parkingLotText, 0, 7);
 		    gridPane.add(lengthText, 0, 8);
-		    gridPane.add(costText, 0, 9);
-		    gridPane.add(backButton, 0, 10);
+		    gridPane.add(startDateText, 0, 9);
+		    gridPane.add(endDateText, 0, 10);
+		    gridPane.add(costText, 0, 11);
+		    gridPane.add(backButton, 0, 12);
 		    
 		    gridPane.add(userNameText, 1, 0);
 		    //gridPane.add(userIDText, 1, 1);
@@ -448,8 +514,10 @@ public class User_View extends Application{
 		    gridPane.add(userLicenseText, 1, 6);
 		    gridPane.add(userParkingLotText, 1, 7);
 		    gridPane.add(userLengthText, 1, 8);
-		    gridPane.add(userCostText, 1, 9);
-		    gridPane.add(confirmButton, 1, 10);
+		    gridPane.add(userStartDateText, 1, 9);
+		    gridPane.add(userEndDateText, 1, 10);
+		    gridPane.add(userCostText, 1, 11);
+		    gridPane.add(confirmButton, 1, 12);
 
 			
 		    Scene scene = new Scene(gridPane);
@@ -471,7 +539,7 @@ public class User_View extends Application{
 			
 			finishButton.setOnAction(e-> {
 				try {
-					start( stage);
+					start(stage);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -496,6 +564,8 @@ public class User_View extends Application{
 		    stage.show();
 			
 		}
+		
+		
 //	  public void createPermitRequest(String period, String lot, String plate){
 //		  
 //		  
