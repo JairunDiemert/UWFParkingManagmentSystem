@@ -35,14 +35,7 @@ public class Create_DB
 
 			
 			Statement s = conn.createStatement();
-			/*s.execute("CREATE TABLE names" +
-					  "(author varchar(50), author_id int, url varchar(80))");*/
-			
-			/*s.execute("CREATE TABLE ParkingManagement" +
-					  "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
-					  "(name varchar(50))");*/
-			
-			
+				
 			
 			s.execute("CREATE TABLE ParkingManagement" +
 					  "(name varchar(50), address varchar(50), email varchar(50),phone_number varchar(50),"
@@ -51,8 +44,6 @@ public class Create_DB
 			
 			System.out.println("Created 'ParkingManagement' table.");
 
-			/*s.execute("INSERT INTO ParkingManagement(name) " +
-					"VALUES ('YL')");*/
 			
 			s.execute("INSERT INTO ParkingManagement " +
 					"VALUES ('YL', 'fdsj St', 'yl@student.uwf.edu', '324-4324', 'Student', 'fjdisof', 'A', '1', 'Semester ', 50,1)");

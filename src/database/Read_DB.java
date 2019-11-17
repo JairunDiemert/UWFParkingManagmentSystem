@@ -76,11 +76,7 @@ public class Read_DB
 					+ " period , duration , cost , USER_ID FROM ParkingManagement");
 			System.out.println("Hello");
 			
-			/*s.execute("CREATE TABLE ParkingManagement" +
-					  "(name varchar(50), address varchar(50), email varchar(50),phone_number varchar(50),"
-					  + "status varchar(50), license_plate varchar(50), parking_lot varchar(50), period varchar(50), duration varchar(50), "
-					  + "cost double, USER_ID INTEGER )");*/
-			/*rs = s.executeQuery("SELECT author, author_id, url FROM names");*/
+			
 			while( rs.next() )
 			{
 				displayNameRecord(rs);
@@ -91,7 +87,7 @@ public class Read_DB
 			System.out.println("All records with an ID > 1:");
 			rs = s.executeQuery("SELECT name , address , email , phone_number , status , license_plate , parking_lot , period , duration , cost , USER_ID " +
 					"FROM ParkingManagement WHERE USER_ID > 1");
-			System.out.println("Hello");
+			
 			while( rs.next() )
 			{
 				displayNameRecord(rs);
