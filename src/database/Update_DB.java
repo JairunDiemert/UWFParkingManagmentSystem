@@ -15,7 +15,7 @@ public class Update_DB
     private static final String protocol = "jdbc:derby:";
     private static int manualy_increment = 3; 
 
-	public void addNewUserInfo(User_Info user, String plate, String period, String duration, String lot, double cost )
+	public int addNewUserInfo(User_Info user, String plate, String period, String duration, String lot, double cost )
 	{
 		try
 		{
@@ -56,5 +56,7 @@ public class Update_DB
 			err.printStackTrace(System.err);
 			System.exit(0);
 		}
+        
+        return manualy_increment-1; 
 	}
 }

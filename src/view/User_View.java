@@ -292,15 +292,96 @@ public class User_View extends Application{
 		
 		public void existingUserRequest(Stage stage, String id) {
 			// temp until database
+			
 			user = control.getUserByID();
 			
 			Read_DB readDB = new Read_DB();
 			
 			@SuppressWarnings("static-access")
-			String arr[] = readDB.findUser(Integer.parseInt(id)); 			
-			addPermitPane(stage, Double.valueOf(arr[9]), arr[8], arr[6], arr[7]);
+			String arr[] = readDB.findUser(Integer.parseInt(id)); 	
+			
+			
+			DecimalFormat df = new DecimalFormat("#.00");
+			
+			Text nameText = new Text("Name: ");
+			Text IDText = new Text("ID: ");
+			Text addressText = new Text("Address: ");
+			Text emailText = new Text("Email: ");
+			Text phoneText = new Text("Phone Number: ");
+			Text statusText = new Text("Status: ");
+			Text licenseText = new Text("license plate: ");
+			Text parkingLotText = new Text("Parking Lot: ");
+			Text lengthText = new Text("Duration: ");
+			Text costText = new Text("Total Cost: ");
+			
+			Text userNameText = new Text(arr[0]);
+			Text userIDText = new Text(arr[10]);
+			Text userAddressText = new Text(arr[1]);
+			Text userEmailText = new Text(arr[2]);
+			Text userPhoneText = new Text(arr[3]);
+			Text userStatusText = new Text(arr[4]);
+			Text userLicenseText = new Text(arr[5]);
+			Text userParkingLotText = new Text(arr[6]);
+			Text userLengthText = new Text(arr[7] + " " +arr[8] + "(s)");
+			Text userCostText = new Text("$ " + df.format(Double.valueOf(arr[9])));
+			
+			
+			Button finishButton = new Button("Finish");
+			Button backButton = new Button("Back");
+			
+			
+			
+			
+			finishButton.setOnAction(e-> {
+				try {
+					start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+			
+			GridPane gridPane = new GridPane();
+			
+			gridPane.setAlignment(Pos.CENTER);
+			gridPane.setMinSize(500, 500);
+		    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+		    gridPane.setVgap(5); 
+		    gridPane.setHgap(1);
+		    
+		    gridPane.add(nameText, 0, 0);
+		    gridPane.add(IDText, 0, 1);
+		    gridPane.add(addressText, 0, 2);
+		    gridPane.add(emailText, 0, 3);
+		    gridPane.add(phoneText, 0, 4);
+		    gridPane.add(statusText, 0, 5);
+		    gridPane.add(licenseText, 0, 6);
+		    gridPane.add(parkingLotText, 0, 7);
+		    gridPane.add(lengthText, 0, 8);
+		    gridPane.add(costText, 0, 9);
+		    gridPane.add(backButton, 0, 10);
+		    
+		    gridPane.add(userNameText, 1, 0);
+		    gridPane.add(userIDText, 1, 1);
+		    gridPane.add(userAddressText, 1, 2);
+		    gridPane.add(userEmailText, 1, 3);
+		    gridPane.add(userPhoneText, 1, 4);
+		    gridPane.add(userStatusText, 1, 5);
+		    gridPane.add(userLicenseText, 1, 6);
+		    gridPane.add(userParkingLotText, 1, 7);
+		    gridPane.add(userLengthText, 1, 8);
+		    gridPane.add(userCostText, 1, 9);
+		    gridPane.add(finishButton, 1, 10);
+
+			
+		    Scene scene = new Scene(gridPane);
+		    stage.setScene(scene);
+		    stage.show();
+			
 			
 		}
+		
+		
 		
 		
 		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost) {
@@ -335,10 +416,8 @@ public class User_View extends Application{
 			
 			
 			backButton.setOnAction(e-> addPermitPane(stage, cost, period, lot, duration));
+			confirmButton.setOnAction(e-> confirmPane( stage, user,plate, period,  duration,  lot,  cost)); 
 			
-			
-			//Update_DB insertUserToDB = new Update_DB();
-			//insertUserToDB.addNewUserInfo(user, plate, period,  duration,  lot,  cost );
 			
 			GridPane gridPane = new GridPane();
 			
@@ -379,6 +458,44 @@ public class User_View extends Application{
 						
 		}
 	  
+		public void confirmPane(Stage stage, User_Info user, String plate, String period, String duration, String lot, double cost) {
+			
+			
+			Update_DB insertUserToDB = new Update_DB();
+			int id = insertUserToDB.addNewUserInfo(user, plate, period,  duration,  lot,  cost );
+			
+			Text comfirmIDText = new Text("Thank you for your purchase, this is your id:  "); 
+			Text userComfirmIDText = new Text(String.valueOf(id));
+			
+			Button finishButton = new Button("Finish");
+			
+			finishButton.setOnAction(e-> {
+				try {
+					start( stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+			
+			GridPane gridPane = new GridPane();
+			
+			gridPane.setAlignment(Pos.CENTER);
+			gridPane.setMinSize(500, 500);
+		    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+		    gridPane.setVgap(5); 
+		    gridPane.setHgap(1);
+		    
+		    gridPane.add(comfirmIDText, 0, 0);
+		    
+		    gridPane.add(userComfirmIDText, 1, 0);
+		    gridPane.add(finishButton, 1, 1);
+		    
+		    Scene scene = new Scene(gridPane);
+		    stage.setScene(scene);
+		    stage.show();
+			
+		}
 //	  public void createPermitRequest(String period, String lot, String plate){
 //		  
 //		  

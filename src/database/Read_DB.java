@@ -145,7 +145,7 @@ public class Read_DB
 			ResultSet rs = null;
 			
 			System.out.println();
-			System.out.println("All records with an ID = 1:");
+			System.out.println("All records with an ID = " + id);
 			rs = s.executeQuery("SELECT name , address , email , phone_number , status , license_plate , parking_lot , period , duration , cost , USER_ID " +
 					"FROM ParkingManagement WHERE USER_ID = " + id );
 			
