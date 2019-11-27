@@ -201,7 +201,9 @@ public class User_View extends Application{
 		Text userStatusText = new Text(arr[4]);
 		
 		Button backButton = new Button("Back");
+		Button editButton = new Button("Edit");//jairun
 		backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
+		editButton.setOnAction(e-> editUserPane(stage, arr));
 		
 		GridPane gridPane = new GridPane();
 		gridPane.setAlignment(Pos.CENTER);
@@ -225,6 +227,57 @@ public class User_View extends Application{
 	    gridPane.add(userStatusText, 1, 5);
 	    
 	    gridPane.add(backButton, 0, 6);
+	    gridPane.add(editButton, 1, 6);
+	    
+	    Scene scene  = new Scene(gridPane);
+		stage.setScene(scene);
+	}
+	
+	public void editUserPane(Stage stage, String arr[]){
+		
+		Text nameText = new Text("Name: ");
+		Text emailText = new Text("Email: ");
+		Text IDText = new Text("ID:");
+		Text phoneText = new Text("Phone Number: ");
+		Text addressText = new Text("Adddress: ");
+		Text statusText = new Text("Status: ");
+		
+		TextField userNameText = new TextField(arr[0]);
+		Text userIDText = new Text(arr[10]);
+		TextField userAddressText = new TextField(arr[1]);
+		TextField userEmailText = new TextField(arr[2]);
+		TextField userPhoneText = new TextField(arr[3]);
+		Text userStatusText = new Text(arr[4]);
+		
+		Button backButton = new Button("Back");
+		Button updateButton = new Button("Update");
+		backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
+		updateButton.setOnAction(e -> updateUserRequest(arr[10], stage, userNameText.getText(), userEmailText.getText(), 
+				userPhoneText.getText(), userAddressText.getText(),userStatusText.getText()));
+		
+		GridPane gridPane = new GridPane();
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(5);
+	    
+	    gridPane.add(nameText, 0, 0);
+	    //gridPane.add(IDText, 0, 1);
+	    gridPane.add(addressText, 0, 1);
+	    gridPane.add(emailText, 0, 2);
+	    gridPane.add(phoneText, 0, 3);
+	    //gridPane.add(statusText, 0, 5);
+	    
+	    gridPane.add(userNameText, 1, 0);
+	    //gridPane.add(userIDText, 1, 1);
+	    gridPane.add(userAddressText, 1, 1);
+	    gridPane.add(userEmailText, 1, 2);
+	    gridPane.add(userPhoneText, 1, 3);
+	    //gridPane.add(userStatusText, 1, 5);
+	    
+	    gridPane.add(backButton, 0, 6);
+	    gridPane.add(updateButton, 1, 6);
 	    
 	    Scene scene  = new Scene(gridPane);
 		stage.setScene(scene);
@@ -312,6 +365,21 @@ public class User_View extends Application{
 	    Scene scene = new Scene(gridPane);
 	    stage.setScene(scene);
 	    stage.show();		
+	}
+	
+	public void updateUserRequest(String id, Stage stage, String name, String email, String phoneNum, String address, String status) {
+		
+		int user_ID = Integer.parseInt(id);
+		user = control.CreateUser(name, email, phoneNum, address, status);
+		Update_DB insertUserToDB = new Update_DB();
+		insertUserToDB.updateUserInfo(user_ID, user);
+		System.out.println( "info up to date" );
+		try {
+			start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void addPermitPane(Stage stage, double cost, String period, String lot, String duration) {
@@ -511,6 +579,7 @@ public class User_View extends Application{
 			
 		}
 
+		@SuppressWarnings("deprecation")
 		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost, LocalDate localDate) {
 			
 			java.util.Date date = java.sql.Date.valueOf(localDate);
