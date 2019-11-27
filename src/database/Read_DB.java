@@ -68,6 +68,7 @@ public class Read_DB
 		 
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args)
 	{
 		try
@@ -117,6 +118,7 @@ public class Read_DB
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static String[] findUser(int id) {
 		
 		try

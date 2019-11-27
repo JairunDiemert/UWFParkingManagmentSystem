@@ -9,6 +9,7 @@ public class Create_DB
 	private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String protocol = "jdbc:derby:";
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args)
 	{
 		

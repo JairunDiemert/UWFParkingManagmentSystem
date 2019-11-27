@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import models.User_Info;
 
+@SuppressWarnings("unused")
 public class Update_DB
 {
 
@@ -15,6 +16,7 @@ public class Update_DB
     private static final String protocol = "jdbc:derby:";
     private static int manualy_increment = 3; 
 
+	@SuppressWarnings("deprecation")
 	public int addNewUserInfo(User_Info user, String plate, String period, String duration, String lot, double cost )
 	{
 		try
@@ -58,5 +60,47 @@ public class Update_DB
 		}
         
         return manualy_increment-1; 
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void updateUserInfo(int id, User_Info user)
+	{
+		try
+		{
+			Class.forName(driver).newInstance();
+			System.out.println("Loaded the embedded driver.");
+		}
+		catch (Exception err)
+		{
+			System.err.println("Unable to load the embedded driver.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+        }
+        String dbName = "ParkingManagementDB";
+        Connection conn = null;
+        try
+        {
+			System.out.println("Connecting to the database...");
+        	conn = DriverManager.getConnection(protocol + dbName);
+			System.out.println("Connected.");
+			
+			Statement s = conn.createStatement();
+			
+			
+			s.execute("UPDATE ParkingManagement SET name = '" 
+					+ user.getUserName() + "', address = '" 
+					+ user.getUserAddress() + "', email = '" 
+					+ user.getUserEmail() + "', phone_number = '" 
+					+ user.getUserPhoneNum() + "'  WHERE USER_ID = " + id );
+			System.out.println("Table Updated");
+			
+			conn.close();
+		}
+		catch (SQLException err)
+		{
+			System.err.println("SQL error.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+		}
 	}
 }
