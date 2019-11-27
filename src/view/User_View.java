@@ -1,8 +1,11 @@
 package view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 
+import controller.BarCode_Creator;
 import controller.EndDate_Calculation;
 import database.Read_DB;
 import database.Update_DB;
@@ -17,9 +20,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField; 
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text; 
-import javafx.scene.control.TextField; 
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import models.User_Info; 
@@ -591,43 +598,58 @@ public class User_View extends Application{
 						
 		}
 	  
-		public void confirmPane(Stage stage, User_Info user, String plate, String period, String duration, String lot, double cost) {
-			
-			Update_DB insertUserToDB = new Update_DB();
-			int id = insertUserToDB.addNewUserInfo(user, plate, period,  duration,  lot,  cost );
-			
-			Text comfirmIDText = new Text("Thank you for your purchase, this is your id:  "); 
-			Text userComfirmIDText = new Text(String.valueOf(id));
-			
-			Button finishButton = new Button("Finish");
-			
-			finishButton.setOnAction(e-> {
-				try {
-					start(stage);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			});
-			
-			GridPane gridPane = new GridPane();
-			
-			gridPane.setAlignment(Pos.CENTER);
-			gridPane.setMinSize(500, 500);
-		    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
-		    gridPane.setVgap(5); 
-		    gridPane.setHgap(1);
-		    
-		    gridPane.add(comfirmIDText, 0, 0);
-		    
-		    gridPane.add(userComfirmIDText, 1, 0);
-		    gridPane.add(finishButton, 1, 1);
-		    
-		    Scene scene = new Scene(gridPane);
-		    stage.setScene(scene);
-		    stage.show();
-			
+	public void confirmPane(Stage stage, User_Info user, String plate, String period, String duration, String lot,
+			double cost) {
+
+		Update_DB insertUserToDB = new Update_DB();
+		int id = insertUserToDB.addNewUserInfo(user, plate, period, duration, lot, cost);
+
+		Text comfirmIDText = new Text("Thank you for your purchase.");
+
+		BarCode_Creator barCode;
+		try {
+			BarCode_Creator.crateBarcode(id);
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
+
+		Button finishButton = new Button("Finish");
+
+		finishButton.setOnAction(e -> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+
+		FileInputStream inputstream = null;
+		try {
+			inputstream = new FileInputStream("BarCodeStuff"+"/"+"images"+"/"+"out.png");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		Image img = new Image(inputstream); 
+		
+		VBox vbox = new VBox();
+		
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+	    vbox.setSpacing(20);
+	    
+	    vbox.getChildren().add(comfirmIDText);
+	    vbox.getChildren().add(new ImageView(img));
+	    vbox.getChildren().add(finishButton);
+	   
+	    Scene scene = new Scene(vbox);
+	    stage.setScene(scene);
+	    stage.show();
+
+	}
 		
 		
 //	  public void createPermitRequest(String period, String lot, String plate){
