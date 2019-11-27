@@ -604,8 +604,7 @@ public class User_View extends Application{
 		Update_DB insertUserToDB = new Update_DB();
 		int id = insertUserToDB.addNewUserInfo(user, plate, period, duration, lot, cost);
 
-		Text comfirmIDText = new Text("Thank you for your purchase, this is your barcode & id:  ");
-		Text userComfirmIDText = new Text(String.valueOf(id));
+		Text comfirmIDText = new Text("Thank you for your purchase.");
 
 		BarCode_Creator barCode;
 		try {
@@ -613,7 +612,7 @@ public class User_View extends Application{
 		} catch (Exception e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
-		} // jairun
+		}
 
 		Button finishButton = new Button("Finish");
 
@@ -626,19 +625,6 @@ public class User_View extends Application{
 			}
 		});
 
-		GridPane gridPane = new GridPane();
-
-		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setMinSize(500, 500);
-		gridPane.setPadding(new Insets(10, 10, 10, 10));
-		gridPane.setVgap(5);
-		gridPane.setHgap(1);
-
-		gridPane.add(comfirmIDText, 2, 0);
-
-		gridPane.add(userComfirmIDText, 3, 0);
-		gridPane.add(finishButton, 1, 1);
-
 		FileInputStream inputstream = null;
 		try {
 			inputstream = new FileInputStream("BarCodeStuff"+"/"+"images"+"/"+"out.png");
@@ -647,12 +633,21 @@ public class User_View extends Application{
 			e1.printStackTrace();
 		} 
 		Image img = new Image(inputstream); 
-
-		gridPane.getChildren().add(new ImageView(img));
-		Scene scene = new Scene(gridPane);
-		stage.setTitle("An Image View Pane App");
-		stage.setScene(scene);
-		stage.show(); 
+		
+		VBox vbox = new VBox();
+		
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+	    vbox.setSpacing(20);
+	    
+	    vbox.getChildren().add(comfirmIDText);
+	    vbox.getChildren().add(new ImageView(img));
+	    vbox.getChildren().add(finishButton);
+	   
+	    Scene scene = new Scene(vbox);
+	    stage.setScene(scene);
+	    stage.show();
 
 	}
 		

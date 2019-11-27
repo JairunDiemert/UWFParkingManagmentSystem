@@ -14,7 +14,7 @@ public class BarCode_Creator {
 	public static int hashBarcodeNumber(int uniqueID)
 	{
 		int hash = 0;
-		hash = (uniqueID + 31321000) * 3;
+		hash = (uniqueID + 900000000) ;
 		return hash;
 	}
 	
