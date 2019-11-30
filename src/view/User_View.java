@@ -48,11 +48,19 @@ public class User_View extends Application{
 		Text titleText = new Text("Welcome to Campus Parking Services");
 		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
 		
-		Button purchasePermitButton = new Button("Purchase Parking Permit");
 		Button loginButton = new Button("Log In");
+		Button registerButton = new Button("Register");
+		Button guestButton = new Button("Guest");
+		Button lotButton = new Button("Lots Status");
 		Button exitButton = new Button("Exit");
 		
-		purchasePermitButton.setOnAction(e -> selectUserPane(stage));
+		loginButton.setMaxWidth(150);
+		registerButton.setMaxWidth(150);
+		guestButton.setMaxWidth(150);
+		lotButton.setMaxWidth(150);
+		exitButton.setMaxWidth(150);
+		
+		//purchasePermitButton.setOnAction(e -> selectUserPane(stage));
 		loginButton.setOnAction(e-> loginPane(stage));
 		exitButton.setOnAction(e-> stage.close());
 		
@@ -61,11 +69,14 @@ public class User_View extends Application{
 		vbox.setSpacing(20);
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setMinSize(500, 500);
+		
 	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
 	    
 	    vbox.getChildren().add(titleText);
-	    vbox.getChildren().add(purchasePermitButton);
 	    vbox.getChildren().add(loginButton);
+	    vbox.getChildren().add(registerButton);
+	    vbox.getChildren().add(guestButton);
+	    vbox.getChildren().add(lotButton);
 	    vbox.getChildren().add(exitButton);
 	    
 	    Scene scene = new Scene(vbox);
