@@ -78,7 +78,7 @@ public class User_Controller {
 		
 		newPermit.setLotPermissions(lotPermissions);
 		setDate();
-		newPermit.setStartDate(getDateString());
+		//newPermit.setStartDate(getDateString());
 		//newPermit.setEndDate(endDate.getEndDate(getDate(), multiplier, choice));
 		newUser.setLicensePlate(licensePlate);
 		
@@ -86,14 +86,14 @@ public class User_Controller {
 		return newPermit;
 	}
 	// two diff formats
-	public permit inputNewPermitInfo(char lotPermissions, String startDate, String endDate, String licensePlate) {		
+	public permit inputNewPermitInfo(char lotPermissions, String licensePlate) {		
 		permit newPermit = getPermit();			
 		User_Info newUser = getUser();			
 
 
 		newPermit.setLotPermissions(lotPermissions);			
-		newPermit.setStartDate(startDate);			
-		newPermit.setEndDate(endDate);			
+		//newPermit.setStartDate(startDate);			
+		//newPermit.setEndDate(endDate);			
 		newUser.setLicensePlate(licensePlate);
 		
 		
@@ -123,11 +123,12 @@ public class User_Controller {
 		
 		String tempLotPermissions = tokens[5];
 		char lotPermissions = tempLotPermissions.charAt(0);
-		String startDate = tokens[6]; 
-		String endDate = tokens[7];
+		//Date startDate = tokens[6]; 
+		//Date endDate = tokens[7];
 		String licensePlate = tokens[8];
 		
-		permit existingPermit = inputNewPermitInfo(lotPermissions, startDate, endDate, licensePlate);
+		//permit existingPermit = inputNewPermitInfo(lotPermissions, startDate, endDate, licensePlate);
+		permit existingPermit = inputNewPermitInfo(lotPermissions, licensePlate);
 		
 		String formatedUserAndPermitInfo = "" + formatUserInfo() + formatPermitInfo();
 		return formatedUserAndPermitInfo;

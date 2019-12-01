@@ -1,10 +1,12 @@
 package models;
+import java.util.Date;
+
 
 public class permit {
 
 	private char lotPermissions;
-	private String startDate; // Day/Month/Year
-	private String endDate; // Day/Month/Year
+	private Date startDate; // Day/Month/Year
+	private Date endDate; // Day/Month/Year
 	private int startHour; //24 hour clock
 	private int endHour;   //24 hour clock
 	private String liscensePlate; 
@@ -14,15 +16,13 @@ public class permit {
 
 	public permit() {
 		lotPermissions = 'Z';
-		startDate = "0/JAN/00"; // Day/Month/Year
-		endDate = "0/JAN/00"; 
 		setStartHour(00);
 		setEndHour(00);
 		UID = "NA";
 		setLiscensePlate("NA");
 	}
 	
-	public permit(char lotPermissions, String startDate, String endDate, int startHour, int endHour, String liscensePlate, String UID) {
+	public permit(char lotPermissions, Date startDate, Date endDate, int startHour, int endHour, String liscensePlate, String UID) {
 		this.lotPermissions = lotPermissions;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -49,28 +49,28 @@ public class permit {
 	/**
 	 * @return the startDate
 	 */
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
 	/**
 	 * @return the endDate
 	 */
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

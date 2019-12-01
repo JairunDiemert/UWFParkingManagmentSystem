@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
 
 public class Create_DB
 {
@@ -52,13 +53,24 @@ public class Create_DB
 					"VALUES ('GM', 'fdfsfsft', 'gm@student.uwf.edu', '234-4324', 'Military', 'fdsff', 'B', '2', 'Semester', 45, DEFAULT)");
 			*/
 			
-			s.execute("CREATE TABLE LoginInfo" +
+			/*s.execute("CREATE TABLE LoginInfo" +
 			  "(userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), userName varchar(100), userPassword varchar(100),"
 			  + "userEmail varchar(100), userStatus char(1), UNIQUE(userID) )");
 	
 			s.execute("INSERT INTO LoginInfo " +
-			"VALUES (DEFAULT, 'YL', 'GuessWhat', 'yl@students.uwf.edu', 'S')");
+			"VALUES (DEFAULT, 'YL', 'GuessWhat', 'yl@students.uwf.edu', 'S')");*/
 			
+			//s.execute("DROP TABLE GuestInfo");
+			
+			/*s.execute("CREATE TABLE GuestInfo" +
+			  "(userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 90000000, INCREMENT BY 1), userEmail varchar(100), userPlate varchar(100), userLot char(1),period varchar(50), duration varchar(50),"
+			  + " userStartTime DATE, userEndTime DATE ,cost double, UNIQUE(userID,userEmail) )");*/
+	
+			
+			s.execute("INSERT INTO GuestInfo " +
+			"VALUES (DEFAULT, 'ds@students.uwf.edu', 'plateNum', 'A', '1', 'Semester', '03/25/2019', '03/25/2020' , 20 )");
+			
+			System.out.println("Done");
 			conn.close();
 		}
 		catch (SQLException err)

@@ -73,6 +73,20 @@ public class Permit_Cost_Calculation {
 		
 	}
 	
+	public double guestCal( String period, String lot, String duration) {
+		
+		
+		
+		double cost = rateCal(period,duration);
+			
+			
+		cost *= lotCal(lot);
+			
+		return cost;
+		//System.out.println("The cost is "+ cost);
+		
+	}
+	
 	private double discountCal(String s){
 		
 		double discountFactor = 0.0;
