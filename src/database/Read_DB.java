@@ -10,7 +10,7 @@ public class Read_DB
 	private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String protocol = "jdbc:derby:";
     private static String[] resultSet = new String[11]; 
-   
+    private static String[] loginResultSet = new String[5];
 	/*
 	 Outputs the author, ID, and URL of the current
 	 author in the ResultSet
@@ -30,7 +30,7 @@ public class Read_DB
 		String duration = rs.getString("duration");
 		
 		Double cost = rs.getDouble("cost");
-		int USER_ID = rs.getInt("USER_ID");
+		int USER_ID = rs.getInt("userID");
 		
 		
 		
@@ -62,7 +62,7 @@ public class Read_DB
 		resultSet[8] = rs.getString("duration");
 		
 		resultSet[9] = String.valueOf(rs.getDouble("cost"));
-		resultSet[10] = String.valueOf(rs.getInt("USER_ID"));
+		resultSet[10] = String.valueOf(rs.getInt("userID"));
 		
 		
 		 
@@ -96,7 +96,7 @@ public class Read_DB
 			ResultSet rs = null;
 			System.out.println("All records:");
 			rs = s.executeQuery("SELECT name, address , email , phone_number , status , license_plate , parking_lot,"
-					+ " period , duration , cost , USER_ID FROM ParkingManagement");
+					+ " period , duration , cost , userID FROM ParkingManagement");
 			System.out.println("Hello");
 			
 			
@@ -148,8 +148,8 @@ public class Read_DB
 			
 			System.out.println();
 			System.out.println("All records with an ID = " + id);
-			rs = s.executeQuery("SELECT name , address , email , phone_number , status , license_plate , parking_lot , period , duration , cost , USER_ID " +
-					"FROM ParkingManagement WHERE USER_ID = " + id );
+			rs = s.executeQuery("SELECT name , address , email , phone_number , status , license_plate , parking_lot , period , duration , cost , userID  " +
+					"FROM ParkingManagement WHERE userID = " + id );
 			
 			while( rs.next() )
 			{
@@ -168,4 +168,81 @@ public class Read_DB
         return resultSet;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public static char findStatus(String email, String password) {
+		
+		char status = 'N';
+		try
+		{
+			Class.forName(driver).newInstance();
+			System.out.println("Loaded the embedded driver.");
+		}
+		catch (Exception err)
+		{
+			System.err.println("Unable to load the embedded driver.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+        }
+
+        String dbName = "ParkingManagementDB";
+        Connection conn = null;
+        
+        try
+        {
+			System.out.println("Connecting to the database...");
+        	conn = DriverManager.getConnection(protocol + dbName);
+			System.out.println("Connected.");
+
+			Statement s = conn.createStatement();
+
+			ResultSet rs = null;
+			
+			System.out.println();
+			//System.out.println("All records with an ID = " + id);
+			/*s.execute("CREATE TABLE LoginInfo" +
+					  "(userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), userName varchar(100), userPassword varchar(100),"
+					  + "userEmail varchar(100), userStatus char(1), UNIQUE(userID) )");*/
+			
+			rs = s.executeQuery("SELECT * FROM LoginInfo WHERE userEmail = '" + email +"'");
+			//rs = s.executeQuery("SELECT userID , userName , userPassword , userEmail ,userStatus FROM ParkingManagement WHERE userEmail = '" + email +"'");
+			
+			if(rs!= null) {
+			
+				while( rs.next() )
+				{
+				
+					status = checkingStatus(rs);
+				}
+			}
+			else {
+				
+				status = 'N';
+				
+			}
+			System.out.println("Done");
+			
+			rs.close();
+			conn.close();
+        }
+        catch (SQLException err)
+		{
+			System.err.println("SQL error.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+		}
+	
+        return status;
+	}
+	
+	public static char checkingStatus(ResultSet rs) throws SQLException
+	{
+		/*int USER_ID = rs.getInt("userID");
+		String name = rs.getString("userName");
+		String password = rs.getString("userPassword");
+		String email = rs.getString("userEmail");*/
+		
+		char status =  rs.getString("userStatus").charAt(0);
+	    System.out.println(status);
+		return status;
+	}
 }

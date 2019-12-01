@@ -38,19 +38,26 @@ public class Create_DB
 			Statement s = conn.createStatement();
 				
 			
+			
+			//s.execute("DROP Table ParkingManagement");
+			/*
 			s.execute("CREATE TABLE ParkingManagement" +
 					  "(name varchar(50), address varchar(50), email varchar(50),phone_number varchar(50),"
 					  + "status varchar(50), license_plate varchar(50), parking_lot varchar(50), period varchar(50), duration varchar(50), "
-					  + "cost double, USER_ID INTEGER )");
-			
-			System.out.println("Created 'ParkingManagement' table.");
-
+					  + "cost double, userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),UNIQUE(userID))");
 			
 			s.execute("INSERT INTO ParkingManagement " +
-					"VALUES ('YL', 'fdsj St', 'yl@student.uwf.edu', '324-4324', 'Student', 'fjdisof', 'A', '1', 'Semester', 50,1)");
+					"VALUES ('YL', 'fdsj St', 'yl@student.uwf.edu', '324-4324', 'Student', 'fjdisof', 'A', '1', 'Semester', 50,DEFAULT)");
 			s.execute("INSERT INTO ParkingManagement " +
-					"VALUES ('GM', 'fdfsfsft', 'gm@student.uwf.edu', '234-4324', 'Military', 'fdsff', 'B', '2', 'Semester', 45, 2)");
-			System.out.println("Done' table.");
+					"VALUES ('GM', 'fdfsfsft', 'gm@student.uwf.edu', '234-4324', 'Military', 'fdsff', 'B', '2', 'Semester', 45, DEFAULT)");
+			*/
+			
+			s.execute("CREATE TABLE LoginInfo" +
+			  "(userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), userName varchar(100), userPassword varchar(100),"
+			  + "userEmail varchar(100), userStatus char(1), UNIQUE(userID) )");
+	
+			s.execute("INSERT INTO LoginInfo " +
+			"VALUES (DEFAULT, 'YL', 'GuessWhat', 'yl@students.uwf.edu', 'S')");
 			
 			conn.close();
 		}

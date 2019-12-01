@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.geometry.HPos;
 
 import models.User_Info; 
 
@@ -87,13 +88,30 @@ public class User_View extends Application{
 	
 	public void loginPane(Stage stage) {
 		
-		Text loginText = new Text("Please enter your User ID: ");
-		TextField loginField = new TextField();
+		Text titleText = new Text("Please login with your email and password.");
+		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
 		
-		Button submitButton = new Button("Submit");
+		//spacing
+		Text emptyText = new Text("    ");
+		Text empty1Text = new Text("    ");
+		Text empty2Text = new Text("    ");
+		
+		Text emailText = new Text("Please enter your email: ");
+		TextField emailField = new TextField();
+		
+		Text passwordText = new Text("Please enter your password: ");
+		TextField passwordField = new TextField();
+		
+		Button loginButton = new Button("Login");
 		Button backButton = new Button("Back");
 		
-		submitButton.setOnAction(e-> mainUserPane(stage, loginField.getText()) );
+		loginButton.setMaxWidth(100);
+		backButton.setMaxWidth(100);
+		
+			
+		loginButton.setOnAction(e-> determentPane(stage, emailField.getText(),passwordField.getText()));
+	
+		
 		backButton.setOnAction(e-> {
 			try {
 				start(stage);
@@ -108,19 +126,65 @@ public class User_View extends Application{
 		gridPane.setAlignment(Pos.CENTER);
 		gridPane.setMinSize(500, 500);
 	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
-	    
+	 
 	    gridPane.setVgap(5); 
 	    gridPane.setHgap(5);
 	    
-	    gridPane.add(loginText, 0, 0);
-	    gridPane.add(loginField, 1, 0);
-	    gridPane.add(submitButton, 1, 1);
-	    gridPane.add(backButton, 0, 1);
+	    gridPane.add(titleText,0,0,2,1);
+	    gridPane.add(emptyText, 0,1);	  
+	    gridPane.add(empty2Text, 0,2);
+	    gridPane.add(emailText, 0, 3);
+	    gridPane.add(emailField, 1, 3);
+	    
+	    gridPane.add(passwordText, 0, 4);
+	    gridPane.add(passwordField, 1, 4);
+	    
+	    gridPane.add(empty1Text, 0, 5);
+	    gridPane.add(loginButton, 1, 6);
+	    GridPane.setHalignment(loginButton, HPos.RIGHT);
+	    gridPane.add(backButton, 0, 6);
 	    
 	    Scene scene = new Scene(gridPane);
 	    stage.setScene(scene);
 	    stage.show();
 		
+	}
+	
+	public void determentPane(Stage stage, String email, String password ) {
+		
+		Read_DB readDB = new Read_DB();
+		
+		@SuppressWarnings("static-access")
+		char exist = readDB.findStatus(email, password);
+		
+		if(Character.compare(exist, 'S') == 0) {
+			
+			mainUserPane(stage, "1");
+		}
+		else {
+			
+			Text titleText = new Text("You have entered either wrong password or email or the account didn't exist!");
+			Button backButton = new Button("Back");
+			backButton.setMaxWidth(100);
+			backButton.setOnAction(e-> loginPane(stage));
+			
+			GridPane gridPane = new GridPane();
+			
+			gridPane.setAlignment(Pos.CENTER);
+			gridPane.setMinSize(500, 500);
+		    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+		 
+		    gridPane.setVgap(5); 
+		    gridPane.setHgap(5);
+		    
+		    gridPane.add(titleText,0,0,2,1);
+		    GridPane.setHalignment(backButton, HPos.RIGHT);
+		    gridPane.add(backButton, 1, 1);
+		    Scene scene = new Scene(gridPane);
+		    stage.setScene(scene);
+		    stage.show();
+		    
+		}
 	}
 	
 	public void mainUserPane(Stage stage, String id) {
