@@ -224,6 +224,7 @@ public class User_View extends Application{
 	    vbox.getChildren().add(purchaseButton);
 	    vbox.getChildren().add(permitInfoButton);
 	    vbox.getChildren().add(barcodeButton);
+	    vbox.getChildren().add(backButton);
 	    vbox.getChildren().add(exitButton);
 	    
 	    Scene scene = new Scene(vbox);
@@ -630,11 +631,14 @@ public class User_View extends Application{
 		Text phoneText = new Text("Phone Number: ");
 		Text addressText = new Text("Adddress: ");
 		Text statusText = new Text("Status: ");
+		Text passwordText = new Text("Password: ");
 		
 		TextField nameField = new TextField();
 		TextField emailField = new TextField();
 		TextField phoneField = new TextField();
 		TextField addressField = new TextField();
+		PasswordField passwordField = new PasswordField();
+		passwordField.setPromptText("Your password");
 		
 		ChoiceBox<String> statusChoice = new ChoiceBox<>();
 		
@@ -669,16 +673,18 @@ public class User_View extends Application{
 	    gridPane.add(phoneText, 0, 2);
 	    gridPane.add(addressText, 0, 3);
 	    gridPane.add(statusText, 0, 4);
+	    gridPane.add(passwordText, 0, 5);
 	    
-	    gridPane.add(backButton, 0, 5);
+	    gridPane.add(backButton, 0, 6);
 
 	    gridPane.add(nameField, 1, 0);
 	    gridPane.add(emailField, 1, 1);
 	    gridPane.add(phoneField, 1, 2);
 	    gridPane.add(addressField, 1, 3);
 	    gridPane.add(statusChoice, 1, 4);
+	    gridPane.add(passwordField, 1, 5);
 	    
-	    gridPane.add(submitButton, 1, 5);
+	    gridPane.add(submitButton, 1, 6);
 	    
 	    Scene scene = new Scene(gridPane);
 	    stage.setScene(scene);
@@ -793,8 +799,8 @@ public class User_View extends Application{
 			
 			//addPermitPane(stage, cost, "Semester", "A", "1");		
 			
-			Update_DB insertUserToDB = new Update_DB();
-			int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);
+			//Update_DB insertUserToDB = new Update_DB();
+			//int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);
 			newUserConfirmation(stage);
 		}
 	
@@ -1015,6 +1021,8 @@ public class User_View extends Application{
         Scene scene = new Scene(lineChart, 1000, 800);
         stage.setScene(scene);
         
+        
+        
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         
         //This is a temporary setup for presentation purposes to show how the real time updates work.
@@ -1045,10 +1053,7 @@ public class User_View extends Application{
                     series4.getData().remove(0);
             });
         }, 0, 3, TimeUnit.SECONDS);
-     }
-		
-		
-
-	
+     }    
+    
 	
 }
