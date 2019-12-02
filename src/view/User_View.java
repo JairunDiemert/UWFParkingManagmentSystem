@@ -821,11 +821,12 @@ public class User_View extends Application{
 		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String status) {
 			
 			user = control.CreateUser(name, email, phoneNum, address, status);
-			//double cost = control.Calculation(user, "Semester", "A", "1");
+			double cost = control.Calculation(user, "Semester", "A", "1");
 			
-			//addPermitPane(stage, cost, "Semester", "A", "1");		
-			Update_DB insertUserToDB = new Update_DB();
-			int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);
+			addPermitPane(stage, cost, "Semester", "A", "1");		
+			
+			/*Update_DB insertUserToDB = new Update_DB();
+			int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);*/
 			newUserConfirmation(stage);
 		}
 		public void newUserConfirmation(Stage stage) {
