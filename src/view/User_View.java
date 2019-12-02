@@ -3,7 +3,13 @@ package view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import controller.BarCode_Creator;
 import controller.EndDate_Calculation;
@@ -11,11 +17,16 @@ import controller.Permit_Cost_Calculation;
 import database.Read_DB;
 import database.Update_DB;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets; 
 import javafx.geometry.Pos; 
-import javafx.scene.Scene; 
+import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -67,6 +78,14 @@ public class User_View extends Application{
 		//purchasePermitButton.setOnAction(e -> selectUserPane(stage));
 		loginButton.setOnAction(e-> loginPanel(stage));
 		guestButton.setOnAction(e-> guestPanel(stage));
+		lotButton.setOnAction(e -> {
+			try {
+				LotStatusPane(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		exitButton.setOnAction(e-> stage.close());
 		
 		VBox vbox = new VBox();
@@ -1063,6 +1082,67 @@ public class User_View extends Application{
 	    stage.show();
 
 	}
+	
+    @SuppressWarnings("unchecked")
+	public void LotStatusPane(Stage stage) throws Exception {
+        stage.setTitle("UWF Lot Visualizations");
+        stage.show();
+        
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis(0, 100, 5);
+        xAxis.setLabel("Time");
+        xAxis.setAnimated(true);
+        yAxis.setLabel("Population");
+        yAxis.setAnimated(true);
+
+        final LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.setTitle("Real Time Lot Population");
+        lineChart.setAnimated(false);
+        
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("Lot A");    
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series2.setName("Lot B");
+        XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+        series3.setName("Lot C");
+        XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+        series4.setName("Lot D");
+
+        lineChart.getData().addAll(series1, series2, series3, series4); 
+        Scene scene = new Scene(lineChart, 1000, 800);
+        stage.setScene(scene);
+        
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        
+        //This is a temporary setup for presentation purposes to show how the real time updates work.
+        ScheduledExecutorService scheduledExecutorService;
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
+            Integer random = ThreadLocalRandom.current().nextInt(100); //assuming 100 parking spots per lot
+
+            Platform.runLater(() -> {
+                Date now = new Date();
+                series1.getData().add(new XYChart.Data<>(simpleDateFormat.format(now), random));
+                Integer random2 = ThreadLocalRandom.current().nextInt(100);
+                series2.getData().add(new XYChart.Data<>(simpleDateFormat.format(now), random2));
+                Integer random3 = ThreadLocalRandom.current().nextInt(100);
+                series3.getData().add(new XYChart.Data<>(simpleDateFormat.format(now), random3));
+                Integer random4 = ThreadLocalRandom.current().nextInt(100);
+                series4.getData().add(new XYChart.Data<>(simpleDateFormat.format(now), random4));
+                //only 5 points plotted per lot on screen at a time
+                final int SIZE = 5;
+                if (series1.getData().size() > SIZE)
+                    series1.getData().remove(0);
+                if (series2.getData().size() > SIZE)
+                    series2.getData().remove(0);
+                if (series3.getData().size() > SIZE)
+                    series3.getData().remove(0);
+                if (series4.getData().size() > SIZE)
+                    series4.getData().remove(0);
+            });
+        }, 0, 3, TimeUnit.SECONDS);
+     }
 		
 		
 
