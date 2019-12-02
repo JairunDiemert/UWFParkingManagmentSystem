@@ -487,7 +487,7 @@ public class User_View extends Application{
 		Button logoutButton = new Button("Log Out");
 		
 		viewUserInfoButton.setOnAction(e-> ViewUserInfoPain(stage, arr));
-		purchasePermitButton.setOnAction(e-> userPurchasePermit(stage, arr));
+		//purchasePermitButton.setOnAction(e-> userPurchasePermit(stage, arr));
 		
 		logoutButton.setOnAction(e-> {
 			try {
@@ -515,13 +515,14 @@ public class User_View extends Application{
 	    stage.show();	
 	    	
 	}
+	/*
 	public void userPurchasePermit(Stage stage, String arr[]) {
 		user = control.CreateUser(arr[0], arr[2], arr[3], arr[1], arr[4]);
 		double cost = control.Calculation(user, "Semester", "A", "1");
 		
 		addPermitPane(stage, cost, "Semester", "A", "1", arr);	
 		
-	}
+	}*/
 
 	public void ViewUserInfoPain(Stage stage, String arr[]) {
 		
@@ -657,7 +658,7 @@ public class User_View extends Application{
 			}
 		});
 		submitButton.setOnAction(e -> newUserRequest(stage, nameField.getText(), emailField.getText(), 
-				phoneField.getText(), addressField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
+				phoneField.getText(), addressField.getText(), passwordField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
 		
 		GridPane gridPane = new GridPane();
 		
@@ -694,7 +695,7 @@ public class User_View extends Application{
 	public void updateUserRequest(String id, Stage stage, String name, String email, String phoneNum, String address, String status) {
 		
 		int user_ID = Integer.parseInt(id);
-		user = control.CreateUser(name, email, phoneNum, address, status);
+		//user = control.CreateUser(name, email, phoneNum, address, status);
 		Update_DB insertUserToDB = new Update_DB();
 		insertUserToDB.updateUserInfo(user_ID, user);
 		System.out.println( "info up to date" );
@@ -792,15 +793,15 @@ public class User_View extends Application{
 	  
 		
 		
-		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String status) {
+		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String password, String status) {
 			
-			user = control.CreateUser(name, email, phoneNum, address, status);
-			//double cost = control.Calculation(user, "Semester", "A", "1");
+			user = control.CreateUser(name, email, phoneNum, address, password, status);
+			
 			
 			//addPermitPane(stage, cost, "Semester", "A", "1");		
 			
-			//Update_DB insertUserToDB = new Update_DB();
-			//int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);
+			Update_DB insertUserToDB = new Update_DB();
+			insertUserToDB.insertUserInfo(user);
 			newUserConfirmation(stage);
 		}
 	
@@ -994,6 +995,7 @@ public class User_View extends Application{
 	
     @SuppressWarnings("unchecked")
 	public void LotStatusPane(Stage stage) throws Exception {
+    	
         stage.setTitle("UWF Lot Visualizations");
         stage.show();
         

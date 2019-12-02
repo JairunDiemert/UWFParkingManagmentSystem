@@ -11,7 +11,7 @@ public class TestController {
 	Permit_Cost_Calculation cal = new Permit_Cost_Calculation();
 	
 	public User_Info CreateUser(String name, String email, String phoneNum,
-			String address, String status) {
+			String address, String status, String password) {
 		
 		User_Info user = new User_Info();
 
@@ -21,6 +21,7 @@ public class TestController {
 		 * 
 		 */
 		user.setUserName(name);
+		user.setUserPassword(password);
 		user.setUserPhoneNum(phoneNum);
 		user.setUserEmail(email);
 		user.setUserInfo(status);

@@ -11,6 +11,7 @@ public class User_Info {
 	private String userPhoneNum; 		//user phone number
 	private String userInfo; 			//student, employee, guess
 	private String userLot; 			//user parking lot
+	private String userPassword;
 	
 	public User_Info() {
 		
@@ -179,6 +180,20 @@ public class User_Info {
 	 */
 	public void setUserLot(String userLot) {
 		this.userLot = userLot;
+	}
+
+	/**
+	 * @return the userPassword
+	 */
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	/**
+	 * @param userPassword the userPassword to set
+	 */
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 	
 

@@ -15,6 +15,7 @@ public class Update_DB
 	private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String protocol = "jdbc:derby:";
     private static int id = 0;
+    private static int loginID = 0;
 
 	@SuppressWarnings("deprecation")
 	public int addNewUserInfo(User_Info user, String plate, String period, String duration, String lot, double cost )
@@ -123,4 +124,51 @@ public class Update_DB
 			System.exit(0);
 		}
 	}
+	
+	public void insertUserInfo(User_Info user)
+	{
+		
+		
+		try
+		{
+			Class.forName(driver).newInstance();
+			System.out.println("Loaded the embedded driver.");
+		}
+		catch (Exception err)
+		{
+			System.err.println("Unable to load the embedded driver.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+        }
+        String dbName = "ParkingManagementDB";
+        Connection conn = null;
+        try
+        {
+			System.out.println("Connecting to the database...");
+        	conn = DriverManager.getConnection(protocol + dbName);
+			System.out.println("Connected.");
+			
+			Statement s = conn.createStatement();
+			
+			
+			s.execute("INSERT INTO UserInfo " +
+					"VALUES (DEFAULT, '" + user.getUserName() + "',' " + user.getUserEmail()  + "' , '" + user.getUserPhoneNum() + "' , '" + 
+					user.getUserAddress() + "' , '" + user.getUserPassword()  + "' , '" + user.getUserInfo() +"' )");
+					
+			
+			System.out.println("user inserted");
+			
+			conn.close();
+		}
+		catch (SQLException err)
+		{
+			System.err.println("SQL error.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+		}
+        
+       
+	}
+	
+
 }
