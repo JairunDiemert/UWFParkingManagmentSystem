@@ -14,7 +14,7 @@ public class Update_DB
 
 	private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String protocol = "jdbc:derby:";
-    private static int manualy_increment = 3; 
+    private static int id = 0;
 
 	@SuppressWarnings("deprecation")
 	public int addNewUserInfo(User_Info user, String plate, String period, String duration, String lot, double cost )
@@ -43,13 +43,24 @@ public class Update_DB
 			
 			s.execute("INSERT INTO ParkingManagement " +
 					"VALUES ('" + user.getUserName() + "',' " + user.getUserAddress()  + "' , '" + user.getUserEmail() + "' , '" + user.getUserPhoneNum()
-					+ "' , '" + user.getUserInfo() + "' , '" + plate + "' , '" + lot + "' , '" + duration + "' , '" + period + "' , " + cost + " , " + manualy_increment
-					+ ")");
+					+ "' , '" + user.getUserInfo() + "' , '" + plate + "' , '" + lot + "' , '" + duration + "' , '" + period + "' , " + cost + " , default)");
 			
-			manualy_increment++;
+			ResultSet rs = null;
+			rs = s.executeQuery("SELECT userID FROM ParkingManagement WHERE email = '" + user.getUserEmail() +"'");
 
-			//System.out.println("URL changed to " + newURL);
 			
+			
+			if(rs!= null) {
+				
+				while( rs.next() )
+				{
+					id = getID(rs);
+					
+				}
+			}
+			
+			
+			rs.close();
 			conn.close();
 		}
 		catch (SQLException err)
@@ -59,7 +70,16 @@ public class Update_DB
 			System.exit(0);
 		}
         
-        return manualy_increment-1; 
+        return id; 
+	}
+	
+	public static int getID(ResultSet rs) throws SQLException
+	{
+		
+		
+		int status =  rs.getInt("userID");
+	    System.out.println(status);
+		return status;
 	}
 	
 	@SuppressWarnings("deprecation")

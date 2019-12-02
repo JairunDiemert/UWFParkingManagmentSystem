@@ -5,8 +5,8 @@ import java.util.Date;
 public class permit {
 
 	private char lotPermissions;
-	private Date startDate; // Day/Month/Year
-	private Date endDate; // Day/Month/Year
+	private String startDate; // Day/Month/Year
+	private String endDate; // Day/Month/Year
 	private int startHour; //24 hour clock
 	private int endHour;   //24 hour clock
 	private String liscensePlate; 
@@ -22,7 +22,7 @@ public class permit {
 		setLiscensePlate("NA");
 	}
 	
-	public permit(char lotPermissions, Date startDate, Date endDate, int startHour, int endHour, String liscensePlate, String UID) {
+	public permit(char lotPermissions, String startDate, String endDate, int startHour, int endHour, String liscensePlate, String UID) {
 		this.lotPermissions = lotPermissions;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -49,28 +49,28 @@ public class permit {
 	/**
 	 * @return the startDate
 	 */
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param string the startDate to set
 	 */
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartDate(String string) {
+		this.startDate = string;
 	}
 
 	/**
 	 * @return the endDate
 	 */
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 

@@ -41,11 +41,11 @@ public class Create_DB
 			
 			
 			//s.execute("DROP Table ParkingManagement");
-			/*
-			s.execute("CREATE TABLE ParkingManagement" +
+			
+			/*s.execute("CREATE TABLE ParkingManagement" +
 					  "(name varchar(50), address varchar(50), email varchar(50),phone_number varchar(50),"
 					  + "status varchar(50), license_plate varchar(50), parking_lot varchar(50), period varchar(50), duration varchar(50), "
-					  + "cost double, userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),UNIQUE(userID))");
+					  + "cost double, userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 70000000, INCREMENT BY 1),UNIQUE(userID))");
 			
 			s.execute("INSERT INTO ParkingManagement " +
 					"VALUES ('YL', 'fdsj St', 'yl@student.uwf.edu', '324-4324', 'Student', 'fjdisof', 'A', '1', 'Semester', 50,DEFAULT)");
@@ -67,8 +67,8 @@ public class Create_DB
 			  + " userStartTime DATE, userEndTime DATE ,cost double, UNIQUE(userID,userEmail) )");*/
 	
 			
-			s.execute("INSERT INTO GuestInfo " +
-			"VALUES (DEFAULT, 'ds@students.uwf.edu', 'plateNum', 'A', '1', 'Semester', '03/25/2019', '03/25/2020' , 20 )");
+			/*s.execute("INSERT INTO GuestInfo " +
+			"VALUES (DEFAULT, 'ds@students.uwf.edu', 'plateNum', 'A', '1', 'Semester', '03/25/2019', '03/25/2020' , 20 )");*/
 			
 			System.out.println("Done");
 			conn.close();

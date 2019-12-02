@@ -77,6 +77,7 @@ public class User_View extends Application{
 		
 		//purchasePermitButton.setOnAction(e -> selectUserPane(stage));
 		loginButton.setOnAction(e-> loginPanel(stage));
+		registerButton.setOnAction(e->enterUserInfo(stage));
 		guestButton.setOnAction(e-> guestPanel(stage));
 		lotButton.setOnAction(e -> {
 			try {
@@ -291,7 +292,7 @@ public class User_View extends Application{
 		submitButton.setMaxWidth(100);
 		backButton.setMaxWidth(100);
 		
-		backButton.setOnAction(e-> selectUserPane(stage));
+		backButton.setOnAction(e-> guestPanel(stage));
 		submitButton.setOnAction(e-> guestInfoPane(stage, emailField.getText(), licensePlateField.getText(), periodChoice.getSelectionModel().getSelectedItem(),
 				durationChoice.getSelectionModel().getSelectedItem(), parkingLotChoice.getSelectionModel().getSelectedItem(), cost,
 				datePicker.getValue()));
@@ -694,7 +695,14 @@ public class User_View extends Application{
 		Button submitButton = new Button("Submit");
 		Button backButton = new Button("Back");
 		
-		backButton.setOnAction(e-> selectUserPane(stage));
+		backButton.setOnAction(e-> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		submitButton.setOnAction(e -> newUserRequest(stage, nameField.getText(), emailField.getText(), 
 				phoneField.getText(), addressField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
 		
@@ -834,7 +842,37 @@ public class User_View extends Application{
 			user = control.CreateUser(name, email, phoneNum, address, status);
 			double cost = control.Calculation(user, "Semester", "A", "1");
 			
-			addPermitPane(stage, cost, "Semester", "A", "1");			
+			addPermitPane(stage, cost, "Semester", "A", "1");		
+			
+			/*Update_DB insertUserToDB = new Update_DB();
+			int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);*/
+			newUserConfirmation(stage);
+		}
+		public void newUserConfirmation(Stage stage) {
+			
+			Text titleText  = new Text("Your account was created successfully");
+			Button finishButton  = new Button("Finish");
+			
+			VBox vbox = new VBox();
+			
+			finishButton.setOnAction(e-> {
+				try {
+					start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+			
+			vbox.setSpacing(20);
+			vbox.setAlignment(Pos.CENTER);
+			vbox.setMinSize(500, 500);
+			
+		    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+		    
+		    vbox.getChildren().add(titleText);
+			vbox.getChildren().add(finishButton);
+			
 		}
 		
 		
