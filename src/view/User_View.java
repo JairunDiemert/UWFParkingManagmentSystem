@@ -461,12 +461,13 @@ public class User_View extends Application{
 		
 		@SuppressWarnings("static-access")
 		String arr[] = readDB.findUser(Integer.parseInt(id));
-		
 		Button viewUserInfoButton = new Button("View User Info");
 		Button viewUserPermitButton = new Button("View Permit Info");
+		Button purchasePermitButton = new Button("Purchase Permit");
 		Button logoutButton = new Button("Log Out");
 		
 		viewUserInfoButton.setOnAction(e-> ViewUserInfoPain(stage, arr));
+		purchasePermitButton.setOnAction(e-> userPurchasePermit(stage, arr));
 		
 		logoutButton.setOnAction(e-> {
 			try {
@@ -486,6 +487,7 @@ public class User_View extends Application{
 	    
 	    vbox.getChildren().add(viewUserInfoButton);
 	    vbox.getChildren().add(viewUserPermitButton);
+	    vbox.getChildren().add(purchasePermitButton);
 	    vbox.getChildren().add(logoutButton);
 	    
 	    Scene scene = new Scene(vbox);
@@ -493,40 +495,14 @@ public class User_View extends Application{
 	    stage.show();	
 	    	
 	}
-	public void selectUserPane(Stage stage) {
+	public void userPurchasePermit(Stage stage, String arr[]) {
+		user = control.CreateUser(arr[0], arr[2], arr[3], arr[1], arr[4]);
+		double cost = control.Calculation(user, "Semester", "A", "1");
 		
-		Button newUserButton = new Button("New User");
-		Button existingUserButton = new Button("Existing User");
-		Button backButton = new Button("Back");
-		
-		newUserButton.setOnAction(e -> enterUserInfo(stage));
-		existingUserButton.setOnAction(e-> enterExistingUser(stage));
-		
-		backButton.setOnAction(e -> {
-			try {
-				start(stage);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		VBox vbox = new VBox();
-		
-		vbox.setAlignment(Pos.CENTER);
-		vbox.setMinSize(500, 500);
-	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
-	    vbox.setSpacing(20);
-	    
-	    vbox.getChildren().add(existingUserButton);
-	    vbox.getChildren().add(newUserButton);
-	    vbox.getChildren().add(backButton);
-	   
-	    Scene scene = new Scene(vbox);
-	    stage.setScene(scene);
-	    stage.show();	
+		addPermitPane(stage, cost, "Semester", "A", "1", arr);	
 		
 	}
+
 	public void ViewUserInfoPain(Stage stage, String arr[]) {
 		
 		Text nameText = new Text("Name: ");
@@ -538,6 +514,7 @@ public class User_View extends Application{
 		
 		Text userNameText = new Text(arr[0]);
 		Text userIDText = new Text(arr[10]);
+		System.out.println(arr[10]);
 		Text userAddressText = new Text(arr[1]);
 		Text userEmailText = new Text(arr[2]);
 		Text userPhoneText = new Text(arr[3]);
@@ -626,34 +603,6 @@ public class User_View extends Application{
 		stage.setScene(scene);
 	}
 	
-	public void enterExistingUser(Stage stage) {
-		
-		Text enterUserName = new Text("Enter Your User Id");
-		TextField nameField = new TextField();
-		
-		Button submitButton = new Button("Submit");
-		Button backButton = new Button("Back");
-		
-		submitButton.setOnAction(e-> existingUserRequest(stage, nameField.getText()));
-		backButton.setOnAction(e-> selectUserPane(stage));
-		
-		GridPane gridPane = new GridPane();
-		
-		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setMinSize(500, 500);
-	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
-	    gridPane.setVgap(5); 
-	    gridPane.setHgap(5);
-	    
-	    gridPane.add(enterUserName, 0, 0);
-	    gridPane.add(nameField, 1, 0);
-	    gridPane.add(submitButton, 1, 1);
-	    gridPane.add(backButton, 0, 1);
-	    
-	    
-	    Scene scene  = new Scene(gridPane);
-		stage.setScene(scene);
-	}
 	
 	public void enterUserInfo(Stage stage){
 			
@@ -732,7 +681,7 @@ public class User_View extends Application{
 		}
 	}
 	
-	public void addPermitPane(Stage stage, double cost, String period, String lot, String duration) {
+	public void addPermitPane(Stage stage, double cost, String period, String lot, String duration, String arr[]) {
 		
 		DecimalFormat df = new DecimalFormat("#.00");
 		
@@ -764,20 +713,20 @@ public class User_View extends Application{
 		durationChoice.setValue(duration);
 		
 		parkingLotChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
-				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
+				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem(), arr));
 		periodChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
-				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
+				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem(), arr));
 		durationChoice.setOnAction(e-> toCostCal(stage, periodChoice.getSelectionModel().getSelectedItem(),
-				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem()));
+				parkingLotChoice.getSelectionModel().getSelectedItem(),durationChoice.getSelectionModel().getSelectedItem(), arr));
 		
 		Button submitButton = new Button("Submit");
 		Button backButton = new Button("Back");
 		
-		backButton.setOnAction(e-> selectUserPane(stage));
+		backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
 		
 		submitButton.setOnAction(e-> userInfoPane(stage, licensePlateField.getText(), periodChoice.getSelectionModel().getSelectedItem(),
 				durationChoice.getSelectionModel().getSelectedItem(), parkingLotChoice.getSelectionModel().getSelectedItem(), cost,
-				datePicker.getValue()));
+				datePicker.getValue(), arr));
 		
 
 		GridPane gridPane = new GridPane();
@@ -808,11 +757,11 @@ public class User_View extends Application{
 	    stage.show();	
 	}
 	
-		public void toCostCal(Stage stage, String period, String lot, String duration) {
+		public void toCostCal(Stage stage, String period, String lot, String duration, String arr[]) {
 			  
 			double cost = control.Calculation(user, period, lot, duration);
 			  
-			addPermitPane(stage, cost, period, lot, duration);
+			addPermitPane(stage, cost, period, lot, duration, arr);
 		  
 		}
 	  
@@ -821,14 +770,15 @@ public class User_View extends Application{
 		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String status) {
 			
 			user = control.CreateUser(name, email, phoneNum, address, status);
-			double cost = control.Calculation(user, "Semester", "A", "1");
+			//double cost = control.Calculation(user, "Semester", "A", "1");
 			
-			addPermitPane(stage, cost, "Semester", "A", "1");		
+			//addPermitPane(stage, cost, "Semester", "A", "1");		
 			
-			/*Update_DB insertUserToDB = new Update_DB();
-			int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);*/
+			Update_DB insertUserToDB = new Update_DB();
+			int id = insertUserToDB.addNewUserInfo(user, null, null, null, null, 0);
 			newUserConfirmation(stage);
 		}
+	
 		public void newUserConfirmation(Stage stage) {
 			
 			Text titleText  = new Text("Your account was created successfully");
@@ -853,6 +803,10 @@ public class User_View extends Application{
 		    
 		    vbox.getChildren().add(titleText);
 			vbox.getChildren().add(finishButton);
+			Scene scene = new Scene(vbox);
+			stage.setScene(scene);
+		    stage.show();
+			
 			
 		}
 		
@@ -871,98 +825,9 @@ public class User_View extends Application{
 		
 		resultSet[9] = String.valueOf(rs.getDouble("cost"));
 		resultSet[10] = String.valueOf(rs.getInt("USER_ID"));*/
-		
-		public void existingUserRequest(Stage stage, String id) {
-			// temp until database
-			
-			user = control.getUserByID();
-			
-			Read_DB readDB = new Read_DB();
-			
-			@SuppressWarnings("static-access")
-			String arr[] = readDB.findUser(Integer.parseInt(id)); 	
-			
-			
-			DecimalFormat df = new DecimalFormat("#.00");
-			
-			Text nameText = new Text("Name: ");
-			Text IDText = new Text("ID: ");
-			Text addressText = new Text("Address: ");
-			Text emailText = new Text("Email: ");
-			Text phoneText = new Text("Phone Number: ");
-			Text statusText = new Text("Status: ");
-			Text licenseText = new Text("license plate: ");
-			Text parkingLotText = new Text("Parking Lot: ");
-			Text lengthText = new Text("Duration: ");
-			Text costText = new Text("Total Cost: ");
-			
-			Text userNameText = new Text(arr[0]);
-			Text userIDText = new Text(arr[10]);
-			Text userAddressText = new Text(arr[1]);
-			Text userEmailText = new Text(arr[2]);
-			Text userPhoneText = new Text(arr[3]);
-			Text userStatusText = new Text(arr[4]);
-			Text userLicenseText = new Text(arr[5]);
-			Text userParkingLotText = new Text(arr[6]);
-			Text userLengthText = new Text(arr[7] + " " +arr[8] + "(s)");
-			Text userCostText = new Text("$ " + df.format(Double.valueOf(arr[9])));
-			
-			
-			Button finishButton = new Button("Finish");
-			Button backButton = new Button("Back");
-			backButton.setOnAction(e-> enterExistingUser(stage));
-			
-			finishButton.setOnAction(e-> {
-				try {
-					start(stage);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			});
-			
-			GridPane gridPane = new GridPane();
-			
-			gridPane.setAlignment(Pos.CENTER);
-			gridPane.setMinSize(500, 500);
-		    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
-		    gridPane.setVgap(5); 
-		    gridPane.setHgap(1);
-		    
-		    gridPane.add(nameText, 0, 0);
-		    gridPane.add(IDText, 0, 1);
-		    gridPane.add(addressText, 0, 2);
-		    gridPane.add(emailText, 0, 3);
-		    gridPane.add(phoneText, 0, 4);
-		    gridPane.add(statusText, 0, 5);
-		    gridPane.add(licenseText, 0, 6);
-		    gridPane.add(parkingLotText, 0, 7);
-		    gridPane.add(lengthText, 0, 8);
-		    gridPane.add(costText, 0, 9);
-		    gridPane.add(backButton, 0, 10);
-		    
-		    gridPane.add(userNameText, 1, 0);
-		    gridPane.add(userIDText, 1, 1);
-		    gridPane.add(userAddressText, 1, 2);
-		    gridPane.add(userEmailText, 1, 3);
-		    gridPane.add(userPhoneText, 1, 4);
-		    gridPane.add(userStatusText, 1, 5);
-		    gridPane.add(userLicenseText, 1, 6);
-		    gridPane.add(userParkingLotText, 1, 7);
-		    gridPane.add(userLengthText, 1, 8);
-		    gridPane.add(userCostText, 1, 9);
-		    gridPane.add(finishButton, 1, 10);
-
-			
-		    Scene scene = new Scene(gridPane);
-		    stage.setScene(scene);
-		    stage.show();
-			
-			
-		}
 
 		@SuppressWarnings("deprecation")
-		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost, LocalDate localDate) {
+		public void userInfoPane(Stage stage, String plate, String period, String duration, String lot, double cost, LocalDate localDate, String arr[]) {
 			
 			java.util.Date date = java.sql.Date.valueOf(localDate);
 			EndDate_Calculation dateCalc = new EndDate_Calculation();
@@ -1002,7 +867,7 @@ public class User_View extends Application{
 			Button backButton = new Button("Back");
 			
 
-			backButton.setOnAction(e-> addPermitPane(stage, cost, period, lot, duration));
+			backButton.setOnAction(e-> addPermitPane(stage, cost, period, lot, duration, arr));
 			confirmButton.setOnAction(e-> confirmPane( stage, user,plate, period,  duration,  lot,  cost)); 
 			
 			
