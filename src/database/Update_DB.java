@@ -108,12 +108,13 @@ public class Update_DB
 			Statement s = conn.createStatement();
 			
 			
-			s.execute("UPDATE ParkingManagement SET name = '" 
-					+ user.getUserName() + "', address = '" 
-					+ user.getUserAddress() + "', email = '" 
-					+ user.getUserEmail() + "', phone_number = '" 
-					+ user.getUserPhoneNum() + "'  WHERE USER_ID = " + id );
-			System.out.println("Table Updated");
+			
+			s.execute("UPDATE UserInfo SET userName = '" 
+					+ user.getUserName() + "', userAddress = '" 
+					+ user.getUserAddress() + "', userEmail = '" 
+					+ user.getUserEmail() + "', userPhoneNumber = '" 
+					+ user.getUserPhoneNum() + "'  WHERE loginID = " + id );
+			
 			
 			conn.close();
 		}

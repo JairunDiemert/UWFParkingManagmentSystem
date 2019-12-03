@@ -10,8 +10,8 @@ public class Read_DB
 	private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String protocol = "jdbc:derby:";
     private static String[] resultSet = new String[11]; 
-    //private static String[] loginResultSet = new String[5];
-    private static String status = new String();
+    private static String[] loginResultSet = new String[] {"","","","","","",""};
+    //private static String[] status = new String[7];
 	/*
 	 Outputs the author, ID, and URL of the current
 	 author in the ResultSet
@@ -170,7 +170,7 @@ public class Read_DB
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static String findStatus(String email, String password) {
+	public static String[] findStatus(String email, String password) {
 		
 		
 		try
@@ -198,24 +198,18 @@ public class Read_DB
 			ResultSet rs = null;
 			
 			
-			System.out.println(email);
-			
-			//rs = s.executeQuery("SELECT * FROM UserInfo WHERE userEmail = '" + email +"'");
-			rs = s.executeQuery("SELECT userPassword , userEmail ,userStatus FROM UserInfo WHERE userEmail = '" + email +"'");
-			
-		
+			rs = s.executeQuery("SELECT * FROM UserInfo WHERE userEmail = '" + email +"'");
+				
 			
 			while( rs.next() )
 			{
-					System.out.println("DB HERE");
+					System.out.println("here");
 					checkingStatus(rs, password, email);
 			}
 			
-			System.out.println("Done");
-			
 			rs.close();
 			conn.close();
-			System.out.println("Status");
+			
         }
         catch (SQLException err)
 		{
@@ -224,29 +218,36 @@ public class Read_DB
 			System.exit(0);
 		}
 	
-        return status;
+        return loginResultSet;
 	}
-	
 	
 			  
 	public static void checkingStatus(ResultSet rs, String inputPassword, String inputEmail) throws SQLException
 	{
-		
-		String userPassword = rs.getString("userPassword");
+		int loginID = rs.getInt("loginID");
+		String userName = rs.getString("userName");
 	    String userEmail = rs.getString("userEmail");
-	    
+	    String userPhoneNumber = rs.getString("userPhoneNumber");
+	    String userAddress = rs.getString("userAddress");
+	    String userPassword = rs.getString("userPassword");
 	    String userStatus =  rs.getString("userStatus");
 	    
-	    System.out.println(" dsad"+userStatus);
-	    System.out.println(" dsad"+userPassword);
-	    System.out.println(" dsad"+userEmail);
+	    
 	    if((inputEmail.compareTo(userEmail) == 0) && (inputPassword.compareTo(userPassword )==0 ) ) {
 	    	
-	    	status = userStatus;
+	    	loginResultSet[0] = Integer.toString(loginID);
+	    	loginResultSet[1] = userName;
+	    	loginResultSet[2] = userEmail;
+	    	loginResultSet[3] = userPhoneNumber;
+	    	loginResultSet[4] = userAddress;
+	    	loginResultSet[5] = userPassword;
+	    	loginResultSet[6] = userStatus;
+			
+	    	System.out.println(loginResultSet[6]);
 	    	
 	    }
 	    
-		System.out.println(status);
+		
 		
 	}
 	
