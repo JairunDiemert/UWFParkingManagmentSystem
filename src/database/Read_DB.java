@@ -119,8 +119,10 @@ public class Read_DB
 		}
 	}
 	
+	
+	
 	@SuppressWarnings("deprecation")
-	public static String[] findUser(int id) {
+	public static String[] findUser(String email) {
 		
 		try
 		{
@@ -147,13 +149,16 @@ public class Read_DB
 
 			ResultSet rs = null;
 			
+			
 			System.out.println();
-			System.out.println("All records with an ID = " + id);
+			System.out.println("All records with an ID = " + email);
+			
 			rs = s.executeQuery("SELECT name , address , email , phone_number , status , license_plate , parking_lot , period , duration , cost , userID  " +
-					"FROM ParkingManagement WHERE userID = " + id );
+					"FROM ParkingManagement WHERE email = '" + email+"'" );
 			
 			while( rs.next() )
 			{
+				System.out.println("here");
 				passingRecord(rs);
 			}
 			rs.close();
