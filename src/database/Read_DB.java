@@ -10,7 +10,8 @@ public class Read_DB
 	private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String protocol = "jdbc:derby:";
     private static String[] resultSet = new String[11]; 
-    private static String[] loginResultSet = new String[5];
+    //private static String[] loginResultSet = new String[5];
+    private static String status = new String();
 	/*
 	 Outputs the author, ID, and URL of the current
 	 author in the ResultSet
@@ -169,9 +170,9 @@ public class Read_DB
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static char findStatus(String email, String password) {
+	public static String findStatus(String email, String password) {
 		
-		char status = 'N';
+		
 		try
 		{
 			Class.forName(driver).newInstance();
@@ -186,10 +187,9 @@ public class Read_DB
 
         String dbName = "ParkingManagementDB";
         Connection conn = null;
-        
         try
         {
-			System.out.println("Connecting to the database...");
+        	System.out.println("Connecting to the database...");
         	conn = DriverManager.getConnection(protocol + dbName);
 			System.out.println("Connected.");
 
@@ -197,28 +197,20 @@ public class Read_DB
 
 			ResultSet rs = null;
 			
-			System.out.println();
-			//System.out.println("All records with an ID = " + id);
-			/*s.execute("CREATE TABLE LoginInfo" +
-					  "(userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), userName varchar(100), userPassword varchar(100),"
-					  + "userEmail varchar(100), userStatus char(1), UNIQUE(userID) )");*/
 			
-			rs = s.executeQuery("SELECT * FROM LoginInfo WHERE userEmail = '" + email +"'");
-			//rs = s.executeQuery("SELECT userID , userName , userPassword , userEmail ,userStatus FROM ParkingManagement WHERE userEmail = '" + email +"'");
+			System.out.println(email);
 			
-			if(rs!= null) {
+			//rs = s.executeQuery("SELECT * FROM UserInfo WHERE userEmail = '" + email +"'");
+			rs = s.executeQuery("SELECT userPassword , userEmail ,userStatus FROM UserInfo WHERE userEmail = '" + email +"'");
 			
-				while( rs.next() )
-				{
-				
-					status = checkingStatus(rs);
-				}
+		
+			
+			while( rs.next() )
+			{
+					System.out.println("DB HERE");
+					checkingStatus(rs, password, email);
 			}
-			else {
-				
-				status = 'N';
-				
-			}
+			
 			System.out.println("Done");
 			
 			rs.close();
@@ -234,15 +226,26 @@ public class Read_DB
         return status;
 	}
 	
-	public static char checkingStatus(ResultSet rs) throws SQLException
+	
+			  
+	public static void checkingStatus(ResultSet rs, String inputPassword, String inputEmail) throws SQLException
 	{
-		/*int USER_ID = rs.getInt("userID");
-		String name = rs.getString("userName");
-		String password = rs.getString("userPassword");
-		String email = rs.getString("userEmail");*/
 		
-		char status =  rs.getString("userStatus").charAt(0);
-	    System.out.println(status);
-		return status;
+		
+		
+	    String userEmail = rs.getString("userEmail");
+	    String userPassword = rs.getString("userPassword");
+	    String userStatus =  rs.getString("userStatus");
+	    
+	    if((inputEmail.compareTo(userEmail) == 0) && (inputPassword.compareTo(userPassword )==0 ) ) {
+	    	
+	    	status = userStatus;
+	    	
+	    }
+	    
+		//System.out.println(userStat);
+		
 	}
+	
+	
 }

@@ -53,11 +53,11 @@ public class Create_DB
 					"VALUES ('GM', 'fdfsfsft', 'gm@student.uwf.edu', '234-4324', 'Military', 'fdsff', 'B', '2', 'Semester', 45, DEFAULT)");
 			*/
 			
-			/*s.execute("DROP TABLE UserInfo");
+			//s.execute("DROP TABLE UserInfo");
 			s.execute("CREATE TABLE UserInfo" +
 					  "(loginID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 10000000, INCREMENT BY 1), userName varchar(100), userEmail varchar(100),"
 					  + " userPhoneNumber varchar(100), userAddress varchar(100), userPassword varchar(100), "
-					  + " userStatus varchar(100), UNIQUE(loginID, userEmail) )");*/
+					  + " userStatus varchar(100), UNIQUE(loginID, userEmail) )");
 			
 			s.execute("INSERT INTO UserInfo " +
 					"VALUES (DEFAULT, 'YL', 'yl@students.uwf.edu', '820-380-3640', '34 Apple St.', 'GuessWhatItWas', 'Student')");
@@ -66,6 +66,8 @@ public class Create_DB
 			  "(userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), userName varchar(100), userPassword varchar(100),"
 			  + "userEmail varchar(100), userStatus char(1), UNIQUE(userID) )");
 	
+			
+			//guest
 			s.execute("INSERT INTO LoginInfo " +
 			"VALUES (DEFAULT, 'YL', 'GuessWhat', 'yl@students.uwf.edu', 'S')");*/
 			

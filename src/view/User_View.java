@@ -114,7 +114,7 @@ public class User_View extends Application{
 	public void loginPanel(Stage stage) {
 		
 		Text titleText = new Text("Please login with your email and password.");
-		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
+		titleText.setStyle("-fx-font: normal bold 18px 'serif' ");
 		
 		//spacing
 		Text emptyText = new Text("    ");
@@ -432,11 +432,14 @@ public class User_View extends Application{
 		Read_DB readDB = new Read_DB();
 		
 		@SuppressWarnings("static-access")
-		char exist = readDB.findStatus(email, password);
+		String exist = readDB.findStatus(email, password);
 		
-		if(Character.compare(exist, 'S') == 0) {
+		System.out.println(exist + " HELLO");
+		
+		if(exist.compareTo("Student") == 0) {
 			
-			mainUserPane(stage, "1");
+			System.out.println("Here");
+			mainUserPane(stage);
 		}
 		else {
 			
@@ -475,18 +478,18 @@ public class User_View extends Application{
 		}
 	}
 	
-	public void mainUserPane(Stage stage, String id) {
+	public void mainUserPane(Stage stage) {
 		
-		Read_DB readDB = new Read_DB();
+		//Read_DB readDB = new Read_DB();
 		
-		@SuppressWarnings("static-access")
-		String arr[] = readDB.findUser(Integer.parseInt(id));
+		//@SuppressWarnings("static-access")
+		//String arr[] = readDB.findUser(Integer.parseInt(id));
 		Button viewUserInfoButton = new Button("View User Info");
 		Button viewUserPermitButton = new Button("View Permit Info");
 		Button purchasePermitButton = new Button("Purchase Permit");
 		Button logoutButton = new Button("Log Out");
 		
-		viewUserInfoButton.setOnAction(e-> ViewUserInfoPain(stage, arr));
+		//viewUserInfoButton.setOnAction(e-> ViewUserInfoPain(stage, arr));
 		//purchasePermitButton.setOnAction(e-> userPurchasePermit(stage, arr));
 		
 		logoutButton.setOnAction(e-> {
@@ -543,8 +546,11 @@ public class User_View extends Application{
 		
 		Button backButton = new Button("Back");
 		Button editButton = new Button("Edit");//jairun
-		backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
-		editButton.setOnAction(e-> editUserPane(stage, arr));
+		//backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
+		//editButton.setOnAction(e-> editUserPane(stage, arr));
+		
+		backButton.setOnAction(e-> mainUserPane(stage));
+		editButton.setOnAction(e-> editUserPane(stage,arr));
 		
 		GridPane gridPane = new GridPane();
 		gridPane.setAlignment(Pos.CENTER);
@@ -592,7 +598,8 @@ public class User_View extends Application{
 		
 		Button backButton = new Button("Back");
 		Button updateButton = new Button("Update");
-		backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
+		backButton.setOnAction(e-> mainUserPane(stage));
+		//backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
 		updateButton.setOnAction(e -> updateUserRequest(arr[10], stage, userNameText.getText(), userEmailText.getText(), 
 				userPhoneText.getText(), userAddressText.getText(),userStatusText.getText()));
 		
@@ -626,7 +633,10 @@ public class User_View extends Application{
 	
 	
 	public void enterUserInfo(Stage stage){
-			
+		
+		Text titleText = new Text("Register          ");
+		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
+		
 		Text nameText = new Text("Name: ");
 		Text emailText = new Text("Email: ");
 		Text phoneText = new Text("Phone Number: ");
@@ -649,6 +659,9 @@ public class User_View extends Application{
 		Button submitButton = new Button("Submit");
 		Button backButton = new Button("Back");
 		
+		submitButton.setMaxWidth(90);
+		backButton.setMaxWidth(90);
+		
 		backButton.setOnAction(e-> {
 			try {
 				start(stage);
@@ -657,8 +670,11 @@ public class User_View extends Application{
 				e1.printStackTrace();
 			}
 		});
+		
+		//System.out.println(statusChoice.getSelectionModel().getSelectedItem());
 		submitButton.setOnAction(e -> newUserRequest(stage, nameField.getText(), emailField.getText(), 
 				phoneField.getText(), addressField.getText(), passwordField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
+		
 		
 		GridPane gridPane = new GridPane();
 		
@@ -669,23 +685,25 @@ public class User_View extends Application{
 	    gridPane.setVgap(5); 
 	    gridPane.setHgap(5);
 	    
-	    gridPane.add(nameText, 0, 0);
-	    gridPane.add(emailText, 0, 1);
-	    gridPane.add(phoneText, 0, 2);
-	    gridPane.add(addressText, 0, 3);
-	    gridPane.add(statusText, 0, 4);
-	    gridPane.add(passwordText, 0, 5);
+	    gridPane.add(titleText, 0, 0,2,1);
+	    gridPane.add(nameText, 0, 3);
+	    gridPane.add(emailText, 0, 4);
+	    gridPane.add(phoneText, 0, 5);
+	    gridPane.add(addressText, 0, 6);
+	    gridPane.add(statusText, 0, 7);
+	    gridPane.add(passwordText, 0, 8);
 	    
-	    gridPane.add(backButton, 0, 6);
+	    gridPane.add(backButton, 0, 11);
 
-	    gridPane.add(nameField, 1, 0);
-	    gridPane.add(emailField, 1, 1);
-	    gridPane.add(phoneField, 1, 2);
-	    gridPane.add(addressField, 1, 3);
-	    gridPane.add(statusChoice, 1, 4);
-	    gridPane.add(passwordField, 1, 5);
+	    gridPane.add(nameField, 1, 3);
+	    gridPane.add(emailField, 1, 4);
+	    gridPane.add(phoneField, 1, 5);
+	    gridPane.add(addressField, 1, 6);
+	    gridPane.add(statusChoice, 1, 7);
+	    gridPane.add(passwordField, 1, 8);
 	    
-	    gridPane.add(submitButton, 1, 6);
+	    gridPane.add(submitButton, 1, 11);
+	    GridPane.setHalignment(submitButton, HPos.RIGHT);
 	    
 	    Scene scene = new Scene(gridPane);
 	    stage.setScene(scene);
@@ -748,8 +766,8 @@ public class User_View extends Application{
 		Button submitButton = new Button("Submit");
 		Button backButton = new Button("Back");
 		
-		backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
-		
+		backButton.setOnAction(e-> mainUserPane(stage));
+		//backButton.setOnAction(e-> mainUserPane(stage, arr[10]));
 		submitButton.setOnAction(e-> userInfoPane(stage, licensePlateField.getText(), periodChoice.getSelectionModel().getSelectedItem(),
 				durationChoice.getSelectionModel().getSelectedItem(), parkingLotChoice.getSelectionModel().getSelectedItem(), cost,
 				datePicker.getValue(), arr));

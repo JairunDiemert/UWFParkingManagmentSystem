@@ -150,11 +150,22 @@ public class Update_DB
 			
 			Statement s = conn.createStatement();
 			
+			System.out.println(user.getUserName() );
+			System.out.println(user.getUserEmail());
+			System.out.println(user.getUserPhoneNum());
+			System.out.println(user.getUserAddress());
+			System.out.println(user.getUserPassword());
+			System.out.println(user.getUserInfo() );
+			
 			
 			s.execute("INSERT INTO UserInfo " +
-					"VALUES (DEFAULT, '" + user.getUserName() + "',' " + user.getUserEmail()  + "' , '" + user.getUserPhoneNum() + "' , '" + 
+					"VALUES (default,'" + user.getUserName() + "',' " + user.getUserEmail()  + "' , '" + user.getUserPhoneNum() + "' , '" + 
 					user.getUserAddress() + "' , '" + user.getUserPassword()  + "' , '" + user.getUserInfo() +"' )");
-					
+			
+			
+			
+		
+		
 			
 			System.out.println("user inserted");
 			
