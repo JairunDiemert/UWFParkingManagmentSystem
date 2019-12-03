@@ -215,6 +215,7 @@ public class Read_DB
 			
 			rs.close();
 			conn.close();
+			System.out.println("Status");
         }
         catch (SQLException err)
 		{
@@ -231,19 +232,21 @@ public class Read_DB
 	public static void checkingStatus(ResultSet rs, String inputPassword, String inputEmail) throws SQLException
 	{
 		
-		
-		
+		String userPassword = rs.getString("userPassword");
 	    String userEmail = rs.getString("userEmail");
-	    String userPassword = rs.getString("userPassword");
+	    
 	    String userStatus =  rs.getString("userStatus");
 	    
+	    System.out.println(" dsad"+userStatus);
+	    System.out.println(" dsad"+userPassword);
+	    System.out.println(" dsad"+userEmail);
 	    if((inputEmail.compareTo(userEmail) == 0) && (inputPassword.compareTo(userPassword )==0 ) ) {
 	    	
 	    	status = userStatus;
 	    	
 	    }
 	    
-		//System.out.println(userStat);
+		System.out.println(status);
 		
 	}
 	

@@ -158,12 +158,12 @@ public class Update_DB
 			System.out.println(user.getUserInfo() );
 			
 			
+			
+			
+			
 			s.execute("INSERT INTO UserInfo " +
-					"VALUES (default,'" + user.getUserName() + "',' " + user.getUserEmail()  + "' , '" + user.getUserPhoneNum() + "' , '" + 
-					user.getUserAddress() + "' , '" + user.getUserPassword()  + "' , '" + user.getUserInfo() +"' )");
-			
-			
-			
+					"VALUES (DEFAULT, '" + user.getUserName() +"', '" + user.getUserEmail() + "', '" + user.getUserPhoneNum()+ "', '"
+					+ user.getUserAddress() + "', '" + user.getUserPassword() +"', '" + user.getUserInfo() +"')");
 		
 		
 			

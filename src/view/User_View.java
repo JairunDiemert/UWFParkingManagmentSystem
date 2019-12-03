@@ -673,7 +673,7 @@ public class User_View extends Application{
 		
 		//System.out.println(statusChoice.getSelectionModel().getSelectedItem());
 		submitButton.setOnAction(e -> newUserRequest(stage, nameField.getText(), emailField.getText(), 
-				phoneField.getText(), addressField.getText(), passwordField.getText(),statusChoice.getSelectionModel().getSelectedItem()));
+				phoneField.getText(), addressField.getText(),statusChoice.getSelectionModel().getSelectedItem(),passwordField.getText()));
 		
 		
 		GridPane gridPane = new GridPane();
@@ -811,9 +811,9 @@ public class User_View extends Application{
 	  
 		
 		
-		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address, String password, String status) {
+		public void newUserRequest(Stage stage, String name, String email, String phoneNum, String address,  String status,String password) {
 			
-			user = control.CreateUser(name, email, phoneNum, address, password, status);
+			user = control.CreateUser(name, email, phoneNum, address, status, password);
 			
 			
 			//addPermitPane(stage, cost, "Semester", "A", "1");		
