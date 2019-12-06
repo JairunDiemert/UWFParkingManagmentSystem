@@ -421,8 +421,78 @@ public class User_View extends Application{
 
 	private void confirmGuestPane(Stage stage, String email, String plate, String period, String duration, String lot,
 			double cost) {
-		
-		
+
+			User_Info user = new User_Info();
+			user.setUserEmail(email);
+			Update_DB insertUserToDB = new Update_DB();
+			int id = insertUserToDB.addNewUserInfo(user, plate, period, duration, lot, cost);
+			
+			
+			Text comfirmIDText =  new Text("Thank you for your purchase.");
+			comfirmIDText.setStyle("-fx-font: normal bold 20px 'serif' ");
+			
+			Text emptyText =  new Text("                  ");
+			
+			BarCode_Creator barCode;
+			try {
+				BarCode_Creator.crateBarcode(id);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			Button backButton = new Button("Back");
+			Button finishButton = new Button("Finish");
+
+			finishButton.setOnAction(e -> {
+				try {
+					start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+			
+			backButton.setOnAction(e-> guestPanel(stage));
+			finishButton.setMaxWidth(150);
+			backButton.setMaxWidth(150);
+			
+
+			FileInputStream inputstream = null;
+			try {
+				inputstream = new FileInputStream("BarCodeStuff"+"/"+"images"+"/"+"out.png");
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+			Image img = new Image(inputstream); 
+			
+			VBox vbox = new VBox();
+			
+			GridPane gridPane = new GridPane();
+			
+			gridPane.add(backButton, 0, 0);
+			gridPane.add(finishButton, 4, 0);
+			gridPane.setAlignment(Pos.CENTER);
+			gridPane.setPadding(new Insets(10 ,10,0, 0));
+		    gridPane.setHgap(25);
+		    
+			vbox.setAlignment(Pos.CENTER);
+			vbox.setMinSize(500, 500);
+		    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+		    vbox.setSpacing(20);
+		    
+		    
+		    vbox.getChildren().add(comfirmIDText);
+		    vbox.getChildren().add(emptyText);
+		    vbox.getChildren().add(new ImageView(img));
+		    vbox.getChildren().add(gridPane);
+		    
+		   
+		    Scene scene = new Scene(vbox);
+		    stage.setScene(scene);
+		    stage.show();
+
 			
 	}
 
