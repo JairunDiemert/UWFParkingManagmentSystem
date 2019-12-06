@@ -41,7 +41,7 @@ public class Create_DB
 			
 			
 			//s.execute("DROP Table ParkingManagement");
-			
+			/*
 			s.execute("CREATE TABLE ParkingManagement" +
 					  "(name varchar(50), address varchar(50), email varchar(50),phone_number varchar(50),"
 					  + "status varchar(50), license_plate varchar(50), parking_lot varchar(50), period varchar(50), duration varchar(50), "
@@ -50,7 +50,7 @@ public class Create_DB
 			s.execute("INSERT INTO ParkingManagement " +
 					"VALUES ('YL', 'fdsj St', 'yl@student.uwf.edu', '324-4324', 'Student', 'fjdisof', 'A', '1', 'Semester', 50,DEFAULT)");
 			s.execute("INSERT INTO ParkingManagement " +
-					"VALUES ('GM', 'fdfsfsft', 'gm@student.uwf.edu', '234-4324', 'Military', 'fdsff', 'B', '2', 'Semester', 45, DEFAULT)");
+					"VALUES ('GM', 'fdfsfsft', 'gm@student.uwf.edu', '234-4324', 'Military', 'fdsff', 'B', '2', 'Semester', 45, DEFAULT)");*/
 			
 			
 			//s.execute("DROP TABLE UserInfo");

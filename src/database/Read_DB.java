@@ -16,37 +16,7 @@ public class Read_DB
 	 Outputs the author, ID, and URL of the current
 	 author in the ResultSet
 	*/
-	public static void displayNameRecord(ResultSet rs) throws SQLException
-	{
-		String name = rs.getString("name");
-		String address = rs.getString("address");
-		String email = rs.getString("email");
-		
-		String phone_number = rs.getString("phone_number");
-		String status = rs.getString("status");
-		String license_plate = rs.getString("license_plate");
-		
-		String parking_lot = rs.getString("parking_lot");
-		String period = rs.getString("period");
-		String duration = rs.getString("duration");
-		
-		Double cost = rs.getDouble("cost");
-		int USER_ID = rs.getInt("userID");
-		
-		
-		
-		System.out.println("Name = " + name + "\nAddress = "
-				+ address + "\nEmail = " + email );
-		
-		System.out.println("Phone Number = " + phone_number + "\nSatus = "
-				+ status + "\nlLicense Plate = " + license_plate );
-		
-		System.out.println("Parking Lot = " + parking_lot + "\nPeriod = "
-				+ period + "\nDuration = " + duration);
-		
-		System.out.println("Cost = " + cost + "\nUSER_ID = "
-				+ USER_ID );
-	}
+
 
 	private static void passingRecord(ResultSet rs) throws SQLException
 	{
@@ -69,57 +39,7 @@ public class Read_DB
 		 
 	}
 	
-	@SuppressWarnings("deprecation")
-	public static void main(String[] args)
-	{
-		try
-		{
-			Class.forName(driver).newInstance();
-			System.out.println("Loaded the embedded driver.");
-		}
-		catch (Exception err)
-		{
-			System.err.println("Unable to load the embedded driver.");
-			err.printStackTrace(System.err);
-			System.exit(0);
-        }
 
-        String dbName = "ParkingManagementDB";
-        Connection conn = null;
-        try
-        {
-			System.out.println("Connecting to the database...");
-        	conn = DriverManager.getConnection(protocol + dbName);
-			System.out.println("Connected.");
-
-			Statement s = conn.createStatement();
-
-			ResultSet rs = null;
-			System.out.println("All records:");
-			rs = s.executeQuery("SELECT name, address , email , phone_number , status , license_plate , parking_lot,"
-					+ " period , duration , cost , userID FROM ParkingManagement");
-			System.out.println("Hello");
-			
-			
-			while( rs.next() )
-			{
-				displayNameRecord(rs);
-			}
-			
-
-			
-			rs.close();
-			conn.close();
-		}
-		catch (SQLException err)
-		{
-			System.err.println("SQL error.");
-			err.printStackTrace(System.err);
-			System.exit(0);
-		}
-	}
-	
-	
 	
 	@SuppressWarnings("deprecation")
 	public static String[] findUser(String email) {
@@ -158,7 +78,7 @@ public class Read_DB
 			
 			while( rs.next() )
 			{
-				System.out.println("here");
+				
 				passingRecord(rs);
 			}
 			rs.close();
@@ -251,8 +171,6 @@ public class Read_DB
 	    	System.out.println(loginResultSet[6]);
 	    	
 	    }
-	    
-		
 		
 	}
 	

@@ -419,10 +419,11 @@ public class User_View extends Application{
 		
 	}
 
-	private Object confirmGuestPane(Stage stage, String email, String plate, String period, String duration, String lot,
+	private void confirmGuestPane(Stage stage, String email, String plate, String period, String duration, String lot,
 			double cost) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+			
 	}
 
 	public void guestCal(Stage stage, String period, String lot, String duration,String email, String plate) {
@@ -440,9 +441,9 @@ public class User_View extends Application{
 		@SuppressWarnings("static-access")
 		String exist[] = readDB.findStatus(email, password);
 		
+	
 		
-		
-		if(exist[6].compareTo("Student") == 0) {
+		if((exist[6].compareTo("Student") == 0) ||( exist[6].compareTo("Veteran") == 0)||( exist[6].compareTo("Employee") == 0)||( exist[6].compareTo("Guest") == 0)) {
 			
 			
 			mainUserPane(stage,exist);
@@ -963,11 +964,11 @@ public class User_View extends Application{
 		public void newUserConfirmation(Stage stage) {
 			
 			Text titleText  = new Text("Your account was created successfully");
-			
+			titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
 			
 			
 			Button finishButton  = new Button("Finish");
-			
+			finishButton.setMaxWidth(100);
 			VBox vbox = new VBox();
 			
 			finishButton.setOnAction(e-> {
