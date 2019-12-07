@@ -146,6 +146,58 @@ public class Read_DB
         return loginResultSet;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public static String[] guestFindStatus(String email) {
+		
+		
+		try
+		{
+			Class.forName(driver).newInstance();
+			System.out.println("Loaded the embedded driver.");
+		}
+		catch (Exception err)
+		{
+			System.err.println("Unable to load the embedded driver.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+        }
+
+        String dbName = "ParkingManagementDB";
+        Connection conn = null;
+        try
+        {
+        	System.out.println("Connecting to the database...");
+        	conn = DriverManager.getConnection(protocol + dbName);
+			System.out.println("Connected.");
+
+			Statement s = conn.createStatement();
+
+			ResultSet rs = null;
+			
+			System.out.println(email);
+			rs = s.executeQuery("SELECT * FROM UserInfo WHERE userEmail = '" + email +"'");
+				
+			System.out.println(rs);
+			while( rs.next() )
+			{
+					System.out.println("here");
+					guestCheckingStatus(rs, email);
+			}
+			
+			rs.close();
+			conn.close();
+			
+        }
+        catch (SQLException err)
+		{
+			System.err.println("SQL error.");
+			err.printStackTrace(System.err);
+			System.exit(0);
+		}
+	
+        return loginResultSet;
+	}
+	
 			  
 	public static void checkingStatus(ResultSet rs, String inputPassword, String inputEmail) throws SQLException
 	{
@@ -158,7 +210,7 @@ public class Read_DB
 	    String userStatus =  rs.getString("userStatus");
 	    
 	    
-	    if((inputEmail.compareTo(userEmail) == 0) && (inputPassword.compareTo(userPassword )==0 ) ) {
+	    if((inputEmail.compareTo(userEmail) == 0) && (inputPassword.compareTo(userPassword)==0 ) ) {
 	    	
 	    	loginResultSet[0] = Integer.toString(loginID);
 	    	loginResultSet[1] = userName;
@@ -166,6 +218,36 @@ public class Read_DB
 	    	loginResultSet[3] = userPhoneNumber;
 	    	loginResultSet[4] = userAddress;
 	    	loginResultSet[5] = userPassword;
+	    	loginResultSet[6] = userStatus;
+			
+	    	System.out.println(loginResultSet[6]);
+	    	
+	    }
+		
+	}
+	
+	public static void guestCheckingStatus(ResultSet rs, String inputEmail) throws SQLException
+	{
+		//int loginID = rs.getInt("loginID");
+		//String userName = rs.getString("userName");
+	    String userEmail = rs.getString("userEmail");
+	    //String userPhoneNumber = rs.getString("userPhoneNumber");
+	    //String userAddress = rs.getString("userAddress");
+	    //String userPassword = rs.getString("userPassword");
+	    String userStatus =  rs.getString("userStatus");
+	    
+
+	    System.out.println(inputEmail); //Delete
+	    System.out.println(userEmail); //Delete
+	    
+	    if(inputEmail.compareTo(userEmail) == 0 ) {
+	    	
+	    	//loginResultSet[0] = Integer.toString(loginID);
+	    	//loginResultSet[1] = userName;
+	    	loginResultSet[2] = userEmail;
+	    	//loginResultSet[3] = userPhoneNumber;
+	    	//loginResultSet[4] = userAddress;
+	    	//loginResultSet[5] = userPassword;
 	    	loginResultSet[6] = userStatus;
 			
 	    	System.out.println(loginResultSet[6]);

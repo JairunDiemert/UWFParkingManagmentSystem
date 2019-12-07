@@ -199,8 +199,8 @@ public class User_View extends Application{
 		
 		
 		purchaseButton.setOnAction(e-> guestPurchasePanel(stage,cost, "Semester", "A", "1" , "", ""));
-		permitInfoButton.setOnAction(e-> guestPanel(stage));
-		barcodeButton.setOnAction(e-> guestPanel(stage));
+		permitInfoButton.setOnAction(e-> guestLoginPanel(stage));
+		barcodeButton.setOnAction(e-> guestLoginPanelBarcode(stage));
 		backButton.setOnAction(e-> {
 			try {
 				start(stage);
@@ -239,6 +239,361 @@ public class User_View extends Application{
 		
 		
 	}
+	
+public void guestLoginPanel(Stage stage) {
+		
+		Text titleText = new Text("Please login with your email.");
+		titleText.setStyle("-fx-font: normal bold 18px 'serif' ");
+		
+		//spacing
+		Text emptyText = new Text("    ");
+		Text empty1Text = new Text("    ");
+		Text empty2Text = new Text("    ");
+		
+		Text emailText = new Text("Please enter your email: ");
+		TextField emailField = new TextField();
+		
+		Button loginButton = new Button("Login");
+		Button backButton = new Button("Back");
+		
+		loginButton.setMaxWidth(100);
+		backButton.setMaxWidth(100);
+		
+			
+		loginButton.setOnAction(e-> guestDetermentPane(stage, emailField.getText()));
+	
+		
+		backButton.setOnAction(e-> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	 
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(5);
+	    
+	    gridPane.add(titleText,0,0,2,1);
+	    gridPane.add(emptyText, 0,1);	  
+	    gridPane.add(empty2Text, 0,2);
+	    gridPane.add(emailText, 0, 3);
+	    gridPane.add(emailField, 1, 3);
+	    
+	    gridPane.add(empty1Text, 0, 5);
+	    gridPane.add(loginButton, 1, 6);
+	    GridPane.setHalignment(loginButton, HPos.RIGHT);
+	    gridPane.add(backButton, 0, 6);
+	    
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();
+		
+	}
+public void guestLoginPanelBarcode(Stage stage) {
+	
+	Text titleText = new Text("Please login with your email.");
+	titleText.setStyle("-fx-font: normal bold 18px 'serif' ");
+	
+	//spacing
+	Text emptyText = new Text("    ");
+	Text empty1Text = new Text("    ");
+	Text empty2Text = new Text("    ");
+	
+	Text emailText = new Text("Please enter your email: ");
+	TextField emailField = new TextField();
+	
+	Button loginButton = new Button("Login");
+	Button backButton = new Button("Back");
+	
+	loginButton.setMaxWidth(100);
+	backButton.setMaxWidth(100);
+	
+		
+	loginButton.setOnAction(e-> guestDetermentPaneBarcode(stage, emailField.getText()));
+
+	
+	backButton.setOnAction(e-> {
+		try {
+			start(stage);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	});
+	
+	GridPane gridPane = new GridPane();
+	
+	gridPane.setAlignment(Pos.CENTER);
+	gridPane.setMinSize(500, 500);
+    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+ 
+    gridPane.setVgap(5); 
+    gridPane.setHgap(5);
+    
+    gridPane.add(titleText,0,0,2,1);
+    gridPane.add(emptyText, 0,1);	  
+    gridPane.add(empty2Text, 0,2);
+    gridPane.add(emailText, 0, 3);
+    gridPane.add(emailField, 1, 3);
+    
+    gridPane.add(empty1Text, 0, 5);
+    gridPane.add(loginButton, 1, 6);
+    GridPane.setHalignment(loginButton, HPos.RIGHT);
+    gridPane.add(backButton, 0, 6);
+    
+    Scene scene = new Scene(gridPane);
+    stage.setScene(scene);
+    stage.show();
+	
+}
+
+public void guestDetermentPane(Stage stage, String email) {
+	
+	Read_DB readDB = new Read_DB();
+	
+	@SuppressWarnings("static-access")
+	String exist[] = readDB.guestFindStatus(email);
+	
+
+	
+	if((exist[6].compareTo("Student") == 0) ||( exist[6].compareTo("Veteran") == 0)||( exist[6].compareTo("Employee") == 0)||( exist[6].compareTo("Guest") == 0)) {
+		
+		
+		guestPermitView(stage,exist);
+	}
+
+	if(exist[6] == "") {
+		
+		Text errorText = new Text("Error Message!");
+		errorText.setStyle("-fx-font: normal bold 20px 'serif' ");
+		Text emptyText = new Text("    ");
+		Text empty1Text = new Text("    ");
+		
+		Text titleText = new Text("You have entered either wrong password or email or the account didn't exist!");
+		Button backButton = new Button("Back");
+		backButton.setMaxWidth(100);
+		backButton.setOnAction(e-> guestLoginPanel(stage));
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	 
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(5);
+	    
+	    gridPane.add(errorText,0,0,2,1);
+	    GridPane.setHalignment(errorText, HPos.LEFT);
+	    
+	    gridPane.add(emptyText,0,1);
+	    gridPane.add(titleText,0,2,2,1);
+	    gridPane.add(empty1Text,0,3);
+	    GridPane.setHalignment(backButton, HPos.RIGHT);
+	    gridPane.add(backButton, 1, 4);
+	    
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();
+	    
+	}
+}
+private void showBarCode(Stage stage, String exist[]) {
+	
+		Text comfirmIDText =  new Text("Here is your Barcode.");
+		comfirmIDText.setStyle("-fx-font: normal bold 20px 'serif' ");
+		
+		Text emptyText =  new Text("                  ");
+		
+		BarCode_Creator barCode;
+		try {
+			BarCode_Creator.crateBarcode(Integer.parseInt(exist[10]));
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		Button backButton = new Button("Back");
+		Button finishButton = new Button("Finish");
+
+		finishButton.setOnAction(e -> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		backButton.setOnAction(e-> guestPanel(stage));
+		finishButton.setMaxWidth(150);
+		backButton.setMaxWidth(150);
+		
+
+		FileInputStream inputstream = null;
+		try {
+			inputstream = new FileInputStream("BarCodeStuff"+"/"+"images"+"/"+"out.png");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		Image img = new Image(inputstream); 
+		
+		VBox vbox = new VBox();
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.add(backButton, 0, 0);
+		gridPane.add(finishButton, 4, 0);
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setPadding(new Insets(10 ,10,0, 0));
+	    gridPane.setHgap(25);
+	    
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+	    vbox.setSpacing(20);
+	    
+	    
+	    vbox.getChildren().add(comfirmIDText);
+	    vbox.getChildren().add(emptyText);
+	    vbox.getChildren().add(new ImageView(img));
+	    vbox.getChildren().add(gridPane);
+	    
+	   
+	    Scene scene = new Scene(vbox);
+	    stage.setScene(scene);
+	    stage.show();
+
+		
+}
+public void guestDetermentPaneBarcode(Stage stage, String email) {
+	
+	Read_DB readDB = new Read_DB();
+	
+	@SuppressWarnings("static-access")
+	String exist[] = readDB.guestFindStatus(email);
+	
+
+	
+	if((exist[6].compareTo("Student") == 0) ||( exist[6].compareTo("Veteran") == 0)||( exist[6].compareTo("Employee") == 0)||( exist[6].compareTo("Guest") == 0)) {
+		
+		
+		showBarCode(stage,exist);
+	}
+
+	if(exist[6] == "") {
+		
+		Text errorText = new Text("Error Message!");
+		errorText.setStyle("-fx-font: normal bold 20px 'serif' ");
+		Text emptyText = new Text("    ");
+		Text empty1Text = new Text("    ");
+		
+		Text titleText = new Text("You have entered either wrong password or email or the account didn't exist!");
+		Button backButton = new Button("Back");
+		backButton.setMaxWidth(100);
+		backButton.setOnAction(e-> guestLoginPanel(stage));
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	 
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(5);
+	    
+	    gridPane.add(errorText,0,0,2,1);
+	    GridPane.setHalignment(errorText, HPos.LEFT);
+	    
+	    gridPane.add(emptyText,0,1);
+	    gridPane.add(titleText,0,2,2,1);
+	    gridPane.add(empty1Text,0,3);
+	    GridPane.setHalignment(backButton, HPos.RIGHT);
+	    gridPane.add(backButton, 1, 4);
+	    
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();
+	    
+	}
+}
+private void guestPermitView(Stage stage, String[] arr) {
+	
+	Read_DB readDB = new Read_DB();
+	
+	@SuppressWarnings("static-access")
+	String exist[] = readDB.findUser(arr[2]);
+	
+	Text titleText = new Text("Permit Info:                           ");
+	titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
+	Text emptyText = new Text("                ");
+	
+	
+	Button backButton = new Button("Back");
+	
+	backButton.setMaxWidth(150);
+	backButton.setOnAction(e-> guestPanel(stage));
+	
+	DecimalFormat df = new DecimalFormat("#.00");
+	Text emailText = new Text("Email: ");
+	Text licenseText = new Text("license plate: ");
+	Text parkingLotText = new Text("Parking Lot: ");
+	Text lengthText = new Text("Duration: ");	
+	Text costText = new Text("Total Cost: ");
+	
+	Text userEmailText = new Text(exist[2]);
+	Text userLicenseText = new Text(exist[5]);
+	Text userParkingLotText = new Text(exist[6]);
+	Text userLengthText = new Text(exist[8] + " " + exist[7] + "(s)");
+	//Text userStartDateText = new Text(dateCalc.getStartDate().toString());
+	//Text userEndDateText = new Text(dateCalc.getEndDate().toString());
+	
+	Text userCostText = new Text("$ " + df.format(Double.parseDouble(exist[9]) ));
+	
+	
+	
+	GridPane gridPane = new GridPane();
+	
+	gridPane.setAlignment(Pos.CENTER);
+	gridPane.setMinSize(500, 500);
+    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+    gridPane.setVgap(5); 
+    gridPane.setHgap(5);
+    
+    gridPane.add( titleText, 0, 0,2,1);
+    gridPane.add( emptyText, 0, 1,2,1);
+
+    gridPane.add(emailText, 0, 3);
+    gridPane.add(licenseText, 0, 4);
+    gridPane.add(parkingLotText, 0, 5);
+    gridPane.add(lengthText , 0, 6);
+    gridPane.add(costText, 0, 7);   
+    gridPane.add(backButton, 1, 10);
+    GridPane.setHalignment(backButton, HPos.RIGHT);
+   
+    gridPane.add(userEmailText, 1, 3);
+    gridPane.add(userLicenseText, 1, 4);
+    gridPane.add(userParkingLotText, 1, 5);
+    gridPane.add(userLengthText, 1, 6);
+    gridPane.add(userCostText, 1, 7);
+    
+    
+    Scene scene = new Scene(gridPane);
+    stage.setScene(scene);
+    stage.show();	
+	
+	
+	
+}
 	
 	public void guestPurchasePanel(Stage stage, double cost, String period, String lot,String duration, String email, String plate) {
 		
@@ -343,6 +698,7 @@ public class User_View extends Application{
 	    stage.show();	
 		
 	}
+	
 	@SuppressWarnings("deprecation")
 	private void guestInfoPane(Stage stage, String email, String plate, String period, String duration,
 			String lot, double cost, LocalDate value) {
@@ -422,8 +778,14 @@ public class User_View extends Application{
 	private void confirmGuestPane(Stage stage, String email, String plate, String period, String duration, String lot,
 			double cost) {
 
-			User_Info user = new User_Info();
+		    guestUserRequest(stage, "", email, "", "" , "Guest","");
+
 			user.setUserEmail(email);
+			user.setUserInfo("Guest");
+
+			
+			System.out.println(user.getUserEmail() + "\n" + user.getUserPassword());//DELETE
+			
 			Update_DB insertUserToDB = new Update_DB();
 			int id = insertUserToDB.addNewUserInfo(user, plate, period, duration, lot, cost);
 			
@@ -1033,6 +1395,15 @@ public class User_View extends Application{
 			newUserConfirmation(stage);
 		}
 		
+		public void guestUserRequest(Stage stage, String name, String email, String phoneNum, String address,  String status,String password) {
+			
+			user = control.CreateUser(name, email, phoneNum, address, status, password);
+		
+			
+			Update_DB insertUserToDB = new Update_DB();
+			insertUserToDB.insertUserInfo(user);
+
+		}
 	
 		public void newUserConfirmation(Stage stage) {
 			
