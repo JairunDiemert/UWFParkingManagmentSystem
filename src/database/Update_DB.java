@@ -49,13 +49,11 @@ public class Update_DB
 			ResultSet rs = null;
 			rs = s.executeQuery("SELECT userID FROM ParkingManagement WHERE email = '" + user.getUserEmail() +"'");
 
-			
 			if(rs!= null) {
 				
 				while( rs.next() )
 				{
-					id = getID(rs);
-					
+					id = getID(rs);				
 				}
 			}
 			
