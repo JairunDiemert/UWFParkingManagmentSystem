@@ -54,18 +54,19 @@ public class Create_DB
 			
 			
 			//s.execute("DROP TABLE UserInfo");
-			/*s.execute("CREATE TABLE UserInfo" +
+			/*
+			s.execute("CREATE TABLE UserInfo" +
 					  "(loginID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 10000000, INCREMENT BY 1), userName varchar(100), userEmail varchar(100),"
 					  + " userPhoneNumber varchar(100), userAddress varchar(100), userPassword varchar(100), "
 					  + " userStatus varchar(100), UNIQUE(loginID, userEmail) )");
-			
-			s.execute("INSERT INTO UserInfo " +
-					"VALUES (DEFAULT, 'YL', 'yl@students.uwf.edu', '820-380-3640', '34 Apple St.', 'GuessWhatItWas', 'Student')");
 			*/
+			//s.execute("INSERT INTO UserInfo " +
+				//	"VALUES (DEFAULT, 'YL', 'yl@students.uwf.edu', '820-380-3640', '34 Apple St.', 'GuessWhatItWas', 'Student')");
+			
 			/*s.execute("CREATE TABLE LoginInfo" +
 			  "(userID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), userName varchar(100), userPassword varchar(100),"
 			  + "userEmail varchar(100), userStatus char(1), UNIQUE(userID) )");
-	
+			
 			
 			//guest
 			s.execute("INSERT INTO LoginInfo " +
@@ -80,6 +81,9 @@ public class Create_DB
 			
 			/*s.execute("INSERT INTO GuestInfo " +
 			"VALUES (DEFAULT, 'ds@students.uwf.edu', 'plateNum', 'A', '1', 'Semester', '03/25/2019', '03/25/2020' , 20 )");*/
+			
+			s.execute("INSERT INTO UserInfo " +
+					"VALUES (DEFAULT, 'X', 'admin@uwf.edu', 'X', 'X', 'adminPassword', 'Admin')");
 			
 			System.out.println("Done");
 			conn.close();

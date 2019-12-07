@@ -518,6 +518,9 @@ public class User_View extends Application{
 			
 			mainUserPane(stage,exist);
 		}
+		else if(exist[6].compareTo("Admin")==0) {
+			adminPane(stage);
+		}
 
 		if(exist[6] == "") {
 			
@@ -1313,7 +1316,207 @@ public class User_View extends Application{
                     series4.getData().remove(0);
             });
         }, 0, 3, TimeUnit.SECONDS);
-     }    
+     }
+    public void adminPane(Stage stage) {
+    	Text titleText = new Text("Admin");
+		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
+		Text emptyText = new Text("     ");
+		
+		Button scheduleButton = new Button("Reserve Parking");
+		Button writeFineButton = new Button("Write Fine");
+		Button logoutButton = new Button("Exit");
+		
+		scheduleButton.setMaxWidth(150);
+		logoutButton.setMaxWidth(150);
+		
+		scheduleButton.setOnAction(e -> schedulePane(stage));
+		//writeFineButton.setOnAction(e-> writeFinePane(stage));
+		logoutButton.setOnAction(e -> {
+			try {
+				start(stage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		
+		VBox vbox = new VBox();
+		
+		vbox.setSpacing(20);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+		
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+	    
+	    vbox.getChildren().add(titleText);
+	    vbox.getChildren().add(emptyText);
+	    vbox.getChildren().add(scheduleButton);
+	    vbox.getChildren().add(writeFineButton);
+	    vbox.getChildren().add(logoutButton);
+	    
+	    Scene scene = new Scene(vbox);
+	    stage.setScene(scene);
+	    stage.setTitle("User View Window");
+	    stage.show();
+    	
+    }
+    public void schedulePane(Stage stage) {
+    	
+	DecimalFormat df = new DecimalFormat("#.00");
+		
+		Text parkingLotText = new Text("Parking Lot: ");
+		Text periodText = new Text("Period: ");
+		Text spaceNumberText = new Text("Number of Spaces: ");
+		Text startDateText = new Text("Start Date: ");
+		Text reservationNameText = new Text("Reservation Name: ");
+		
+		TextField reservationNameField = new TextField();
+		
+		ChoiceBox<String> parkingLotChoice = new ChoiceBox<>();
+		ChoiceBox<String> periodChoice = new ChoiceBox<>();
+		ChoiceBox<String> durationChoice = new ChoiceBox<>();
+		ChoiceBox<String> spaceNumberChoice = new ChoiceBox<>();
+
+		DatePicker datePicker = new DatePicker();
+        datePicker.setEditable(false);
+        datePicker.setValue(LocalDate.now());
+        
+		parkingLotChoice.getItems().addAll("A", "B", "C", "D");
+		parkingLotChoice.setValue("A");
+		
+		periodChoice.getItems().addAll("Hour", "Day", "Week", "Month", "Semester", "Year");
+		periodChoice.setValue("Hour");
+		
+		durationChoice.getItems().addAll("1", "2", "3", "4", "5", "6", "7");
+		durationChoice.setValue("1");
+		
+		for(int i = 0; i <100; i++) {
+			spaceNumberChoice.getItems().add(String.valueOf(100 - i));
+		}
+		spaceNumberChoice.setValue("20");
+		
+
+		Button submitButton = new Button("Submit");
+		Button backButton = new Button("Back");
+		
+		backButton.setOnAction(e-> adminPane(stage));
+		submitButton.setOnAction(e-> confirmReservation(stage, parkingLotChoice.getSelectionModel().getSelectedItem(), periodChoice.getSelectionModel().getSelectedItem(),
+				durationChoice.getSelectionModel().getSelectedItem(), spaceNumberChoice.getSelectionModel().getSelectedItem(), datePicker.getValue(), reservationNameField.getText()));
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(1);
+	    
+	    gridPane.add(parkingLotText, 0, 0);
+	    gridPane.add(periodText, 0, 1);
+	    gridPane.add(startDateText, 0, 2);
+	    gridPane.add(spaceNumberText, 0, 3);
+	    gridPane.add(reservationNameText, 0, 4);
+	    gridPane.add(backButton, 0, 5);
+
+	    gridPane.add(parkingLotChoice, 1, 0);
+	    gridPane.add(periodChoice, 2, 1);
+	    gridPane.add(durationChoice, 1, 1);
+	    gridPane.add(datePicker, 1, 2);
+	    gridPane.add(spaceNumberChoice, 1, 3);
+	    gridPane.add(reservationNameField, 1, 4);
+	    gridPane.add(submitButton, 1, 5);
+	    
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();	
+    	
+    }
+    
+    public void confirmReservation(Stage stage, String lot, String period, String duration, String spaces, LocalDate localDate, String name){
+    	
+    	java.util.Date date = java.sql.Date.valueOf(localDate);
+		EndDate_Calculation dateCalc = new EndDate_Calculation();
+		dateCalc.setStartDate(date.getYear(), date.getMonth(), date.getDate(), 0);
+		dateCalc.setEndDate(period, duration, dateCalc.getStartDate());
+    	
+    	Text parkingLotText = new Text("Parking Lot: ");
+		Text periodText = new Text("Period: ");
+		Text spaceNumberText = new Text("Number of Spaces: ");
+		Text startDateText = new Text("Start Date: ");
+		Text endDateText = new Text("End Date: ");
+		Text reservationNameText = new Text("Reservation Name: ");
+		
+		Text reservedParkingLotText = new Text(lot);
+		Text reservedPeriodText = new Text(duration + " " + period +"(s)" );
+		Text reservedSpaceNumberText = new Text(spaces + " parking spaces");
+		Text reservedStartDateText = new Text(dateCalc.getStartDate().toString());
+		Text reservedEndDateText = new Text(dateCalc.getEndDate().toString());
+		Text reservedReservationNameText = new Text(name);
+		
+		Button confirmButton = new Button("Confirm");
+		Button backButton = new Button("Back");
+		
+		backButton.setOnAction(e-> schedulePane(stage));
+		confirmButton.setOnAction(e-> finishReservation(stage, lot, period, duration, 
+				dateCalc.getStartDate().toString(), dateCalc.getEndDate().toString(), spaces, name));
+		
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(1);
+	    
+	    gridPane.add(parkingLotText, 0, 0);
+	    gridPane.add(periodText, 0, 1);
+	    gridPane.add(startDateText, 0, 2);
+	    gridPane.add(endDateText, 0, 3);
+	    gridPane.add(reservationNameText, 0, 4);
+	    gridPane.add(spaceNumberText, 0, 5);
+	    gridPane.add(backButton, 0, 6);
+
+	    gridPane.add(reservedParkingLotText, 1, 0);
+	    gridPane.add(reservedPeriodText, 1, 1);
+	    gridPane.add(reservedStartDateText, 1, 2);
+	    gridPane.add(reservedEndDateText, 1, 3);
+	    gridPane.add(reservedReservationNameText, 1, 4);
+	    gridPane.add(reservedSpaceNumberText, 1, 5);
+	    gridPane.add(confirmButton, 1, 6);
+	    
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();		
+    	
+    }
+    public void finishReservation(Stage stage, String lot, String period, String duration, String startDate, String endDate, String spaces, String name) {
+		
+    	Text titleText  = new Text(spaces + " parking spaces were reserved from lot " + lot);
+		titleText.setStyle("-fx-font: normal bold 20px 'serif' ");
+		
+		
+		Button finishButton  = new Button("Finish");
+		finishButton.setMaxWidth(100);
+		VBox vbox = new VBox();
+		
+		finishButton.setOnAction(e-> adminPane(stage));
+		
+		vbox.setSpacing(20);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setMinSize(500, 500);
+		
+	    vbox.setPadding(new Insets(10 ,10 , 10, 10));
+	    
+	    vbox.getChildren().add(titleText);
+		vbox.getChildren().add(finishButton);
+		Scene scene = new Scene(vbox);
+		stage.setScene(scene);
+	    stage.show();
+    	
+    }
+    
+    
     
 	
 }
