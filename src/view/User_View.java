@@ -41,7 +41,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.geometry.HPos;
-
+import models.Fine;
 import models.User_Info; 
 
 @SuppressWarnings("unused")
@@ -1698,10 +1698,11 @@ private void guestPermitView(Stage stage, String[] arr) {
 		Button logoutButton = new Button("Exit");
 		
 		scheduleButton.setMaxWidth(150);
+		writeFineButton.setMaxWidth(150);
 		logoutButton.setMaxWidth(150);
 		
 		scheduleButton.setOnAction(e -> schedulePane(stage));
-		//writeFineButton.setOnAction(e-> writeFinePane(stage));
+		writeFineButton.setOnAction(e-> writeFinePane(stage));
 		logoutButton.setOnAction(e -> {
 			try {
 				start(stage);
@@ -1804,7 +1805,8 @@ private void guestPermitView(Stage stage, String[] arr) {
     	
     }
     
-    public void confirmReservation(Stage stage, String lot, String period, String duration, String spaces, LocalDate localDate, String name){
+    @SuppressWarnings("deprecation")
+	public void confirmReservation(Stage stage, String lot, String period, String duration, String spaces, LocalDate localDate, String name){
     	
     	java.util.Date date = java.sql.Date.valueOf(localDate);
 		EndDate_Calculation dateCalc = new EndDate_Calculation();
@@ -1886,6 +1888,53 @@ private void guestPermitView(Stage stage, String[] arr) {
 	    stage.show();
     	
     }
+    
+    public void writeFinePane(Stage stage) {
+  
+    	Text parkingLotText = new Text("Parking Lot: ");
+    	Text violationTypeText = new Text("Violation Type: ");
+    	Text fineText = new Text("Violation: ");
+    	Text fineAmountText = new Text("Amount: ");
+    	
+    	TextField violationField = new TextField();
+    	TextField fineAmountField = new TextField();
+    	ChoiceBox<String> parkingLotChoice = new ChoiceBox<>();
+    	ChoiceBox<String> violationTypeChoice = new ChoiceBox<>();
+    	
+		parkingLotChoice.getItems().addAll("A", "B", "C", "D");
+		parkingLotChoice.setValue("A");
+		violationTypeChoice.getItems().addAll("Moving", "Non-moving");
+		parkingLotChoice.setValue("Moving");
+		
+		Button submitButton = new Button("Submit");
+		Button backButton = new Button("Back");
+		
+		backButton.setOnAction(e-> adminPane(stage));
+    	
+		GridPane gridPane = new GridPane();
+		
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMinSize(500, 500);
+	    gridPane.setPadding(new Insets(10 ,10 , 10, 10));
+	    gridPane.setVgap(5); 
+	    gridPane.setHgap(1);
+	    
+	    gridPane.add(parkingLotText, 0, 0);
+	    gridPane.add(violationTypeText, 0, 1);
+	    gridPane.add(fineText, 0, 2);
+	    gridPane.add(fineAmountText, 0, 3);
+	    gridPane.add(backButton, 0, 6);
+	    
+	    gridPane.add(parkingLotChoice, 1, 0);
+	    gridPane.add(violationTypeChoice, 1, 1);
+	    gridPane.add(violationField, 1, 2);
+	    gridPane.add(fineAmountField, 1, 3);
+	    gridPane.add(submitButton, 1, 6);
+	    
+	    Scene scene = new Scene(gridPane);
+	    stage.setScene(scene);
+	    stage.show();
+	}
     
     
     
